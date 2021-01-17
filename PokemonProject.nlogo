@@ -8,7 +8,7 @@ turtles-own [pokename
   nonvolatile confused? confusedur
   move1 move2 move3 move4
   currentmove movetype cat power acc prio
-  modifier effectiveness damage]
+  modifier effectiveness atkstage damage]
 
 ;temporary setup to test things
 to setup
@@ -188,6 +188,8 @@ end
 
 ;status moves AGAINST the enemy
 to statusMovesEnemy
+  if currentmove = "swords_dance" and -6 <= atkstage and atkstage <= 4 [
+    set atkstage atkstage + 2]
   if [nonvolatile] of ally 0 = 0 [
     if currentmove = "toxic" [
       if random 100 < acc [
@@ -228,6 +230,8 @@ end
 
 ;status moves AGAINST the ally
 to statusMovesAlly
+  if currentmove = "swords_dance" and -6 <= atkstage and atkstage <= 6 [
+    set atkstage atkstage + 2]
   if [nonvolatile] of ally 0 = 0 [
     if currentmove = "toxic" [
       if random 100 < acc [
@@ -311,7 +315,7 @@ end
 ;A is attack D is defense, calculates damage
 to calcDamage [A D pow critmod]
   calcModifier critmod
-  set damage (((((((2 * 50) / 5) + 2) * pow * A) / D) / 50) + 2) * modifier
+  set damage (((((((2 * 5) / 5) + 2) * pow * (A * (1 + (atkstage / 2)))) / D) / 50) + 2) * modifier
 end
 
 ;calculates modifier for calcDamage
@@ -550,7 +554,7 @@ BUTTON
 160
 139
 make ally infernape
-ask ally 0 [\nset pokename \"infernape\"\npokenameTostats\nset color red\n]
+ask ally 0 [\nset pokename \"infernape\"\npokenameTostats\nset color red\nset atkstage 0\n]
 NIL
 1
 T
@@ -596,10 +600,10 @@ NIL
 1
 
 BUTTON
-21
-350
-203
-383
+23
+368
+205
+401
 make crobat use acrobatics
 ask enemy 1 [\nset currentmove move2\nattackAlly]\n
 NIL
@@ -635,10 +639,10 @@ report_hp ([hp] of enemy 1)
 11
 
 BUTTON
-21
-398
-215
-431
+22
+408
+216
+441
 make crobat use cross poison
 ask enemy 1 [\nset currentmove move3\nattackAlly]\n
 NIL
@@ -652,10 +656,10 @@ NIL
 1
 
 BUTTON
-20
-281
-214
-314
+13
+265
+207
+298
 make infernape use flare blitz
 ask ally 0 [\nset currentmove move3\nattackEnemy]\n
 NIL
@@ -669,12 +673,29 @@ NIL
 1
 
 BUTTON
-36
-455
-195
-488
+32
+450
+191
+483
 make crobate use toxic
 ask enemy 1 [\nset currentmove move4\nattackAlly]\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+32
+330
+251
+363
+make infernape use swords dance
+ask ally 0 [\nset currentmove move4\nattackEnemy]\n
 NIL
 1
 T
