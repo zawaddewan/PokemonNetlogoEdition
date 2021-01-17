@@ -1,7 +1,6 @@
 ;Pokemon NetLogo Edition v0.1b
 breed [enemies enemy]
 breed [allies ally]
-breed [moves move]
 
 turtles-own [pokename
   maxhp hp atk def spdef spatk spd
@@ -120,7 +119,7 @@ end
 to moveTostats
   if currentmove = "confuse_ray" [
     set movetype "ghost"
-    set cat "nonvolatile"
+    set cat "status"
     set power 0
     set acc 100
     set prio 0]
@@ -138,7 +137,7 @@ to moveTostats
     set prio 0]
   if currentmove = "toxic" [
     set movetype "poison"
-    set cat "nonvolatile"
+    set cat "status"
     set power 0
     set acc 90
     set prio 0]
@@ -162,19 +161,19 @@ to moveTostats
     set prio 0]
   if currentmove = "swords_dance" [
     set movetype "normal"
-    set cat "nonvolatile"
+    set cat "status"
     set power 0
     set acc 100
     set prio 0]
   if currentmove = "spore" [
     set movetype "grass"
-    set cat "nonvolatile"
+    set cat "status"
     set power 0
     set acc 100
     set prio 0]
   if currentmove = "stun_spore" [
     set movetype "grass"
-    set cat "nonvolatile"
+    set cat "status"
     set power 0
     set acc 75
     set prio 0]
