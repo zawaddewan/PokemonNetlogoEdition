@@ -8,8 +8,7 @@ turtles-own [pokename
   nonvolatile confused? confusedur
   move1 move2 move3 move4
   currentmove movetype cat power acc prio
-  modifier effectiveness crit rand stab burn
-  damage]
+  modifier effectiveness damage]
 
 ;temporary setup to test things
 to setup
@@ -31,10 +30,6 @@ to resetTempStats
   set prio 0
   set modifier 0
   set effectiveness 0
-  set crit 0
-  set rand 0
-  set stab 0
-  set burn 0
   set damage 0
 end
 
@@ -280,9 +275,11 @@ to attackEnemy
       set damage 0]
     [
     if cat = "physical" [
-      calcDamage atk ([def] of enemy 1) power]
+        ifelse currentmove = "cross_poison"
+        [calcDamage atk ([def] of enemy 1) power 1]
+        [calcDamage atk ([def] of enemy 1) power 0]]
     if cat = "special" [
-      calcDamage spatk ([spdef] of enemy 1) power]
+      calcDamage spatk ([spdef] of enemy 1) power 0]
     ask enemy 1 [
       set hp hp - ([damage] of ally 0)]
     ]
@@ -299,9 +296,11 @@ to attackAlly
       set damage 0]
     [
     if cat = "physical" [
-      calcDamage atk ([def] of ally 0) power]
+        ifelse currentmove = "cross_poison"
+        [calcDamage atk ([def] of ally 0) power 1]
+        [calcDamage atk ([def] of ally 0) power 0]]
     if cat = "special" [
-      calcDamage spatk ([spdef] of ally 0) power]
+      calcDamage spatk ([spdef] of ally 0) power 0]
     ask ally 0 [
       set hp hp - ([damage] of enemy 1)]
     ]
@@ -310,43 +309,42 @@ to attackAlly
 end
 
 ;A is attack D is defense, calculates damage
-to calcDamage [A D pow]
-  calcModifier
+to calcDamage [A D pow critmod]
+  calcModifier critmod
   set damage (((((((2 * 50) / 5) + 2) * pow * A) / D) / 50) + 2) * modifier
 end
 
 ;calculates modifier for calcDamage
-to calcModifier
+to calcModifier [n]
   ifelse breed = allies [
   calcEffectiveness movetype ([type1] of enemy 1) ([type2] of enemy 1)
   set modifier 1
-  set crit 1
-  ifelse currentmove = "cross_poison"
+  ifelse n = 1
      [if random 8 = 0
-       [set crit 1.5]]
+       [set modifier modifier * 1.5]]
      [if random 24 = 0
-       [set crit 1.5]]
-  set rand (1 - (random 15 / 100))
+       [set modifier modifier * 1.5]]
+  set modifier modifier * (1 - (random 15 / 100))
   if nonvolatile = "burned" and cat = "physical" [
-    set burn 0.5]
-  set stab 1
-  if movetype = type1 or movetype = type2 [set
-    stab 1.5]
-  set modifier crit * rand * stab * effectiveness
+    set modifier modifier * 0.5]
+  if movetype = type1 or movetype = type2 [
+      set modifier modifier * 15]
+  set modifier modifier * effectiveness
   ]
   [
   calcEffectiveness movetype ([type1] of ally 0) ([type2] of ally 0)
   set modifier 1
-  set crit 1
-  if random 16 = 0 [
-    set crit 1.5]
-  set rand (1 - (random 15 / 100))
+  ifelse n = 1
+     [if random 8 = 0
+       [set modifier modifier * 1.5]]
+     [if random 24 = 0
+       [set modifier modifier * 1.5]]
+  set modifier modifier * (1 - (random 15 / 100))
   if nonvolatile = "burned" and cat = "physical" [
-    set burn 0.5]
-  set stab 1
-  if movetype = type1 or movetype = type2 [set
-    stab 1.5]
-  set modifier (crit * rand * stab * effectiveness)
+    set modifier modifier * 0.5]
+  if movetype = type1 or movetype = type2 [
+      set modifier modifier * 1.5]
+  set modifier modifier * effectiveness
   ]
 end
 
