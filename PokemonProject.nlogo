@@ -25,21 +25,21 @@ to doTurn
   ifelse [prio] of ally 0 > 0 or [prio] of enemy 1 > 0
   [ifelse [prio] of ally 0 > [prio] of enemy 1
     [attackEnemy
-      attackAlly]
-    [attackAlly
+      enemyTurn]
+    [enemyTurn
       attackEnemy]]
   [if [spd] of ally 0 > [spd] of enemy 1 [
     attackEnemy
-    attackAlly]
+    enemyTurn]
     if [spd] of ally 0 < [spd] of enemy 1 [
-      attackAlly
+      enemyTurn
       attackEnemy]
     if [spd] of ally 0 = [spd] of enemy 1 [
       ifelse random 2 = 0
-      [attackAlly
+      [enemyTurn
         attackEnemy]
       [attackEnemy
-        attackAlly]]]
+        enemyTurn]]]
 end
 
 ;resets all temporary stats for the next turn
@@ -294,42 +294,67 @@ end
 ;attacks the enemy
 to attackEnemy
   ask ally 0 [
-    resetTempStats
-    moveTostats
-    ifelse power = 0 [
-      set damage 0]
+    ifelse hp > 0
     [
-    if cat = "physical" [
-        ifelse currentmove = "cross_poison"
-        [calcDamage atk ([def] of enemy 1) power 1]
-        [calcDamage atk ([def] of enemy 1) power 0]]
-    if cat = "special" [
-      calcDamage spatk ([spdef] of enemy 1) power 0]
-    ask enemy 1 [
-      set hp hp - ([damage] of ally 0)]
+         resetTempStats
+      moveTostats
+      ifelse power = 0 [
+        set damage 0]
+      [
+        if cat = "physical" [
+          ifelse currentmove = "cross_poison"
+          [calcDamage atk ([def] of enemy 1) power 1]
+          [calcDamage atk ([def] of enemy 1) power 0]]
+        if cat = "special" [
+          calcDamage spatk ([spdef] of enemy 1) power 0]
+        ask enemy 1 [
+          set hp hp - ([damage] of ally 0)]
+      ]
+      statusMovesEnemy
     ]
-    statusMovesEnemy
+    [die]
   ]
 end
 
 ;attacks the ally
 to attackAlly
   ask enemy 1 [
-    resetTempStats
-    moveTostats
-    ifelse power = 0 [
-      set damage 0]
+    ifelse hp > 0
     [
-    if cat = "physical" [
-        ifelse currentmove = "cross_poison"
-        [calcDamage atk ([def] of ally 0) power 1]
-        [calcDamage atk ([def] of ally 0) power 0]]
-    if cat = "special" [
-      calcDamage spatk ([spdef] of ally 0) power 0]
-    ask ally 0 [
-      set hp hp - ([damage] of enemy 1)]
+      resetTempStats
+      moveTostats
+      ifelse power = 0 [
+        set damage 0]
+      [
+        if cat = "physical" [
+          ifelse currentmove = "cross_poison"
+          [calcDamage atk ([def] of ally 0) power 1]
+          [calcDamage atk ([def] of ally 0) power 0]]
+        if cat = "special" [
+          calcDamage spatk ([spdef] of ally 0) power 0]
+        ask ally 0 [
+          set hp hp - ([damage] of enemy 1)]
+      ]
+      statusMovesAlly
     ]
-    statusMovesAlly
+    [die]
+  ]
+end
+
+to enemyTurn
+  ask enemy 1 [
+    set currentmove random 4
+    ifelse currentmove = 0
+    [set currentmove move1
+      attackAlly]
+    [ifelse currentmove = 1
+      [set currentmove move2
+        attackAlly]
+      [ifelse currentmove = 2
+        [set currentmove move3
+          attackAlly]
+        [set currentmove move4
+          attackAlly]]]
   ]
 end
 
