@@ -23,7 +23,7 @@ end
 
 to doTurn
   ifelse [prio] of ally 0 > 0 or [prio] of enemy 1 > 0
-  [ifelse [prio] of ally 0 > [prio] of enemy 1
+  [ifelse [prio] of ally 0) > or [prio] of enemy 1
     [attackEnemy
       attackAlly]
     [attackAlly
