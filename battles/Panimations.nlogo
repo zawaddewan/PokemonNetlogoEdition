@@ -1,4 +1,11 @@
 breed [ ompa omp ]
+breed [ fmpa fmp ]
+breed [ occa occ ]
+breed [ fcca fcc ]
+breed [ ofba ofb ]
+breed [ ffba ffb ]
+breed [ osda osd ]
+breed [ fsda fsd ]
 
 to ownMachPunchAnimation
   create-ompa 1
@@ -37,45 +44,647 @@ to ownMachPunchAnimation
     set heading 55
     set xcor 45
     set ycor -30 ]
-  ask turtles
+  ask ompa
   [ wait .02 ]
-  ask turtles
+  ask ompa
   [ fd 5
     wait .02 ]
-  ask turtles
+  ask ompa
   [ fd 5
     wait .02 ]
-  ask turtles
+  ask ompa
   [ fd 5
     wait .02 ]
-  ask turtles
+  ask ompa
   [ fd 5
     wait .02 ]
-  ask turtles
+  ask ompa
   [ fd 5
     wait .02 ]
-    ask turtles
+    ask ompa
   [ wait .02 ]
-  ask turtles
+  ask ompa
   [ fd 5
     wait .02 ]
-  ask turtles
+  ask ompa
   [ fd 5
     wait .02 ]
-  ask turtles
+  ask ompa
   [ fd 5
     wait .02 ]
-  ask turtles
+  ask ompa
   [ fd 5
     wait .02 ]
-  ask turtles
+  ask ompa
   [ fd 5
     wait .02 ]
-    ask turtles
+    ask ompa
   [ wait .02 ]
-  ask turtles
+  ask ompa
+  [ fd 5
+    wait .02
+    die ]
+end
+
+to foeMachPunchAnimation
+   create-fmpa 1
+  [ set size 25
+    set color red
+    set heading 220
+    set xcor 37
+    set ycor 88 ]
+  create-fmpa 1
+  [ set size 25
+    set color red
+    set heading 220
+    set xcor 32
+    set ycor 88 ]
+  create-fmpa 1
+  [ set size 25
+    set color red
+    set heading 220
+    set xcor 27
+    set ycor 88 ]
+  create-fmpa 1
+  [ set size 25
+    set color red
+    set heading 220
+    set xcor 37
+    set ycor 80 ]
+  create-fmpa 1
+  [ set size 25
+    set color red
+    set heading 220
+    set xcor 32
+    set ycor 80 ]
+  create-fmpa 1
+  [ set size 25
+    set color red
+    set heading 220
+    set xcor 27
+    set ycor 80 ]
+  ask fmpa
+  [ wait .02 ]
+  ask fmpa
   [ fd 5
     wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02 ]
+    ask fmpa
+  [ wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02 ]
+    ask fmpa
+  [ wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02
+    die ]
+  ask fmpa
+  [ fd 5
+    wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02 ]
+    ask fmpa
+  [ wait .02 ]
+  ask fmpa
+  [ fd 5
+    wait .02
+    die ]
+end
+
+to ownCloseCombatAnimation
+  create-occa 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor 15
+    set ycor 105 ]
+  create-occa 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor 20
+    set ycor 105 ]
+  create-occa 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor 25
+    set ycor 105 ]
+  create-occa 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor 15
+    set ycor 90 ]
+  create-occa 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor 20
+    set ycor 90 ]
+  create-occa 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor 25
+    set ycor 90 ]
+  ask occa
+  [ fd 5
+    wait .05 ]
+  ask occa
+  [ fd 5
+    wait .05 ]
+  ask occa
+  [ fd 5
+    wait .05 ]
+  ask occa
+  [ set xcor xcor + 120
+    set ycor ycor - 15 ]
+  ask occa
+  [ fd 5
+    wait .05 ]
+  ask occa
+  [ fd 5
+    wait .05 ]
+  ask occa
+  [ fd 5
+    wait .05 ]
+  ask occa
+  [ set xcor xcor - 60
+    set ycor ycor - 115 ]
+  ask occa
+  [ fd 5
+    wait .05 ]
+  ask occa
+  [ fd 5
+    wait .05 ]
+  ask occa
+  [ fd 5
+    wait .05
+    die ]
+end
+
+to foeCloseCombatAnimation
+  create-fcca 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor -135
+    set ycor -20 ]
+  create-fcca 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor -130
+    set ycor -20 ]
+  create-fcca 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor -125
+    set ycor -20 ]
+  create-fcca 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor -135
+    set ycor -35 ]
+  create-fcca 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor -130
+    set ycor -35 ]
+  create-fcca 1
+  [ set size 25
+    set color orange
+    set heading 0
+    set xcor -125
+    set ycor -35 ]
+  ask fcca
+  [ fd 5
+    wait .05 ]
+  ask fcca
+  [ fd 5
+    wait .05 ]
+  ask fcca
+  [ fd 5
+    wait .05 ]
+  ask fcca
+  [ set xcor xcor + 120
+    set ycor ycor - 15 ]
+  ask fcca
+  [ fd 5
+    wait .05 ]
+  ask fcca
+  [ fd 5
+    wait .05 ]
+  ask fcca
+  [ fd 5
+    wait .05 ]
+  ask fcca
+  [ set xcor xcor - 60
+    set ycor ycor - 115 ]
+  ask fcca
+  [ fd 5
+    wait .05 ]
+  ask fcca
+  [ fd 5
+    wait .05 ]
+  ask fcca
+  [ fd 5
+    wait .05
+    die ]
+end
+
+to ownFlareBlitzAnimation
+  create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 55
+    set xcor 60
+    set ycor -38 ]
+  create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 55
+    set xcor 55
+    set ycor -38 ]
+  create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 55
+    set xcor 50
+    set ycor -38 ]
+  create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 55
+    set xcor 45
+    set ycor -38 ]
+  create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 55
+    set xcor 60
+    set ycor -30 ]
+    create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 55
+    set xcor 55
+    set ycor -30 ]
+  create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 55
+    set xcor 50
+    set ycor -30 ]
+  create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 55
+    set xcor 45
+    set ycor -30 ]
+    create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 60
+    set xcor 55
+    set ycor -22 ]
+  create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 55
+    set xcor 55
+    set ycor -22 ]
+  create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 55
+    set xcor 50
+    set ycor -22 ]
+  create-ofba 1
+  [ set size 25
+    set color orange
+    set heading 55
+    set xcor 45
+    set ycor -22 ]
+  ask ofba
+  [ wait .02 ]
+  ask ofba
+  [ fd 5
+    wait .02 ]
+  ask ofba
+  [ fd 5
+    wait .02 ]
+  ask ofba
+  [ fd 5
+    wait .02 ]
+  ask ofba
+  [ fd 5
+    wait .02 ]
+  ask ofba
+  [ fd 5
+    wait .02 ]
+    ask ofba
+  [ wait .02 ]
+  ask ofba
+  [ fd 5
+    wait .02 ]
+  ask ofba
+  [ fd 5
+    wait .02 ]
+  ask ofba
+  [ fd 5
+    wait .02 ]
+  ask ofba
+  [ fd 5
+    wait .02 ]
+  ask ofba
+  [ fd 5
+    wait .02 ]
+    ask ofba
+  [ wait .02 ]
+  ask ofba
+  [ fd 5
+    wait .02
+    die ]
+  ask patches with
+  [ pxcor > 16 and pycor > -30 ]
+  [ sprout-ofba 1
+    [ set color orange ] ]
+  ask ofba
+  [ die ]
+end
+
+to foeFlareBlitzAnimation
+  create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 42
+    set ycor 88 ]
+  create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 37
+    set ycor 88 ]
+  create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 32
+    set ycor 88 ]
+  create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 27
+    set ycor 88 ]
+  create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 42
+    set ycor 80 ]
+    create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 37
+    set ycor 80 ]
+  create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 32
+    set ycor 80 ]
+  create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 27
+    set ycor 80 ]
+    create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 42
+    set ycor 72 ]
+  create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 37
+    set ycor 72 ]
+  create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 32
+    set ycor 72 ]
+  create-ffba 1
+  [ set size 25
+    set color orange
+    set heading 220
+    set xcor 27
+    set ycor 72 ]
+  ask ffba
+  [ wait .02 ]
+  ask ffba
+  [ fd 5
+    wait .02 ]
+  ask ffba
+  [ fd 5
+    wait .02 ]
+  ask ffba
+  [ fd 5
+    wait .02 ]
+  ask ffba
+  [ fd 5
+    wait .02 ]
+  ask ffba
+  [ fd 5
+    wait .02 ]
+    ask ffba
+  [ wait .02 ]
+  ask ffba
+  [ fd 5
+    wait .02 ]
+  ask ffba
+  [ fd 5
+    wait .02 ]
+  ask ffba
+  [ fd 5
+    wait .02 ]
+  ask ffba
+  [ fd 5
+    wait .02 ]
+  ask ffba
+  [ fd 5
+    wait .02 ]
+    ask ffba
+  [ wait .02 ]
+  ask ffba
+  [ fd 5
+    wait .02
+    die ]
+  ask patches with
+  [ pxcor < 60 and pycor < 55 ]
+  [ sprout-ffba 1
+    [ set color orange ] ]
+  ask ffba
+  [ die ]
+end
+
+to ownSwordsDanceAnimation
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -150
+    set ycor -160 ]
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -150
+    set ycor -130 ]
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -180
+    set ycor -130 ]
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -120
+    set ycor -130 ]
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -150
+    set ycor -100 ]
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -150
+    set ycor -70 ]
+  ask osda
+  [ fd 10
+    wait .02 ]
+  ask osda
+  [ fd 10
+    wait .02 ]
+  ask osda
+  [ fd 10
+    wait .02 ]
+  ask osda
+  [ set xcor xcor + 150
+    set ycor ycor - 30 ]
+  ask osda
+  [ fd 10
+    wait .02 ]
+  ask osda
+  [ fd 10
+    wait .02 ]
+  ask osda
+  [ fd 10
+    wait .02
+    die ]
+end
+
+to foeSwordsDanceAnimation
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor 15
+    set ycor 30 ]
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor 15
+    set ycor 60 ]
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -15
+    set ycor 60 ]
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor 45
+    set ycor 60 ]
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor 15
+    set ycor 90 ]
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor 15
+    set ycor 120 ]
+  ask fsda
+  [ fd 10
+    wait .02 ]
+  ask fsda
+  [ fd 10
+    wait .02 ]
+  ask fsda
+  [ fd 10
+    wait .02 ]
+  ask fsda
+  [ set xcor xcor + 125
+    set ycor ycor - 30 ]
+  ask fsda
+  [ fd 10
+    wait .02 ]
+  ask fsda
+  [ fd 10
+    wait .02 ]
+  ask fsda
+  [ fd 10
+    wait .02
+    die ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -123,9 +732,9 @@ NIL
 1
 
 BUTTON
-26
+25
 415
-89
+88
 448
 setup
 ask turtles [ die ]
@@ -146,6 +755,125 @@ BUTTON
 472
 ii
 import-pcolors \"ii.png\"
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+16
+71
+182
+104
+NIL
+foeMachPunchAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+18
+120
+199
+153
+NIL
+ownCloseCombatAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+15
+168
+192
+201
+NIL
+foeCloseCombatAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+18
+209
+176
+242
+NIL
+ownFlareBlitzAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+19
+254
+173
+287
+NIL
+foeFlareBlitzAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+21
+297
+205
+330
+NIL
+ownSwordsDanceAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+21
+343
+200
+376
+NIL
+foeSwordsDanceAnimation
 NIL
 1
 T
