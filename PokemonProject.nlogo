@@ -5,7 +5,7 @@ breed [allies ally]
 turtles-own [pokename
   maxhp hp atk def spdef spatk spd
   type1 type2
-  nonvolatile confused? confusedur
+  nonvolatile nonvolatiledur confused? confusedur
   move1 move2 move3 move4
   currentmove movetype cat power acc prio
   modifier effectiveness atkstage damage]
@@ -21,25 +21,81 @@ to setup
     set size 5]
 end
 
-to doTurn
+;TESTING THE TURN
+to DOTURNTEST
+  ask turtles [
+  resetTempStats
+    moveTostats]
   ifelse [prio] of ally 0 > 0 or [prio] of enemy 1 > 0
   [ifelse [prio] of ally 0 > [prio] of enemy 1
     [attackEnemy
-      enemyTurn]
-    [enemyTurn
+      wait 1
+      attackAlly]
+    [attackAlly
+      wait 1
       attackEnemy]]
   [if [spd] of ally 0 > [spd] of enemy 1 [
     attackEnemy
-    enemyTurn]
+    wait 1
+    attackAlly]
     if [spd] of ally 0 < [spd] of enemy 1 [
-      enemyTurn
+      attackAlly
+      wait 1
       attackEnemy]
     if [spd] of ally 0 = [spd] of enemy 1 [
       ifelse random 2 = 0
-      [enemyTurn
+      [attackAlly
+        wait 1
         attackEnemy]
       [attackEnemy
-        enemyTurn]]]
+        wait 1
+        attackAlly]]]
+  ask ally 0 [
+    statusEffects]
+  ask enemy 1 [
+    statusEffects]
+  ask turtles [
+    if hp <= 0
+    [die]]
+end
+
+;THE REAL TURN
+to doTurn
+  enemyTurn
+  ask turtles [
+  resetTempStats
+    moveTostats]
+  ifelse [prio] of ally 0 > 0 or [prio] of enemy 1 > 0
+  [ifelse [prio] of ally 0 > [prio] of enemy 1
+    [attackEnemy
+      wait 1
+      attackAlly]
+    [attackAlly
+      wait 1
+      attackEnemy]]
+  [if [spd] of ally 0 > [spd] of enemy 1 [
+    attackEnemy
+    wait 1
+    attackAlly]
+    if [spd] of ally 0 < [spd] of enemy 1 [
+      attackAlly
+      wait 1
+      attackEnemy]
+    if [spd] of ally 0 = [spd] of enemy 1 [
+      ifelse random 2 = 0
+      [attackAlly
+        wait 1
+        attackEnemy]
+      [attackEnemy
+        wait 1
+        attackAlly]]]
+  ask ally 0 [
+    statusEffects]
+  ask enemy 1 [
+    statusEffects]
+  ask turtles [
+    if hp <= 0
+    [die]]
 end
 
 ;resets all temporary stats for the next turn
@@ -207,11 +263,68 @@ to moveTostats
     set prio 0]
 end
 
+;does the confused status (placed after damage)
+to confusedStatus
+  if confused? = true [
+    ifelse random 4 < confusedur
+    [set confused? false
+     set confusedur 0]
+    [ifelse random 3 = 0
+      [
+      set damage (((((((2 * 50) / 5) + 2) * 40 * (atk * (1 + (atkstage / 2)))) / def) / 50) + 2)
+      set hp hp - damage
+      set confusedur (confusedur + 1)
+      set damage 0
+      ]
+      [set confusedur (confusedur + 1)]
+    ]
+  ]
+end
+
+;does part of the confused status which lowers speed
+to paralyzedStatus
+  if nonvolatile = "paralyzed" [
+    if nonvolatiledur = 0 [
+      set spd (spd / 2)]
+    set nonvolatiledur (nonvolatiledur + 1)]
+end
+
+;asleep
+to asleepStatus
+  if nonvolatile = "asleep" [
+    ifelse nonvolatiledur = 0 [
+      set damage 0
+      set nonvolatiledur (nonvolatiledur + 1)]
+      [ifelse random 3 < nonvolatiledur [
+        set nonvolatile 0
+        set nonvolatiledur 0]
+       [set damage 0
+        set nonvolatiledur (nonvolatiledur + 1)]]]
+end
+
+;nonvolatile status effects that occur after the turn
+to statusEffects
+  if nonvolatile = "burned" [
+    set hp hp - (maxhp / 16)
+    set nonvolatiledur (nonvolatiledur + 1)]
+  if nonvolatile = "poisoned" [
+    set hp hp - (maxhp / 8)
+    set nonvolatiledur (nonvolatiledur + 1)]
+  if nonvolatile = "badly_poisoned" [
+    set hp hp - (nonvolatiledur * (maxhp / 16))
+    set nonvolatiledur (nonvolatiledur + 1)]
+end
+
 ;status moves AGAINST the enemy
 to statusMovesEnemy
+  ifelse nonvolatile = "paralyzed" [
+  if random 4 = 0 [
   if currentmove = "swords_dance" and -6 <= atkstage and atkstage <= 4 [
-    set atkstage atkstage + 2]
-  if [nonvolatile] of ally 0 = 0 [
+        set atkstage atkstage + 2]]]
+  [if currentmove = "swords_dance" and -6 <= atkstage and atkstage <= 4 [
+    set atkstage atkstage + 2]]
+  if nonvolatile != "paralyzed" [
+  if [nonvolatile] of enemy 1 = 0 [
     if currentmove = "toxic" [
       if random 100 < acc [
         ask enemy 1 [
@@ -247,12 +360,18 @@ to statusMovesEnemy
   ]
   if currentmove = "flare_blitz" [
       set hp hp - ((1 / 3) * damage)]
+  ]
 end
 
 ;status moves AGAINST the ally
 to statusMovesAlly
-  if currentmove = "swords_dance" and -6 <= atkstage and atkstage <= 6 [
-    set atkstage atkstage + 2]
+  ifelse nonvolatile = "paralyzed" [
+  if random 4 = 0 [
+  if currentmove = "swords_dance" and -6 <= atkstage and atkstage <= 4 [
+        set atkstage atkstage + 2]]]
+  [if currentmove = "swords_dance" and -6 <= atkstage and atkstage <= 4 [
+    set atkstage atkstage + 2]]
+  if nonvolatile != "paralyzed" [
   if [nonvolatile] of ally 0 = 0 [
     if currentmove = "toxic" [
       if random 100 < acc [
@@ -289,15 +408,18 @@ to statusMovesAlly
   ]
   if currentmove = "flare_blitz" [
       set hp hp - ((1 / 3) * damage)]
+  ]
 end
 
 ;attacks the enemy
 to attackEnemy
   ask ally 0 [
-    ifelse hp > 0
+    paralyzedStatus
+    ifelse nonvolatile = "asleep"
+    [asleepStatus
+     if nonvolatile = 0 [
+        attackEnemy]]
     [
-         resetTempStats
-      moveTostats
       ifelse power = 0 [
         set damage 0]
       [
@@ -307,22 +429,27 @@ to attackEnemy
           [calcDamage atk ([def] of enemy 1) power 0]]
         if cat = "special" [
           calcDamage spatk ([spdef] of enemy 1) power 0]
+        confusedStatus
+        if nonvolatile = "paralyzed" [
+          if random 4 = 0 [
+            set damage 0]]
         ask enemy 1 [
           set hp hp - ([damage] of ally 0)]
       ]
       statusMovesEnemy
     ]
-    [die]
   ]
 end
 
 ;attacks the ally
 to attackAlly
   ask enemy 1 [
-    ifelse hp > 0
+    paralyzedStatus
+    ifelse nonvolatile = "asleep"
+    [asleepStatus
+     if nonvolatile = 0 [
+        attackAlly]]
     [
-      resetTempStats
-      moveTostats
       ifelse power = 0 [
         set damage 0]
       [
@@ -332,29 +459,29 @@ to attackAlly
           [calcDamage atk ([def] of ally 0) power 0]]
         if cat = "special" [
           calcDamage spatk ([spdef] of ally 0) power 0]
+        confusedStatus
+        if nonvolatile = "paralyzed" [
+          if random 4 = 0 [
+            set damage 0]]
         ask ally 0 [
           set hp hp - ([damage] of enemy 1)]
       ]
       statusMovesAlly
     ]
-    [die]
   ]
 end
 
+;makes enemy move random
 to enemyTurn
   ask enemy 1 [
     set currentmove random 4
     ifelse currentmove = 0
-    [set currentmove move1
-      attackAlly]
+    [set currentmove move1]
     [ifelse currentmove = 1
-      [set currentmove move2
-        attackAlly]
+      [set currentmove move2]
       [ifelse currentmove = 2
-        [set currentmove move3
-          attackAlly]
-        [set currentmove move4
-          attackAlly]]]
+        [set currentmove move3]
+        [set currentmove move4]]]
   ]
 end
 
@@ -634,7 +761,7 @@ BUTTON
 286
 258
 make infernape use close combat
-ask ally 0 [\nset currentmove move1\nattackEnemy]\n
+ask ally 0 [\nset currentmove move1]\n
 NIL
 1
 T
@@ -651,7 +778,7 @@ BUTTON
 205
 401
 make crobat use acrobatics
-ask enemy 1 [\nset currentmove move2\nattackAlly]\n
+ask enemy 1 [\nset currentmove move2]\n
 NIL
 1
 T
@@ -690,7 +817,7 @@ BUTTON
 216
 441
 make crobat use cross poison
-ask enemy 1 [\nset currentmove move3\nattackAlly]\n
+ask enemy 1 [\nset currentmove move3]\n
 NIL
 1
 T
@@ -707,7 +834,7 @@ BUTTON
 207
 298
 make infernape use flare blitz
-ask ally 0 [\nset currentmove move3\nattackEnemy]\n
+ask ally 0 [\nset currentmove move3]\n
 NIL
 1
 T
@@ -723,8 +850,8 @@ BUTTON
 450
 191
 483
-make crobate use toxic
-ask enemy 1 [\nset currentmove move4\nattackAlly]\n
+make crobat use toxic
+ask enemy 1 [\nset currentmove move4]\n
 NIL
 1
 T
@@ -741,7 +868,24 @@ BUTTON
 251
 363
 make infernape use swords dance
-ask ally 0 [\nset currentmove move4\nattackEnemy]\n
+ask ally 0 [\nset currentmove move4]\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+65
+523
+155
+556
+NIL
+doturntest
 NIL
 1
 T
