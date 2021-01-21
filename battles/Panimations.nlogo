@@ -65,45 +65,11 @@ to ownMachPunchAnimation
     set xcor 45
     set ycor -30 ]
   ask ompa
-  [ wait .02 ]
-  ask ompa
-  [ fd 5
-    wait .02 ]
-  ask ompa
-  [ fd 5
-    wait .02 ]
-  ask ompa
-  [ fd 5
-    wait .02 ]
-  ask ompa
-  [ fd 5
-    wait .02 ]
-  ask ompa
-  [ fd 5
-    wait .02 ]
-    ask ompa
-  [ wait .02 ]
-  ask ompa
-  [ fd 5
-    wait .02 ]
-  ask ompa
-  [ fd 5
-    wait .02 ]
-  ask ompa
-  [ fd 5
-    wait .02 ]
-  ask ompa
-  [ fd 5
-    wait .02 ]
-  ask ompa
-  [ fd 5
-    wait .02 ]
-    ask ompa
-  [ wait .02 ]
-  ask ompa
-  [ fd 5
-    wait .02
-    die ]
+  [repeat 25 [
+    wait .01
+    fd 1
+    ]
+    die]
 end
 
 to foeMachPunchAnimation
@@ -273,6 +239,7 @@ end
 to foeCloseCombatAnimation
   create-fcca 1
   [ set size 25
+    set shape "fist"
     set color orange
     set heading 0
     set xcor -135
@@ -280,30 +247,35 @@ to foeCloseCombatAnimation
   create-fcca 1
   [ set size 25
     set color orange
+    set shape "fist"
     set heading 0
     set xcor -130
     set ycor -20 ]
   create-fcca 1
   [ set size 25
     set color orange
+    set shape "fist"
     set heading 0
     set xcor -125
     set ycor -20 ]
   create-fcca 1
   [ set size 25
     set color orange
+    set shape "fist"
     set heading 0
     set xcor -135
     set ycor -35 ]
   create-fcca 1
   [ set size 25
     set color orange
+    set shape "fist"
     set heading 0
     set xcor -130
     set ycor -35 ]
   create-fcca 1
   [ set size 25
     set color orange
+    set shape "fist"
     set heading 0
     set xcor -125
     set ycor -35 ]
@@ -3765,6 +3737,20 @@ Polygon -1 true false 135 195 119 235 95 218 76 210 46 204 60 165
 Polygon -1 true false 75 45 83 77 71 103 86 114 166 78 135 60
 Polygon -7500403 true true 30 136 151 77 226 81 280 119 292 146 292 160 287 170 270 195 195 210 151 212 30 166
 Circle -16777216 true false 215 106 30
+
+fist
+true
+0
+Rectangle -7500403 true true 150 45 195 150
+Rectangle -7500403 true true 150 45 195 150
+Rectangle -7500403 true true 105 45 150 150
+Rectangle -7500403 true true 60 45 105 150
+Line -16777216 false 105 150 105 90
+Line -16777216 false 150 150 150 90
+Rectangle -7500403 true true 195 45 240 150
+Line -16777216 false 195 150 195 90
+Rectangle -7500403 true true 150 150 240 195
+Line -16777216 false 150 150 240 150
 
 flag
 false
