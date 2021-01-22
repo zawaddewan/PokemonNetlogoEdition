@@ -167,73 +167,78 @@ to ownCloseCombatAnimation
   create-occa 1
   [ set size 25
     set color orange
+    set shape "fist"
     set heading 0
     set xcor 15
     set ycor 105 ]
   create-occa 1
   [ set size 25
     set color orange
+    set shape "fist"
     set heading 0
     set xcor 20
     set ycor 105 ]
   create-occa 1
   [ set size 25
     set color orange
+    set shape "fist"
     set heading 0
     set xcor 25
     set ycor 105 ]
   create-occa 1
   [ set size 25
     set color orange
+    set shape "fist"
     set heading 0
     set xcor 15
     set ycor 90 ]
   create-occa 1
   [ set size 25
     set color orange
+    set shape "fist"
     set heading 0
     set xcor 20
     set ycor 90 ]
   create-occa 1
   [ set size 25
     set color orange
+    set shape "fist"
     set heading 0
     set xcor 25
     set ycor 90 ]
   ask occa
-  [ fd 5
-    wait .05 ]
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
   ask occa
-  [ fd 5
-    wait .05 ]
+  [ set xcor xcor + 110
+    set ycor ycor - 10 ]
   ask occa
-  [ fd 5
-    wait .05 ]
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
   ask occa
-  [ set xcor xcor + 120
-    set ycor ycor - 15 ]
+  [ set xcor xcor - 50
+    set ycor ycor - 110 ]
   ask occa
-  [ fd 5
-    wait .05 ]
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
   ask occa
-  [ fd 5
-    wait .05 ]
+  [ set xcor xcor + 20
+    set ycor ycor + 90 ]
   ask occa
-  [ fd 5
-    wait .05 ]
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
   ask occa
-  [ set xcor xcor - 60
-    set ycor ycor - 115 ]
+  [ set xcor xcor + 30
+    set ycor ycor - 50 ]
   ask occa
-  [ fd 5
-    wait .05 ]
-  ask occa
-  [ fd 5
-    wait .05 ]
-  ask occa
-  [ fd 5
-    wait .05
-    die ]
+  [ repeat 3 [
+    fd 2
+    wait .0125]
+    die]
 end
 
 to foeCloseCombatAnimation
@@ -280,158 +285,157 @@ to foeCloseCombatAnimation
     set xcor -125
     set ycor -35 ]
   ask fcca
-  [ fd 5
-    wait .05 ]
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
   ask fcca
-  [ fd 5
-    wait .05 ]
-  ask fcca
-  [ fd 5
-    wait .05 ]
-  ask fcca
-  [ set xcor xcor + 120
-    set ycor ycor - 15 ]
-  ask fcca
-  [ fd 5
-    wait .05 ]
-  ask fcca
-  [ fd 5
-    wait .05 ]
-  ask fcca
-  [ fd 5
-    wait .05 ]
-  ask fcca
-  [ set xcor xcor - 60
+  [ set xcor xcor + 60
     set ycor ycor - 115 ]
   ask fcca
-  [ fd 5
-    wait .05 ]
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
   ask fcca
-  [ fd 5
-    wait .05 ]
+  [ set xcor xcor - 20
+    set ycor ycor + 90 ]
   ask fcca
-  [ fd 5
-    wait .05
-    die ]
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fcca
+  [ set xcor xcor - 30
+    set ycor ycor - 50 ]
+  ask fcca
+  [ repeat 3 [
+    fd 2
+    wait .0125]
+    die]
 end
 
 to ownFlareBlitzAnimation
   create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 55
     set xcor 60
     set ycor -38 ]
   create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 55
     set xcor 55
     set ycor -38 ]
   create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 55
     set xcor 50
     set ycor -38 ]
   create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 55
     set xcor 45
     set ycor -38 ]
   create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 55
     set xcor 60
     set ycor -30 ]
     create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 55
     set xcor 55
     set ycor -30 ]
   create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 55
     set xcor 50
     set ycor -30 ]
   create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 55
     set xcor 45
     set ycor -30 ]
     create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 60
     set xcor 55
     set ycor -22 ]
   create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 55
     set xcor 55
     set ycor -22 ]
   create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 55
     set xcor 50
     set ycor -22 ]
   create-ofba 1
-  [ set size 25
+  [ set size 50
     set color red
     set heading 55
     set xcor 45
     set ycor -22 ]
+  repeat 14 [
+    ask ofba [
+      wait .00625
+      fd 5]]
+  ask ofba [die]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 103
+    set ycor 151]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 167
+    set ycor 101]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 103
+    set ycor 80]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 57
+    set ycor 40]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 32
+    set ycor 101]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 156
+    set ycor 40]
   ask ofba
-  [ wait .02 ]
-  ask ofba
-  [ fd 5
-    wait .02 ]
-  ask ofba
-  [ fd 5
-    wait .02 ]
-  ask ofba
-  [ fd 5
-    wait .02 ]
-  ask ofba
-  [ fd 5
-    wait .02 ]
-  ask ofba
-  [ fd 5
-    wait .02 ]
-    ask ofba
-  [ wait .02 ]
-  ask ofba
-  [ fd 5
-    wait .02 ]
-  ask ofba
-  [ fd 5
-    wait .02 ]
-  ask ofba
-  [ fd 5
-    wait .02 ]
-  ask ofba
-  [ fd 5
-    wait .02 ]
-  ask ofba
-  [ fd 5
-    wait .02 ]
-    ask ofba
-  [ wait .02 ]
-  ask ofba
-  [ fd 5
-    wait .02
-    die ]
-  ask patches with
-  [ pxcor > 16 and pycor > -30 ]
-  [ sprout-ofba 1
-    [ set color red ] ]
+  [ repeat 18 [
+    fd 1
+    wait .00625]]
   ask ofba
   [ die ]
 end
@@ -3728,6 +3732,13 @@ Circle -7500403 true true 8 8 285
 Circle -16777216 true false 60 75 60
 Circle -16777216 true false 180 75 60
 Polygon -16777216 true false 150 168 90 184 62 210 47 232 67 244 90 220 109 205 150 198 192 205 210 220 227 242 251 229 236 206 212 183
+
+fire
+false
+0
+Polygon -7500403 true true 151 286 134 282 103 282 59 248 40 210 32 157 37 108 68 146 71 109 83 72 111 27 127 55 148 11 167 41 180 112 195 57 217 91 226 126 227 203 256 156 256 201 238 263 213 278 183 281
+Polygon -955883 true false 126 284 91 251 85 212 91 168 103 132 118 153 125 181 135 141 151 96 185 161 195 203 193 253 164 286
+Polygon -2674135 true false 155 284 172 268 172 243 162 224 148 201 130 233 131 260 135 282
 
 fish
 false
