@@ -2065,11 +2065,67 @@ to foeBadPoisonanimation
 end
 
 to ownParalyzeanimation
-
+  create-opa 1 [
+    set size 65
+    set heading 0
+    set shape "lightningbolt"
+    set color yellow
+    setxy -60 -10]
+  create-opa 1 [
+    set size 65
+    set heading 0
+    set shape "lightningbolt"
+    set color yellow
+    setxy -120 -70]
+  create-opa 1 [
+    set size 75
+    set heading 0
+    set shape "lightningbolt"
+    set color yellow
+    setxy -30 -70]
+  create-opa 1 [
+    set size 65
+    set heading 0
+    set shape "lightningbolt"
+    set color yellow
+    setxy -95 -140]
+  repeat 6
+  [ ask opa
+  [ fd -3
+      wait .05 ] ]
+  ask opa [die]
 end
 
 to foeParalyzeanimation
-
+create-fpa 1 [
+    set size 65
+    set heading 0
+    set shape "lightningbolt"
+    set color yellow
+    setxy 80 30]
+  create-fpa 1 [
+    set size 65
+    set heading 0
+    set shape "lightningbolt"
+    set color yellow
+    setxy 140 90]
+  create-fpa 1 [
+    set size 75
+    set heading 0
+    set shape "lightningbolt"
+    set color yellow
+    setxy 50 90]
+  create-fpa 1 [
+    set size 65
+    set heading 0
+    set shape "lightningbolt"
+    set color yellow
+    setxy 115 160]
+  repeat 6
+  [ ask fpa
+  [ fd -3
+      wait .05 ] ]
+  ask fpa [die]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -2966,6 +3022,40 @@ NIL
 NIL
 1
 
+BUTTON
+912
+420
+1067
+453
+NIL
+ownParalyzeanimation\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+911
+454
+1061
+487
+NIL
+foeParalyzeanimation\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
 @#$#@#$#@
 ## WHAT IS IT?
 
@@ -3185,6 +3275,11 @@ false
 0
 Polygon -7500403 true true 150 210 135 195 120 210 60 210 30 195 60 180 60 165 15 135 30 120 15 105 40 104 45 90 60 90 90 105 105 120 120 120 105 60 120 60 135 30 150 15 165 30 180 60 195 60 180 120 195 120 210 105 240 90 255 90 263 104 285 105 270 120 285 135 240 165 240 180 270 195 240 210 180 210 165 195
 Polygon -7500403 true true 135 195 135 240 120 255 105 255 105 285 135 285 165 240 165 195
+
+lightningbolt
+true
+0
+Polygon -7500403 true true 90 165 135 165 75 255 195 135 150 135 210 45 90 165
 
 line
 true
