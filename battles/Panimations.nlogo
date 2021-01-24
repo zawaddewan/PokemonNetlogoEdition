@@ -50,7 +50,18 @@ breed [ fma fm ]
 breed [ fmat fmt ]
 breed [ opja opj ]
 breed [ fpja fpj ]
-
+breed [ osla osl ]
+breed [ fsla fsl ]
+breed [ ocoa oco ]
+breed [ fcoa fco ]
+breed [ oba ob ]
+breed [ fba fb ]
+breed [ opa op ]
+breed [ fpa fp ]
+breed [ obpa obp ]
+breed [ fbpa fbp ]
+breed [ opra opr ]
+breed [ fpra fpr ]
 to ownMachPunchAnimation
   create-ompa 1
   [ set size 55
@@ -1898,6 +1909,54 @@ to foePoisonJabAnimation
     wait .0125]
     die]
 end
+
+to ownSleepanimation
+
+end
+
+to foeSleepanimation
+
+end
+
+to ownConfuseanimation
+
+end
+
+to foeConfuseanimation
+
+end
+
+to ownBurnanimation
+
+end
+
+to foeBurnanimation
+
+end
+
+to ownPoisonedanimation
+
+end
+
+to foePoisonedanimation
+
+end
+
+to ownBadPoisonanimation
+
+end
+
+to foeBadPoisonanimation
+
+end
+
+to ownParalyzeanimation
+
+end
+
+to foeParalyzeanimation
+
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -2996,6 +3055,13 @@ Rectangle -1 true true 65 221 80 296
 Polygon -1 true true 195 285 210 285 210 240 240 210 195 210
 Polygon -7500403 true false 276 85 285 105 302 99 294 83
 Polygon -7500403 true false 219 85 210 105 193 99 201 83
+
+sleepz
+false
+0
+Rectangle -7500403 true true 75 60 210 90
+Polygon -7500403 true true 165 90 75 180 120 180 210 90 165 90
+Rectangle -7500403 true true 75 180 210 210
 
 square
 false
