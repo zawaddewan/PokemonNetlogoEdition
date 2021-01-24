@@ -1378,6 +1378,120 @@ to foeDragonClawAnimation
   ask fdca
   [ die ]
 end
+
+to ownEarthquakeAnimation
+  create-oea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 25
+    set ycor 10]
+  create-oea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 80
+    set ycor -20]
+  create-oea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 160
+    set ycor -15]
+  create-oea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 170
+    set ycor 20]
+  repeat 15
+  [ ask oea
+    [ set heading random 360
+      fd 5
+      wait .02 ] ]
+  ask oea
+  [ die ]
+end
+
+to foeEarthquakeAnimation
+  create-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor -160
+    set ycor -120]
+  create-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor -120
+    set ycor -110]
+  create-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 35
+    set ycor -130]
+  create-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 90
+    set ycor -170]
+  repeat 15
+  [ ask fea
+    [ set heading random 360
+      fd 5
+      wait .02 ] ]
+  ask fea
+  [ die ]
+end
+
+to ownCrunchAnimation
+  create-oca 1
+  [ set size 100
+    set color gray
+    set heading 0
+    set shape "jaw"
+    set xcor 120
+    set ycor 75 ]
+  create-oca 1
+  [ set size 100
+    set color gray
+    set heading 180
+    set shape "jaw"
+    set xcor 120
+    set ycor 25 ]
+  repeat 6
+  [ ask oca
+    [ bk 5
+      wait .02 ] ]
+  ask oca
+  [ die ]
+end
+
+to foeCrunchAnimation
+  create-fca 1
+  [ set size 100
+    set color gray
+    set heading 0
+    set shape "jaw"
+    set xcor -60
+    set ycor -50 ]
+  create-fca 1
+  [ set size 100
+    set color gray
+    set heading 180
+    set shape "jaw"
+    set xcor -60
+    set ycor -100 ]
+  repeat 6
+  [ ask fca
+    [ bk 5
+      wait .02 ] ]
+  ask fca
+  [ die ]
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -1991,6 +2105,74 @@ BUTTON
 124
 NIL
 foeDragonClawAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1026
+134
+1198
+167
+NIL
+ownEarthquakeAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1026
+178
+1193
+211
+NIL
+foeEarthquakeAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1216
+142
+1364
+175
+NIL
+ownCrunchAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1216
+184
+1359
+217
+NIL
+foeCrunchAnimation
 NIL
 1
 T
