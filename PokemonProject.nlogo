@@ -3523,9 +3523,11 @@ NIL
 1
 
 @#$#@#$#@
+Zawad Dewan, Donald Bi, and Jeffery Tang, Pd 4
+
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+This is an implementation of Pokemon in NetLogo. It simulates 1v1 battles with teams of 1 pokemon each, with 6 pokemon to choose from and a pool of 20 moves. Each pokemon has its own moveset, health, and stats. Each move and status affect also has its own corresponding animation.
 
 ## HOW IT WORKS
 
@@ -3533,7 +3535,7 @@ NIL
 
 ## HOW TO USE IT
 
-(how to use the model, including a description of each of the items in the Interface tab)
+Press the 'menu' button, which will bring up a menu of 6 pokemon to choose from. Click on whatever pokemon you choose, and then the reporters showing the moves will show what moves your pokemon of choice has available to it. Select one, and then press 'doTurn' to initiate the turn. You can do this until you die or you beat the pokemon. To restart, press the 'menu' button again.
 
 ## THINGS TO NOTICE
 
