@@ -68,6 +68,88 @@ turtles-own [pokename
   currentmove movetype cat power acc prio
   modifier effectiveness atkstage defstage spdefstage damage]
 
+
+to menu
+  ca
+  import-pcolors "menu.png"
+  if mouse-down? = true [
+    if ((round mouse-xcor) >= -200 and (round mouse-xcor) <= -5) and ((round mouse-ycor) <= -95 and (round mouse-ycor) >= -180)
+    [ca
+      create-ordered-allies 1 [
+        setxy -100 -100
+        set size 50
+        set pokename "haxorus"
+        pokenameTostats
+        set color yellow
+        set atkstage 0 ]
+      genEnemy
+      stop]
+    if ((round mouse-xcor) >= 1 and (round mouse-xcor) <= 198) and ((round mouse-ycor) <= -105 and (round mouse-ycor) >= -195)
+    [ca
+      create-ordered-allies 1 [
+        setxy -100 -100
+        set size 50
+        set pokename "nidoking"
+        pokenameTostats
+        set color magenta
+        set atkstage 0 ]
+      genEnemy
+      stop]
+    if ((round mouse-xcor) >= -198 and (round mouse-xcor) <= -2) and ((round mouse-ycor) <= 11 and (round mouse-ycor) >= -85)
+        [ca
+          create-ordered-allies 1 [
+            setxy -100 -100
+            set size 50
+            set pokename "crobat"
+            pokenameTostats
+            set color violet
+            set atkstage 0 ]
+          genEnemy
+          stop]
+    if ((round mouse-xcor) >= -197 and (round mouse-xcor) <= 0) and ((round mouse-ycor) <= 114 and (round mouse-ycor) >= 17)
+        [ca
+          create-ordered-allies 1 [
+            setxy -100 -100
+            set size 50
+            set pokename "amoonguss"
+            pokenameTostats
+            set color green
+            set atkstage 0 ]
+          genEnemy
+          stop]
+    if ((round mouse-xcor) >= 1 and (round mouse-xcor) <= 197) and ((round mouse-ycor) <= 95 and (round mouse-ycor) >= 0)
+        [ca
+          create-ordered-allies 1 [
+            setxy -100 -100
+            set size 50
+            set pokename "infernape"
+            pokenameTostats
+            set color red
+            set atkstage 0 ]
+          genEnemy
+          stop]
+    if ((round mouse-xcor) >= 0 and (round mouse-xcor) <= 198) and ((round mouse-ycor) <= -3 and (round mouse-ycor) >= -98)
+        [ca
+          create-ordered-allies 1 [
+            setxy -100 -100
+            set size 50
+            set pokename "krookodile"
+            pokenameTostats
+            set color green
+            set atkstage 0 ]
+          genEnemy
+          stop]]
+end
+
+to genEnemy
+        create-ordered-enemies 1 [
+        setxy 100 100
+        set size 50
+        set pokename one-of ["haxorus" "nidoking" "crobat" "amoonguss" "infernape" "krookodile"]
+        pokenameTostats
+        set atkstage 0 ]
+end
+
 ;temporary setup to test things
 to setup
   ca
@@ -3076,10 +3158,10 @@ NIL
 1
 
 BUTTON
-140
-234
-276
-267
+122
+233
+258
+266
 ally use move1
 ask ally 0 [\nset currentmove move1]\n
 NIL
@@ -3093,10 +3175,10 @@ NIL
 1
 
 MONITOR
-315
-376
-421
-421
+314
+419
+420
+464
 hp of ally
 report_hp ([hp] of ally 0)
 1
@@ -3104,9 +3186,9 @@ report_hp ([hp] of ally 0)
 11
 
 MONITOR
-551
+722
 11
-721
+892
 56
 hp of enemy
 report_hp ([hp] of enemy 1)
@@ -3132,10 +3214,10 @@ NIL
 1
 
 MONITOR
-18
-229
-129
-274
+0
+228
+111
+273
 Move1 of ally
 report_move [move1] of ally 0
 17
@@ -3143,10 +3225,10 @@ report_move [move1] of ally 0
 11
 
 MONITOR
-20
-282
-107
-327
+2
+281
+89
+326
 Move2 of ally
 report_move [move2] of ally 0
 17
@@ -3154,10 +3236,10 @@ report_move [move2] of ally 0
 11
 
 MONITOR
-22
-333
-109
-378
+4
+332
+91
+377
 Move3 of ally
 report_move [move3] of ally 0
 17
@@ -3165,10 +3247,10 @@ report_move [move3] of ally 0
 11
 
 MONITOR
-23
-385
-110
-430
+5
+384
+92
+429
 Move4 of ally
 report_move [move4] of ally 0
 17
@@ -3176,10 +3258,10 @@ report_move [move4] of ally 0
 11
 
 BUTTON
-138
-285
-277
-318
+120
+284
+259
+317
 ally use move2
 ask ally 0 [\nset currentmove move2]\n
 NIL
@@ -3193,10 +3275,10 @@ NIL
 1
 
 BUTTON
-148
-340
-261
-373
+130
+339
+243
+372
 ally use move3
 ask ally 0 [\nset currentmove move3]\n
 NIL
@@ -3210,10 +3292,10 @@ NIL
 1
 
 BUTTON
-145
-392
-258
-425
+127
+391
+240
+424
 ally use move4
 ask ally 0 [\nset currentmove move4]\n
 NIL
@@ -3227,10 +3309,10 @@ NIL
 1
 
 MONITOR
-285
-453
-390
-498
+284
+477
+389
+522
 Move1 of enemy
 report_move [move1] of enemy 1
 17
@@ -3238,10 +3320,10 @@ report_move [move1] of enemy 1
 11
 
 MONITOR
-454
 453
-559
-498
+477
+558
+522
 Move2 of enemy
 report_move [move2] of enemy 1
 17
@@ -3249,10 +3331,10 @@ report_move [move2] of enemy 1
 11
 
 MONITOR
-623
-454
-728
-499
+622
+478
+727
+523
 Move3 of enemy
 report_move [move3] of enemy 1
 17
@@ -3260,10 +3342,10 @@ report_move [move3] of enemy 1
 11
 
 MONITOR
-804
-452
-909
-497
+803
+476
+908
+521
 Move4 of enemy
 report_move [move4] of enemy 1
 17
@@ -3271,10 +3353,10 @@ report_move [move4] of enemy 1
 11
 
 BUTTON
-272
-509
-407
-542
+271
+533
+406
+566
 enemy  use move1
 ask enemy 1 [\nset currentmove move1]\n
 NIL
@@ -3288,10 +3370,10 @@ NIL
 1
 
 BUTTON
-441
-510
-573
-543
+440
+534
+572
+567
 enemy use move2
 ask enemy 1 [\nset currentmove move2]\n
 NIL
@@ -3305,10 +3387,10 @@ NIL
 1
 
 BUTTON
-614
-513
-746
-546
+613
+537
+745
+570
 enemy use move3
 ask enemy 1 [\nset currentmove move3]\n
 NIL
@@ -3322,10 +3404,10 @@ NIL
 1
 
 BUTTON
-788
-512
-920
-545
+787
+536
+919
+569
 enemy use move4
 ask enemy 1 [\nset currentmove move4]\n
 NIL
@@ -3397,6 +3479,40 @@ BUTTON
 enemy krookodile
 ask enemy 1 [\nset pokename \"krookodile\"\npokenameTostats\nset color red\nset atkstage 0\n]
 NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+37
+157
+106
+190
+NIL
+doturn
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+131
+10
+194
+43
+NIL
+menu
+T
 1
 T
 OBSERVER
