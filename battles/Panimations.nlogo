@@ -1927,11 +1927,61 @@ to foeConfuseanimation
 end
 
 to ownBurnanimation
-
+  create-oba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor -32
+    set ycor -101]
+  create-oba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor -103
+    set ycor -51]
+  create-oba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor -167
+    set ycor -101]
+  ask oba [
+    repeat 25 [
+      fd 1
+      wait .0125]]
+  ask oba [die]
 end
 
 to foeBurnanimation
-
+  create-fba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 32
+    set ycor 101]
+  create-fba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 103
+    set ycor 151]
+  create-fba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 167
+    set ycor 101]
+  ask fba
+  [ repeat 25 [
+    fd 1
+    wait .0125]]
+  ask fba [die]
 end
 
 to ownPoisonedanimation
@@ -2774,6 +2824,40 @@ BUTTON
 415
 NIL
 foePoisonJabAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+635
+420
+768
+453
+NIL
+ownBurnanimation\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+773
+419
+901
+452
+NIL
+foeBurnanimation\n
 NIL
 1
 T
