@@ -1,24 +1,82 @@
 ;Pokemon NetLogo Edition v0.1b
 breed [enemies enemy]
 breed [allies ally]
+globals [allyanimation enemyanimation]
+;ANIMATION BREEDS-------------------------------------------------------------------------------------------------------------------------
+breed [ ompa omp ]
+breed [ ompat ompt ]
+breed [ fmpa fmp ]
+breed [ fmpat fmpt ]
+breed [ occa occ ]
+breed [ fcca fcc ]
+breed [ ofba ofb ]
+breed [ ffba ffb ]
+breed [ osda osd ]
+breed [ fsda fsd ]
+breed [ ocpa ocp ]
+breed [ fcpa fcp ]
+breed [ ocpat ocpt ]
+breed [ fcpat fcpt ]
+breed [ ota ot ]
+breed [ fta ft ]
+breed [ ocra ocr ]
+breed [ ocrat ocrt ]
+breed [ fcra fcr ]
+breed [ fcrat fcrt ]
+breed [ oaa oa ]
+breed [ faa fa ]
+breed [ oaat oat ]
+breed [ faat fat ]
+breed [ osba osb ]
+breed [ fsba fsb ]
+breed [ ogda ogd ]
+breed [ fgda fgd ]
+breed [ oeba oeb ]
+breed [ feba feb ]
+breed [ osa os ]
+breed [ fsa fs ]
+breed [ osea ose ]
+breed [ fsea fse ]
+breed [ odca odc ]
+breed [ odcat odct ]
+breed [ fdca fdc ]
+breed [ fdcat fdct ]
+breed [ oca oc ]
+breed [ fca fc ]
+breed [ oea oe ]
+breed [ fea fe ]
+breed [ ohsa ohs ]
+breed [ fhsa fhs ]
+breed [ ooa oo ]
+breed [ foa fo ]
+breed [ oma om ]
+breed [ fma fm ]
+breed [ omat omt ]
+breed [ fmat fmt ]
+breed [ opja opj ]
+breed [ fpja fpj ]
+breed [ ocsa ocs ]
+breed [ fcsa fcs ]
+;------------------------------------------------------------------------------------------------------------------------------------------
+
 
 turtles-own [pokename
   maxhp hp atk def spdef spatk spd
   type1 type2
-  nonvolatile nonvolatiledur confused? confusedur
+  nonvolatile nonvolatiledur confused? confusedur outragedur
   move1 move2 move3 move4
   currentmove movetype cat power acc prio
-  modifier effectiveness atkstage damage]
+  modifier effectiveness atkstage defstage spdefstage damage]
 
 ;temporary setup to test things
 to setup
   ca
   create-ordered-allies 1 [
-    setxy 25 25
-    set size 5]
+    setxy -100 -100
+    set size 50]
   create-ordered-enemies 1 [
-    setxy -25 -25
-    set size 5]
+    setxy 100 100
+    set size 50]
 end
 
 ;TESTING THE TURN
@@ -28,27 +86,39 @@ to DOTURNTEST
     moveTostats]
   ifelse [prio] of ally 0 > 0 or [prio] of enemy 1 > 0
   [ifelse [prio] of ally 0 > [prio] of enemy 1
-    [attackEnemy
+    [moveAnimationAlly
+      attackEnemy
       wait 1
+      moveAnimationEnemy
       attackAlly]
-    [attackAlly
-      wait 1
-      attackEnemy]]
-  [if [spd] of ally 0 > [spd] of enemy 1 [
-    attackEnemy
-    wait 1
-    attackAlly]
-    if [spd] of ally 0 < [spd] of enemy 1 [
+    [moveAnimationEnemy
       attackAlly
       wait 1
+      moveAnimationAlly
+      attackEnemy]]
+  [if [spd] of ally 0 > [spd] of enemy 1 [
+    moveAnimationAlly
+    attackEnemy
+    wait 1
+    moveAnimationEnemy
+    attackAlly]
+    if [spd] of ally 0 < [spd] of enemy 1 [
+      moveAnimationEnemy
+      attackAlly
+      wait 1
+      moveAnimationAlly
       attackEnemy]
     if [spd] of ally 0 = [spd] of enemy 1 [
       ifelse random 2 = 0
-      [attackAlly
+      [moveAnimationEnemy
+        attackAlly
         wait 1
+        moveAnimationAlly
         attackEnemy]
-      [attackEnemy
+      [moveAnimationAlly
+        attackEnemy
         wait 1
+        moveAnimationEnemy
         attackAlly]]]
   ask ally 0 [
     statusEffects]
@@ -67,27 +137,39 @@ to doTurn
     moveTostats]
   ifelse [prio] of ally 0 > 0 or [prio] of enemy 1 > 0
   [ifelse [prio] of ally 0 > [prio] of enemy 1
-    [attackEnemy
+    [moveAnimationAlly
+      attackEnemy
       wait 1
+      moveAnimationEnemy
       attackAlly]
-    [attackAlly
-      wait 1
-      attackEnemy]]
-  [if [spd] of ally 0 > [spd] of enemy 1 [
-    attackEnemy
-    wait 1
-    attackAlly]
-    if [spd] of ally 0 < [spd] of enemy 1 [
+    [moveAnimationEnemy
       attackAlly
       wait 1
+      moveAnimationAlly
+      attackEnemy]]
+  [if [spd] of ally 0 > [spd] of enemy 1 [
+    moveAnimationAlly
+    attackEnemy
+    wait 1
+    moveAnimationEnemy
+    attackAlly]
+    if [spd] of ally 0 < [spd] of enemy 1 [
+      moveAnimationEnemy
+      attackAlly
+      wait 1
+      moveAnimationAlly
       attackEnemy]
     if [spd] of ally 0 = [spd] of enemy 1 [
       ifelse random 2 = 0
-      [attackAlly
+      [moveAnimationEnemy
+        attackAlly
         wait 1
+        moveAnimationAlly
         attackEnemy]
-      [attackEnemy
+      [moveAnimationAlly
+        attackEnemy
         wait 1
+        moveAnimationEnemy
         attackAlly]]]
   ask ally 0 [
     statusEffects]
@@ -153,9 +235,54 @@ to pokenameTostats
     set type1 "grass"
     set type2 "poison"
     set move1 "spore"
-    set move2 "stun_spore"
+    set move2 "giga_drain"
     set move3 "energy_ball"
     set move4 "sludge_bomb"
+  ]
+  if pokename = "krookodile" [
+    calcHP 95 0 0
+    set hp maxhp
+    calcatk 117 0 0
+    calcdef 80 0 0
+    calcspatk 65 0 0
+    calcspdef 70 0 0
+    calcspd 92 0 0
+    set type1 "ground"
+    set type2 "dark"
+    set move1 "earthquake"
+    set move2 "crunch"
+    set move3 "stone_edge"
+    set move4 "dragon_claw"
+  ]
+  if pokename = "haxorus" [
+    calcHP 76 0 0
+    set hp maxhp
+    calcatk 147 0 0
+    calcdef 90 0 0
+    calcspatk 60 0 0
+    calcspdef 70 0 0
+    calcspd 97 0 0
+    set type1 "dragon"
+    set type2 "null"
+    set move1 "swords_dance"
+    set move2 "earthquake"
+    set move3 "poison_jab"
+    set move4 "outrage"
+  ]
+  if pokename = "nidoking" [
+    calcHP 81 0 0
+    set hp maxhp
+    calcatk 102 0 0
+    calcdef 77 0 0
+    calcspatk 85 0 0
+    calcspdef 75 0 0
+    calcspd 85 0 0
+    set type1 "poison"
+    set type2 "ground"
+    set move1 "earthquake"
+    set move2 "head_smash"
+    set move3 "megahorn"
+    set move4 "outrage"
   ]
 end
 
@@ -243,11 +370,11 @@ to moveTostats
     set power 0
     set acc 100
     set prio 0]
-  if currentmove = "stun_spore" [
+  if currentmove = "giga_drain" [
     set movetype "grass"
-    set cat "status"
-    set power 0
-    set acc 75
+    set cat "special"
+    set power 75
+    set acc 100
     set prio 0]
   if currentmove = "energy_ball" [
     set movetype "grass"
@@ -260,6 +387,54 @@ to moveTostats
     set cat "special"
     set power 90
     set acc 100
+    set prio 0]
+  if currentmove = "earthquake" [
+    set movetype "ground"
+    set cat "physical"
+    set power 100
+    set acc 100
+    set prio 0]
+  if currentmove = "crunch" [
+    set movetype "dark"
+    set cat "physical"
+    set power 80
+    set acc 100
+    set prio 0]
+  if currentmove = "stone_edge" [
+    set movetype "rock"
+    set cat "physical"
+    set power 100
+    set acc 80
+    set prio 0]
+  if currentmove = "dragon_claw" [
+    set movetype "dragon"
+    set cat "physical"
+    set power 80
+    set acc 100
+    set prio 0]
+  if currentmove = "poison_jab" [
+    set movetype "poison"
+    set cat "physical"
+    set power 80
+    set acc 100
+    set prio 0]
+  if currentmove = "outrage" [
+    set movetype "dragon"
+    set cat "physical"
+    set power 120
+    set acc 100
+    set prio 0]
+  if currentmove = "head_smash" [
+    set movetype "rock"
+    set cat "physical"
+    set power 150
+    set acc 80
+    set prio 0]
+  if currentmove = "megahorn" [
+    set movetype "bug"
+    set cat "physical"
+    set power 120
+    set acc 85
     set prio 0]
 end
 
@@ -274,7 +449,9 @@ to confusedStatus
       set damage (((((((2 * 50) / 5) + 2) * 40 * (atk * (1 + (atkstage / 2)))) / def) / 50) + 2)
       set hp hp - damage
       set confusedur (confusedur + 1)
+      set currentmove 0
       set damage 0
+      resetTempStats
       ]
       [set confusedur (confusedur + 1)]
     ]
@@ -302,6 +479,22 @@ to asleepStatus
         set nonvolatiledur (nonvolatiledur + 1)]]]
 end
 
+to outrageMechanic
+  if outragedur > 0 [
+      ifelse outragedur > 1 [
+        if outragedur = 3 [
+          set outragedur 0
+          set confused? true]
+        if outragedur = 2 [
+          ifelse random 2 = 0 [
+          set outragedur 0
+          set confused? true]
+        [set outragedur outragedur + 1]]]
+        [set outragedur outragedur + 1]]
+  if currentmove = "outrage" and outragedur = 0 [
+    set outragedur 1]
+end
+
 ;nonvolatile status effects that occur after the turn
 to statusEffects
   if nonvolatile = "burned" [
@@ -326,9 +519,8 @@ to statusMovesEnemy
   if nonvolatile != "paralyzed" [
   if [nonvolatile] of enemy 1 = 0 [
     if currentmove = "toxic" [
-      if random 100 < acc [
         ask enemy 1 [
-          set nonvolatile "badly_poisoned"]]]
+          set nonvolatile "badly_poisoned"]]
     if currentmove = "cross_poison" [
       if random 100 < 10 [
         ask enemy 1 [
@@ -341,9 +533,12 @@ to statusMovesEnemy
       ask enemy 1 [
         set nonvolatile "asleep"]]
     if currentmove = "stun_spore" [
-      if random 100 < acc [
         ask enemy 1 [
-          set nonvolatile "paralyzed"]]]
+          set nonvolatile "paralyzed"]]
+    if currentmove = "slude_bomb" or currentmove = "poison_jab" [
+      if random 100 < 30 [
+        ask enemy 1 [
+          set nonvolatile "poisoned"]]]
   ]
   if [confused?] of enemy 1 = false [
     if currentmove = "confuse_ray" [
@@ -353,13 +548,25 @@ to statusMovesEnemy
   ask enemy 1 [
   if (type1 = "fire" or type2 = "fire") and nonvolatile = "burned" [
     set nonvolatile 0]
-  if (type1 = "poison" or type2 = "poison") and nonvolatile = "poisoned" [
+  if (type1 = "poison" or type2 = "poison" or type1 = "steel" or type2 = "steel") and nonvolatile = "poisoned" [
     set nonvolatile 0]
   if (type1 = "electric" or type2 = "electric") and nonvolatile = "paralyzed" [
     set nonvolatile 0]
   ]
   if currentmove = "flare_blitz" [
       set hp hp - ((1 / 3) * damage)]
+  if currentmove = "giga_drain" [
+      set hp hp + (damage * 0.5)]
+  if currentmove = "energy_ball" and -6 <= [spdefstage] of enemy 1 and [spdefstage] of enemy 1 <= 5 [
+      if random 100 < 10 [
+        ask enemy 1 [
+          set spdefstage spdefstage - 1]]]
+  if currentmove = "crunch" and -6 <= [defstage] of enemy 1 and [defstage] of enemy 1 <= 5 [
+      if random 100 < 20 [
+        ask enemy 1 [
+          set defstage defstage - 1]]]
+  if currentmove = "head_smash" [
+      set hp hp - (0.5 * damage)]
   ]
 end
 
@@ -392,6 +599,10 @@ to statusMovesAlly
       if random 100 < acc [
         ask ally 0 [
           set nonvolatile "paralyzed"]]]
+    if currentmove = "slude_bomb" or currentmove = "poison_jab" [
+      if random 100 < 30 [
+        ask ally 0 [
+          set nonvolatile "poisoned"]]]
   ]
   if [confused?] of ally 0 = false [
     if currentmove = "confuse_ray" [
@@ -401,19 +612,39 @@ to statusMovesAlly
   ask ally 0 [
   if (type1 = "fire" or type2 = "fire") and nonvolatile = "burned" [
     set nonvolatile 0]
-  if (type1 = "poison" or type2 = "poison") and (nonvolatile = "poisoned" or nonvolatile = "badly_poisoned") [
+  if (type1 = "poison" or type2 = "poison" or type1 = "steel" or type2 = "steel") and (nonvolatile = "poisoned" or nonvolatile = "badly_poisoned") [
     set nonvolatile 0]
   if (type1 = "electric" or type2 = "electric") and nonvolatile = "paralyzed" [
     set nonvolatile 0]
   ]
   if currentmove = "flare_blitz" [
       set hp hp - ((1 / 3) * damage)]
+  if currentmove = "giga_drain" [
+      set hp hp + (damage * 0.5)]
+  if currentmove = "energy_ball" and -6 <= [spdefstage] of ally 0 and [spdefstage] of ally 0 <= 5 [
+      if random 100 < 10 [
+        ask ally 0 [
+          set spdefstage spdefstage - 1]]]
+  if currentmove = "crunch" and -6 <= [defstage] of ally 0 and [defstage] of ally 0 <= 5 [
+      if random 100 < 20 [
+        ask ally 0 [
+          set defstage defstage - 1]]]
+  if currentmove = "head_smash" [
+      set hp hp - (0.5 * damage)]
   ]
 end
 
 ;attacks the enemy
 to attackEnemy
   ask ally 0 [
+    ifelse hp <= 0
+    [set currentmove 0]
+    [
+    outrageMechanic
+        if outragedur > 0 [
+          set currentmove "outrage"
+          moveToStats]
+    ifelse random 100 < acc [
     paralyzedStatus
     ifelse nonvolatile = "asleep"
     [asleepStatus
@@ -424,7 +655,7 @@ to attackEnemy
         set damage 0]
       [
         if cat = "physical" [
-          ifelse currentmove = "cross_poison"
+          ifelse currentmove = "cross_poison" or currentmove = "stone_edge"
           [calcDamage atk ([def] of enemy 1) power 1]
           [calcDamage atk ([def] of enemy 1) power 0]]
         if cat = "special" [
@@ -438,12 +669,23 @@ to attackEnemy
       ]
       statusMovesEnemy
     ]
+    ]
+    [set currentmove 0]
+    ]
   ]
 end
 
 ;attacks the ally
 to attackAlly
   ask enemy 1 [
+    ifelse hp <= 0
+    [set currentmove 0]
+    [
+    outrageMechanic
+        if outragedur > 0 [
+          set currentmove "outrage"
+          moveToStats]
+    ifelse random 100 < acc [
     paralyzedStatus
     ifelse nonvolatile = "asleep"
     [asleepStatus
@@ -454,7 +696,7 @@ to attackAlly
         set damage 0]
       [
         if cat = "physical" [
-          ifelse currentmove = "cross_poison"
+          ifelse currentmove = "cross_poison" or currentmove = "stone_edge"
           [calcDamage atk ([def] of ally 0) power 1]
           [calcDamage atk ([def] of ally 0) power 0]]
         if cat = "special" [
@@ -467,6 +709,9 @@ to attackAlly
           set hp hp - ([damage] of enemy 1)]
       ]
       statusMovesAlly
+    ]
+    ]
+    [set currentmove 0]
     ]
   ]
 end
@@ -672,19 +917,2048 @@ to-report report_hp [yea]
   report (yea)
 end
 
+to-report report_move [bruh]
+  report bruh
+end
 
 
+;ANIMATIONS------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+;----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+;----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+to moveAnimationAlly
+  if [hp] of ally 0 > 0 [
+  ask ally 0 [
+  if currentmove = 0
+    [set allyanimation 0]
+  if currentmove = "confuse_ray"
+    [set allyanimation "ocra"]
+  if currentmove = "acrobatics"
+    [set allyanimation "oaa"]
+  if currentmove = "cross_poison"
+    [set allyanimation "ocpa"]
+  if currentmove = "toxic"
+    [set allyanimation "ota"]
+  if currentmove = "close_combat"
+    [set allyanimation "occa"]
+  if currentmove = "mach_punch"
+    [set allyanimation "ompa"]
+  if currentmove = "flare_blitz"
+    [set allyanimation "ofba"]
+  if currentmove = "swords_dance"
+    [set allyanimation "osda"]
+  if currentmove = "spore"
+    [set allyanimation "osa"]
+  if currentmove = "giga_drain"
+    [set allyanimation "ogda"]
+  if currentmove = "energy_ball"
+    [set allyanimation "oeba"]
+  if currentmove = "sludge_bomb"
+    [set allyanimation "osba"]
+  if currentmove = "earthquake"
+    [set allyanimation "oea"]
+  if currentmove = "crunch"
+    [set allyanimation "oca"]
+  if currentmove = "stone_edge"
+    [set allyanimation "osea"]
+  if currentmove = "dragon_claw"
+    [set allyanimation "odca"]
+  if currentmove = "poison_jab"
+    [set allyanimation "opja"]
+  if currentmove = "outrage" or (outragedur > 0 and outragedur < 3)
+    [set allyanimation "ooa"]
+  if currentmove = "head_smash"
+    [set allyanimation "ohsa"]
+  if currentmove = "megahorn"
+    [set allyanimation "oma"]
+  ]
 
-;n is movetype w is ???
+  if [confused?] of ally 0 = true
+  [ownConfusedStatusAnimation]
+  if allyanimation = "ocra"
+  [ownConfuseRayAnimation]
+  if allyanimation = "oaa"
+  [ownAcrobaticsAnimation]
+  if allyanimation = "ocpa"
+  [ownCrossPoisonAnimation]
+  if allyanimation = "ota"
+  [ownToxicAnimation]
+  if allyanimation = "occa"
+  [ownCloseCombatAnimation]
+  if allyanimation = "ompa"
+  [ownMachPunchAnimation]
+  if allyanimation = "ofba"
+  [ownFlareBlitzAnimation]
+  if allyanimation = "osda"
+  [ownSwordsDanceAnimation]
+  if allyanimation = "osa"
+  [ownSporeAnimation]
+  if allyanimation = "ogda"
+  [ownGigaDrainAnimation]
+  if allyanimation = "oeba"
+  [ownEnergyBallAnimation]
+  if allyanimation = "osba"
+  [ownSludgeBombAnimation]
+  if allyanimation = "oea"
+  [ownEarthquakeAnimation]
+  if allyanimation = "oca"
+  [ownCrunchAnimation]
+  if allyanimation = "osea"
+  [ownStoneEdgeAnimation]
+  if allyanimation = "odca"
+  [ownDragonClawAnimation]
+  if allyanimation = "opja"
+  [ownPoisonJabAnimation]
+  if allyanimation = "ooa"
+  [ownOutrageAnimation]
+  if allyanimation = "ohsa"
+  [ownHeadSmashAnimation]
+  if allyanimation = "oma"
+  [ownMegahornAnimation]
+  ]
+end
+
+to moveAnimationEnemy
+  if [hp] of enemy 1 > 0 [
+  ask enemy 1 [
+  if currentmove = 0
+    [set enemyanimation 0]
+  if currentmove = "confuse_ray"
+    [set enemyanimation "fcra"]
+  if currentmove = "acrobatics"
+    [set enemyanimation "faa"]
+  if currentmove = "cross_poison"
+    [set enemyanimation "fcpa"]
+  if currentmove = "toxic"
+    [set enemyanimation "fta"]
+  if currentmove = "close_combat"
+    [set enemyanimation "fcca"]
+  if currentmove = "mach_punch"
+    [set enemyanimation "fmpa"]
+  if currentmove = "flare_blitz"
+    [set enemyanimation "ffba"]
+  if currentmove = "swords_dance"
+    [set enemyanimation "fsda"]
+  if currentmove = "spore"
+    [set enemyanimation "fsa"]
+  if currentmove = "giga_drain"
+    [set enemyanimation "fgda"]
+  if currentmove = "energy_ball"
+    [set enemyanimation "feba"]
+  if currentmove = "sludge_bomb"
+    [set enemyanimation "fsba"]
+  if currentmove = "earthquake"
+    [set enemyanimation "fea"]
+  if currentmove = "crunch"
+    [set enemyanimation "fca"]
+  if currentmove = "stone_edge"
+    [set enemyanimation "fsea"]
+  if currentmove = "dragon_claw"
+    [set enemyanimation "fdca"]
+  if currentmove = "poison_jab"
+    [set enemyanimation "fpja"]
+  if currentmove = "outrage" or (outragedur > 0 and outragedur < 3)
+    [set enemyanimation "foa"]
+  if currentmove = "head_smash"
+    [set enemyanimation "fhsa"]
+  if currentmove = "megahorn"
+    [set enemyanimation "fma"]
+  ]
+
+  if [confused?] of enemy 1 = true
+  [foeConfusedStatusAnimation]
+  if enemyanimation = "fcra"
+  [foeConfuseRayAnimation]
+  if enemyanimation = "faa"
+  [foeAcrobaticsAnimation]
+  if enemyanimation = "fcpa"
+  [foeCrossPoisonAnimation]
+  if enemyanimation = "fta"
+  [foeToxicAnimation]
+  if enemyanimation = "fcca"
+  [foeCloseCombatAnimation]
+  if enemyanimation = "fmpa"
+  [foeMachPunchAnimation]
+  if enemyanimation = "ffba"
+  [foeFlareBlitzAnimation]
+  if enemyanimation = "fsda"
+  [foeSwordsDanceAnimation]
+  if enemyanimation = "fsa"
+  [foeSporeAnimation]
+  if enemyanimation = "fgda"
+  [foeGigaDrainAnimation]
+  if enemyanimation = "feba"
+  [foeEnergyBallAnimation]
+  if enemyanimation = "fsba"
+  [foeSludgeBombAnimation]
+  if enemyanimation = "fea"
+  [foeEarthquakeAnimation]
+  if enemyanimation = "fca"
+  [foeCrunchAnimation]
+  if enemyanimation = "fsea"
+  [foeStoneEdgeAnimation]
+  if enemyanimation = "fdca"
+  [foeDragonClawAnimation]
+  if enemyanimation = "fpja"
+  [foePoisonJabAnimation]
+  if enemyanimation = "foa"
+  [foeOutrageAnimation]
+  if enemyanimation = "fhsa"
+  [foeHeadSmashAnimation]
+  if enemyanimation = "fma"
+  [foeMegahornAnimation]
+  ]
+end
+
+to ownMachPunchAnimation
+  create-ompa 1
+  [ set size 55
+    set heading 35
+    set color red
+    set shape "fist"
+    set xcor 20
+    set ycor -77 ]
+  repeat 8 [
+    ask ompa
+    [ hatch 1
+      [ set breed ompat
+        set size 25
+        set heading 35
+        set color red ]
+      fd 20
+      wait .0625 ]]
+  ask ompa
+  [ die ]
+  ask ompat
+  [ die ]
+end
+
+to foeMachPunchAnimation
+  create-fmpa 1
+  [ set size 55
+    set color red
+    set shape "fist"
+    set heading 215
+    set xcor 27
+    set ycor 88 ]
+  repeat 8 [
+    ask fmpa
+    [ hatch 1
+      [ set breed fmpat
+        set size 25
+        set heading 215
+        set color red ]
+      fd 20
+      wait .0625 ]]
+  ask fmpa
+  [ die ]
+  ask fmpat
+  [ die ]
+end
+
+to ownCloseCombatAnimation
+  create-occa 1
+  [ set size 25
+    set color orange
+    set shape "fist"
+    set heading 0
+    set xcor 15
+    set ycor 105 ]
+  create-occa 1
+  [ set size 25
+    set color orange
+    set shape "fist"
+    set heading 0
+    set xcor 20
+    set ycor 105 ]
+  create-occa 1
+  [ set size 25
+    set color orange
+    set shape "fist"
+    set heading 0
+    set xcor 25
+    set ycor 105 ]
+  create-occa 1
+  [ set size 25
+    set color orange
+    set shape "fist"
+    set heading 0
+    set xcor 15
+    set ycor 90 ]
+  create-occa 1
+  [ set size 25
+    set color orange
+    set shape "fist"
+    set heading 0
+    set xcor 20
+    set ycor 90 ]
+  create-occa 1
+  [ set size 25
+    set color orange
+    set shape "fist"
+    set heading 0
+    set xcor 25
+    set ycor 90 ]
+  ask occa
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask occa
+  [ set xcor xcor + 110
+    set ycor ycor - 10 ]
+  ask occa
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask occa
+  [ set xcor xcor - 50
+    set ycor ycor - 110 ]
+  ask occa
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask occa
+  [ set xcor xcor + 20
+    set ycor ycor + 90 ]
+  ask occa
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask occa
+  [ set xcor xcor + 30
+    set ycor ycor - 50 ]
+  ask occa
+  [ repeat 3 [
+    fd 2
+    wait .0125]
+    die]
+end
+
+to foeCloseCombatAnimation
+  create-fcca 1
+  [ set size 25
+    set shape "fist"
+    set color orange
+    set heading 0
+    set xcor -135
+    set ycor -20 ]
+  create-fcca 1
+  [ set size 25
+    set color orange
+    set shape "fist"
+    set heading 0
+    set xcor -130
+    set ycor -20 ]
+  create-fcca 1
+  [ set size 25
+    set color orange
+    set shape "fist"
+    set heading 0
+    set xcor -125
+    set ycor -20 ]
+  create-fcca 1
+  [ set size 25
+    set color orange
+    set shape "fist"
+    set heading 0
+    set xcor -135
+    set ycor -35 ]
+  create-fcca 1
+  [ set size 25
+    set color orange
+    set shape "fist"
+    set heading 0
+    set xcor -130
+    set ycor -35 ]
+  create-fcca 1
+  [ set size 25
+    set color orange
+    set shape "fist"
+    set heading 0
+    set xcor -125
+    set ycor -35 ]
+  ask fcca
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fcca
+  [ set xcor xcor + 60
+    set ycor ycor - 115 ]
+  ask fcca
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fcca
+  [ set xcor xcor - 20
+    set ycor ycor + 90 ]
+  ask fcca
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fcca
+  [ set xcor xcor - 30
+    set ycor ycor - 50 ]
+  ask fcca
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fcca
+  [ set xcor xcor + 100
+    set ycor ycor - 20 ]
+  ask fcca
+  [ repeat 3 [
+    fd 2
+    wait .0125]
+    die]
+end
+
+to ownFlareBlitzAnimation
+  create-ofba 1
+  [ set size 50
+    set color red
+    set heading 55
+    set shape "circle"
+    set xcor 60
+    set ycor -38 ]
+  repeat 20 [
+    ask ofba [
+      wait .02
+      fd 5]]
+  ask ofba [die]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 103
+    set ycor 151]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 167
+    set ycor 101]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 103
+    set ycor 80]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 57
+    set ycor 40]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 32
+    set ycor 101]
+  create-ofba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor 156
+    set ycor 40]
+  ask ofba
+  [ repeat 18 [
+    fd 1
+    wait .00625]]
+  ask ofba
+  [ die ]
+end
+
+to foeFlareBlitzAnimation
+  create-ffba 1
+  [ set size 50
+    set color red
+    set heading 220
+    set shape "circle"
+    set xcor 42
+    set ycor 88 ]
+  repeat 20 [
+    ask ffba [
+      wait .02
+      fd 5]]
+  ask ffba [die]
+  create-ffba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor -103
+    set ycor -151]
+  create-ffba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor -167
+    set ycor -101]
+  create-ffba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor -103
+    set ycor -80]
+  create-ffba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor -57
+    set ycor -40]
+  create-ffba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor -32
+    set ycor -101]
+  create-ffba 1 [
+    set size 45
+    set color red
+    set shape "fire"
+    set heading 0
+    set xcor -156
+    set ycor -40]
+  ask ffba
+  [ repeat 18 [
+    fd 1
+    wait .00625]]
+  ask ffba
+  [ die ]
+end
+
+to ownSwordsDanceAnimation
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -150
+    set ycor -160 ]
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -150
+    set ycor -130 ]
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -180
+    set ycor -130 ]
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -120
+    set ycor -130 ]
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -150
+    set ycor -100 ]
+  create-osda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -150
+    set ycor -70 ]
+  ask osda
+  [ fd 10
+    wait .02 ]
+  ask osda
+  [ fd 10
+    wait .02 ]
+  ask osda
+  [ fd 10
+    wait .02 ]
+  ask osda
+  [ set xcor xcor + 150
+    set ycor ycor - 30 ]
+  ask osda
+  [ fd 10
+    wait .02 ]
+  ask osda
+  [ fd 10
+    wait .02 ]
+  ask osda
+  [ fd 10
+    wait .02
+    die ]
+end
+
+to foeSwordsDanceAnimation
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor 15
+    set ycor 30 ]
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor 15
+    set ycor 60 ]
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor -15
+    set ycor 60 ]
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor 45
+    set ycor 60 ]
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor 15
+    set ycor 90 ]
+  create-fsda 1
+  [ set size 40
+    set color blue
+    set heading 0
+    set xcor 15
+    set ycor 120 ]
+  ask fsda
+  [ fd 10
+    wait .02 ]
+  ask fsda
+  [ fd 10
+    wait .02 ]
+  ask fsda
+  [ fd 10
+    wait .02 ]
+  ask fsda
+  [ set xcor xcor + 125
+    set ycor ycor - 30 ]
+  ask fsda
+  [ fd 10
+    wait .02 ]
+  ask fsda
+  [ fd 10
+    wait .02 ]
+  ask fsda
+  [ fd 10
+    wait .02
+    die ]
+end
+
+to ownSludgeBombAnimation
+  create-osba 1
+  [ set size 50
+    set color violet
+    set heading 55
+    set shape "circle"
+    set xcor 60
+    set ycor -38 ]
+  ask osba
+  [ wait .02 ]
+  repeat 20
+  [ ask osba
+  [ fd 5
+      wait .02 ] ]
+  ask osba
+  [ die ]
+end
+
+to foeSludgeBombAnimation
+  create-fsba 1
+  [ set size 50
+    set color violet
+    set heading 220
+    set shape "circle"
+    set xcor 42
+    set ycor 88 ]
+  ask fsba
+  [ wait .02 ]
+  repeat 20
+  [ ask fsba
+  [ fd 5
+      wait .02 ] ]
+  ask fsba
+  [ die ]
+end
+
+to ownEnergyBallAnimation
+  create-oeba 1
+  [ set size 50
+    set color green
+    set heading 55
+    set shape "circle"
+    set xcor 60
+    set ycor -38 ]
+  ask oeba
+  [ wait .02 ]
+  repeat 20
+  [ ask oeba
+  [ fd 5
+      wait .02 ] ]
+  ask oeba
+  [ die ]
+end
+
+to foeEnergyBallAnimation
+  create-feba 1
+  [ set size 50
+    set color green
+    set heading 220
+    set shape "circle"
+    set xcor 42
+    set ycor 88 ]
+  ask feba
+  [ wait .02 ]
+  repeat 20
+  [ ask feba
+  [ fd 5
+      wait .02 ] ]
+  ask feba
+  [ die ]
+end
+
+to ownSporeAnimation
+  create-osa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor 15
+    set ycor 115 ]
+  create-osa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor 20
+    set ycor 115 ]
+  create-osa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor 25
+    set ycor 115 ]
+  create-osa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor 15
+    set ycor 100 ]
+  create-osa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor 20
+    set ycor 100 ]
+  create-osa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor 25
+    set ycor 100 ]
+  repeat 3
+  [ ask osa
+  [ fd 5
+      wait .025 ] ]
+  ask osa
+  [ set xcor xcor + 120
+    set ycor ycor - 15 ]
+  repeat 3
+  [ ask osa
+  [ fd 5
+      wait .025 ] ]
+  ask osa
+  [ set xcor xcor - 60
+    set ycor ycor - 45 ]
+  repeat 3
+  [ ask osa
+  [ fd 5
+      wait .025 ] ]
+  ask osa
+  [ die ]
+end
+
+to foeSporeAnimation
+  create-fsa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor -135
+    set ycor -10 ]
+  create-fsa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor -130
+    set ycor -10 ]
+  create-fsa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor -125
+    set ycor -10 ]
+  create-fsa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor -135
+    set ycor -25 ]
+  create-fsa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor -130
+    set ycor -35 ]
+  create-fsa 1
+  [ set size 25
+    set color gray
+    set heading 180
+    set shape "circle"
+    set xcor -125
+    set ycor -35 ]
+  repeat 3
+  [ ask fsa
+  [ fd 5
+      wait .025 ] ]
+  ask fsa
+  [ set xcor xcor + 120
+    set ycor ycor - 15 ]
+  repeat 3
+  [ ask fsa
+  [ fd 5
+      wait .025 ] ]
+  ask fsa
+  [ set xcor xcor - 60
+    set ycor ycor - 45 ]
+ repeat 3
+  [ ask fsa
+  [ fd 5
+      wait .025 ] ]
+  ask fsa
+   [ die ]
+end
+
+to ownGigaDrainAnimation
+  create-ogda 1
+  [ set size 25
+    set color green
+    set heading 55
+    set xcor 37
+    set ycor 88 ]
+  create-ogda 1
+  [ set size 25
+    set color green
+    set heading 220
+    set xcor 90
+    set ycor 45 ]
+  create-ogda 1
+  [ set size 25
+    set color green
+    set heading 220
+    set xcor 115
+    set ycor 15 ]
+  repeat 5 [ask ogda
+  [ rt random 360
+      wait .02 ] ]
+  ask ogda
+  [ set heading 220
+    wait .02 ]
+  repeat 15 [ask ogda
+  [ fd 10
+      wait .02 ] ]
+  ask ogda
+  [ die ]
+  create-ogda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor -103
+    set ycor -151]
+  create-ogda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor -167
+    set ycor -101]
+  create-ogda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor -103
+    set ycor -80]
+  create-ogda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor -57
+    set ycor -40]
+  create-ogda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor -32
+    set ycor -101]
+  create-ogda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor -156
+    set ycor -40]
+  ask ogda
+  [ repeat 18 [
+    fd 1
+    wait .00625]]
+  ask ogda
+  [ die ]
+end
+
+to foeGigaDrainAnimation
+  create-fgda 1
+  [ set size 25
+    set color green
+    set heading 220
+    set xcor 55
+    set ycor -38 ]
+  create-fgda 1
+  [ set size 25
+    set color green
+    set heading 220
+    set xcor -10
+    set ycor -100 ]
+  create-fgda 1
+  [ set size 25
+    set color green
+    set heading 220
+    set xcor -80
+    set ycor -50 ]
+  repeat 5 [ask fgda
+  [ rt random 360
+      wait .02 ] ]
+  ask fgda
+  [ set heading 30
+      wait .02 ]
+  repeat 10 [ ask fgda
+    [ fd 10
+      wait .02 ] ]
+  ask fgda
+  [ die ]
+  create-fgda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor 103
+    set ycor 151]
+  create-fgda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor 167
+    set ycor 101]
+  create-fgda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor 103
+    set ycor 80]
+  create-fgda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor 57
+    set ycor 40]
+  create-fgda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor 32
+    set ycor 101]
+  create-fgda 1 [
+    set size 20
+    set color green
+    set shape "circle"
+    set heading 0
+    set xcor 156
+    set ycor 40]
+  ask fgda
+  [ repeat 18 [
+    fd 1
+    wait .00625]]
+  ask fgda
+  [ die ]
+end
+
+to ownToxicAnimation
+  create-ota 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor 15
+    set ycor 115 ]
+  create-ota 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor 20
+    set ycor 115 ]
+  create-ota 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor 25
+    set ycor 115 ]
+  create-ota 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor 15
+    set ycor 100 ]
+  create-ota 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor 20
+    set ycor 100 ]
+  create-ota 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor 25
+    set ycor 100 ]
+  repeat 3
+  [ ask ota
+  [ fd 5
+      wait .025 ] ]
+  ask ota
+  [ set xcor xcor + 120
+    set ycor ycor - 15 ]
+  repeat 3
+  [ ask ota
+  [ fd 5
+      wait .025 ] ]
+  ask ota
+  [ set xcor xcor - 60
+    set ycor ycor - 45 ]
+  repeat 3
+  [ ask ota
+  [ fd 5
+      wait .025 ] ]
+  ask ota
+  [ die ]
+end
+
+to foeToxicAnimation
+  create-fta 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor -135
+    set ycor -20 ]
+  create-fta 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor -130
+    set ycor -20 ]
+  create-fta 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor -125
+    set ycor -20 ]
+  create-fta 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor -135
+    set ycor -35 ]
+  create-fta 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor -130
+    set ycor -35 ]
+  create-fta 1
+  [ set size 25
+    set color violet
+    set heading 180
+    set shape "circle"
+    set xcor -125
+    set ycor -35 ]
+  repeat 3
+  [ ask fta
+  [ fd 5
+      wait .025 ] ]
+  ask fta
+  [ set xcor xcor + 120
+    set ycor ycor - 15 ]
+  repeat 3
+  [ ask fta
+  [ fd 5
+      wait .025 ] ]
+  ask fta
+  [ set xcor xcor - 60
+    set ycor ycor - 45 ]
+ repeat 3
+  [ ask fta
+  [ fd 5
+      wait .025 ] ]
+  ask fta
+   [ die ]
+end
+
+to ownCrossPoisonAnimation
+  create-ocpa 1
+  [ set size 25
+    set heading 135
+    set color violet
+    set xcor -15
+    set ycor 170 ]
+  repeat 13 [ask ocpa
+  [ hatch 1
+    [ set breed ocpat
+      set size 25
+      set heading 135
+      set color violet ]
+    fd 20
+      wait .02 ] ]
+  ask ocpat
+  [ die ]
+  ask ocpa
+  [ die ]
+  create-ocpa 1
+  [ set size 25
+    set heading 225
+    set color violet
+    set xcor 190
+    set ycor 170 ]
+  repeat 13 [ ask ocpa
+  [ hatch 1
+    [ set breed ocpat
+      set size 25
+      set heading 225
+      set color violet ]
+    fd 20
+      wait .02 ] ]
+  ask ocpat
+  [ die ]
+  ask ocpa
+  [ die ]
+  create-ocpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 103
+    set ycor 151]
+  create-ocpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 167
+    set ycor 101]
+  create-ocpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 103
+    set ycor 80]
+  create-ocpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 57
+    set ycor 40]
+  create-ocpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 32
+    set ycor 101]
+  create-ocpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 156
+    set ycor 40]
+  ask ocpa
+  [ repeat 18 [
+    fd 1
+    wait .00625]]
+  ask ocpa
+  [ die ]
+end
+
+to foeCrossPoisonAnimation
+  create-fcpa 1
+  [ set size 25
+    set heading 135
+    set color violet
+    set xcor -190
+    set ycor 0 ]
+  repeat 13 [ask fcpa
+  [ hatch 1
+    [ set breed fcpat
+      set size 25
+      set heading 135
+      set color violet ]
+    fd 20
+      wait .02 ] ]
+  ask fcpat
+  [ die ]
+  ask fcpa
+  [ die ]
+  create-fcpa 1
+  [ set size 25
+    set heading 225
+    set color violet
+    set xcor 50
+    set ycor 0 ]
+  repeat 13 [ask fcpa
+  [ hatch 1
+    [ set breed fcpat
+      set size 25
+      set heading 225
+      set color violet ]
+    fd 20
+      wait .02 ] ]
+  ask fcpat
+  [ die ]
+  ask fcpa
+  [ die ]
+  create-fcpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -103
+    set ycor -151]
+  create-fcpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -167
+    set ycor -101]
+  create-fcpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -103
+    set ycor -80]
+  create-fcpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -57
+    set ycor -40]
+  create-fcpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -32
+    set ycor -101]
+  create-fcpa 1 [
+    set size 20
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -156
+    set ycor -40]
+  ask fcpa
+  [ repeat 18 [
+    fd 1
+    wait .00625]]
+  ask fcpa
+  [ die ]
+end
+
+to ownAcrobaticsAnimation
+  repeat 2 [create-oaa 1
+    [ set size 25
+      set heading 315
+      set color gray
+      set xcor 169
+      set ycor -14 ]
+    repeat 13 [ ask oaa
+      [ hatch 1
+        [ set breed oaat
+          set size 25
+          set heading 315
+          set color gray ]
+        fd 20
+        wait .02 ] ]
+    ask oaat
+    [ die ]
+    ask oaa
+    [ die ]
+    create-oaa 1
+    [ set size 25
+      set heading 45
+      set color gray
+      set xcor 6
+      set ycor -14 ]
+    repeat 13 [ask oaa
+      [ hatch 1
+        [ set breed oaat
+          set size 25
+          set heading 45
+          set color gray ]
+        fd 20
+        wait .02 ] ]
+    ask oaat
+    [ die ]
+    ask oaa
+    [ die ] ]
+end
+
+to foeAcrobaticsAnimation
+  repeat 2 [create-faa 1
+    [ set size 25
+      set heading 315
+      set color gray
+      set xcor -6
+      set ycor -184 ]
+    repeat 13 [ask faa
+      [ hatch 1
+        [ set breed faat
+          set size 25
+          set heading 315
+          set color gray ]
+        fd 20
+        wait .02 ] ]
+    ask faat
+    [ die ]
+    ask faa
+    [ die ]
+    create-faa 1
+    [ set size 25
+      set heading 45
+      set color gray
+      set xcor -134
+      set ycor -184 ]
+    repeat 13 [ask faa
+      [ hatch 1
+        [ set breed faat
+          set size 25
+          set heading 45
+          set color gray ]
+        fd 20
+        wait .02 ] ]
+    ask faat
+    [ die ]
+    ask faa
+    [ die ] ]
+end
+
+to ownConfuseRayAnimation
+  create-ocra 1
+  [ set size 25
+    set color yellow
+    set heading 25
+    set xcor 20
+    set ycor -77 ]
+  repeat 8 [
+    ask ocra
+    [ hatch 1
+      [ set breed ocrat
+        set size 25
+        set heading 25
+        set color yellow ]
+      fd 20
+      wait .0625 ]]
+  ask ocrat [die]
+  ask ocra [
+    set xcor 50
+    set ycor 110
+    set heading 0 ]
+  repeat 8
+  [repeat 5 [ask ocra
+    [ fd 10
+      wait .02 ] ]
+    ask ocra
+    [ rt 90
+      fd 10
+      wait .02 ] ]
+  ask ocra
+  [ die ]
+end
+
+to foeConfuseRayAnimation
+  create-fcra 1
+  [ set size 25
+    set color yellow
+    set heading 205
+    set xcor 27
+    set ycor 88 ]
+  repeat 8 [
+    ask fcra
+    [ hatch 1
+      [ set breed fcrat
+        set size 25
+        set heading 205
+        set color yellow ]
+      fd 20
+      wait .0625 ]]
+  ask fcrat [die]
+  ask fcra
+  [ set xcor -100
+    set ycor -70
+    set heading 0 ]
+  repeat 8
+  [ repeat 5 [ask fcra
+  [ fd 10
+        wait .02 ] ]
+  ask fcra
+  [ rt 90
+    fd 10
+        wait .02 ] ]
+  ask fcra
+  [ die ]
+end
+
+to ownStoneEdgeAnimation
+  create-osea 1
+  [ set size 50
+    set color brown
+    set heading 55
+    set shape "pentagon"
+    set xcor 60
+    set ycor -38 ]
+  ask osea
+  [ wait .02 ]
+  repeat 20
+  [ ask osea
+  [ fd 5
+      wait .02 ] ]
+  ask osea
+  [ die ]
+end
+
+to foeStoneEdgeAnimation
+  create-fsea 1
+  [ set size 50
+    set color brown
+    set heading 220
+    set shape "pentagon"
+    set xcor 42
+    set ycor 88 ]
+  ask fsea
+  [ wait .02 ]
+  repeat 20
+  [ ask fsea
+  [ fd 5
+      wait .02 ] ]
+  ask fsea
+  [ die ]
+end
+
+to ownDragonClawAnimation
+create-odca 1
+  [ set size 25
+    set heading 225
+    set color blue
+    set xcor 190
+    set ycor 170 ]
+  repeat 13 [ ask odca
+  [ hatch 1
+    [ set breed odcat
+      set size 25
+      set heading 225
+      set color blue ]
+    fd 20
+      wait .02 ] ]
+  ask odcat
+  [ die ]
+  ask odca
+  [ die ]
+end
+
+to foeDragonClawAnimation
+  create-fdca 1
+  [ set size 25
+    set heading 225
+    set color blue
+    set xcor 120
+    set ycor 0 ]
+  repeat 13 [ask fdca
+  [ hatch 1
+    [ set breed fdcat
+      set size 25
+      set heading 225
+      set color blue ]
+    fd 20
+      wait .02 ] ]
+  ask fdcat
+  [ die ]
+  ask fdca
+  [ die ]
+end
+
+to ownEarthquakeAnimation
+  create-oea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 25
+    set ycor 10]
+  create-oea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 80
+    set ycor -20]
+  create-oea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 160
+    set ycor -15]
+  create-oea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 170
+    set ycor 20]
+  repeat 15
+  [ ask oea
+    [ set heading random 360
+      fd 5
+      wait .02 ] ]
+  ask oea
+  [ die ]
+end
+
+to foeEarthquakeAnimation
+  create-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor -160
+    set ycor -120]
+  create-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor -120
+    set ycor -110]
+  create-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 35
+    set ycor -130]
+  create-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor 90
+    set ycor -170]
+  repeat 15
+  [ ask fea
+    [ set heading random 360
+      fd 5
+      wait .02 ] ]
+  ask fea
+  [ die ]
+end
+
+to ownCrunchAnimation
+  create-oca 1
+  [ set size 100
+    set color gray
+    set heading 0
+    set shape "jaw"
+    set xcor 120
+    set ycor 75 ]
+  create-oca 1
+  [ set size 100
+    set color gray
+    set heading 180
+    set shape "jaw"
+    set xcor 120
+    set ycor 25 ]
+  repeat 6
+  [ ask oca
+    [ bk 5
+      wait .02 ] ]
+  ask oca
+  [ die ]
+end
+
+to foeCrunchAnimation
+  create-fca 1
+  [ set size 100
+    set color gray
+    set heading 0
+    set shape "jaw"
+    set xcor -60
+    set ycor -50 ]
+  create-fca 1
+  [ set size 100
+    set color gray
+    set heading 180
+    set shape "jaw"
+    set xcor -60
+    set ycor -100 ]
+  repeat 6
+  [ ask fca
+    [ bk 5
+      wait .02 ] ]
+  ask fca
+  [ die ]
+end
+
+to ownMegahornAnimation
+  create-oma 1
+    [ set size 25
+      set heading 45
+      set color 126
+      set xcor 6
+      set ycor -14 ]
+    repeat 6 [ask oma
+      [ hatch 1
+        [ set breed omat
+          set size 25
+          set heading 45
+          set color 126 ]
+        fd 20
+        wait .02 ] ]
+  ask oma
+  [ lt 30 ]
+  repeat 6 [ask oma
+      [ hatch 1
+        [ set breed omat
+          set size 25
+          set heading 15
+          set color 126 ]
+        fd 20
+        wait .02 ] ]
+    ask omat
+    [ die ]
+    ask oma
+    [ die ]
+end
+
+to foeMegahornAnimation
+ create-fma 1
+    [ set size 25
+      set heading 315
+      set color 126
+      set xcor -6
+      set ycor -184 ]
+    repeat 6 [ask fma
+      [ hatch 1
+        [ set breed fmat
+          set size 25
+          set heading 315
+          set color 126 ]
+        fd 20
+        wait .02 ] ]
+  ask fma
+  [ rt 30 ]
+  repeat 6 [ask fma
+      [ hatch 1
+        [ set breed fmat
+          set size 25
+          set heading 345
+          set color 126 ]
+        fd 20
+        wait .02 ] ]
+    ask fmat
+    [ die ]
+    ask fma
+    [ die ]
+end
+
+to ownOutrageAnimation
+  create-ooa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor -160
+    set ycor -120]
+  create-ooa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor -120
+    set ycor -110]
+  create-ooa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 35
+    set ycor -130]
+  create-ooa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 90
+    set ycor -170]
+  repeat 15
+  [ ask ooa
+    [ set heading random 360
+      fd 5
+      wait .02 ] ]
+  ask ooa
+  [ die ]
+  create-ooa 1 [
+    set size 100
+    set color blue
+    set shape "circle"
+    set heading 0
+    set xcor 100
+    set ycor 80]
+  repeat 20
+  [ ask ooa
+    [ set size size - 5
+      wait .02 ] ]
+  ask ooa
+  [ die ]
+end
+
+to foeOutrageAnimation
+  create-foa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 25
+    set ycor 10]
+  create-foa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 80
+    set ycor -20]
+  create-foa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 160
+    set ycor -15]
+  create-foa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 170
+    set ycor 20]
+  repeat 15
+  [ ask foa
+    [ set heading random 360
+      fd 5
+      wait .02 ] ]
+  ask foa
+  [ die ]
+  create-foa 1 [
+    set size 100
+    set color blue
+    set shape "circle"
+    set heading 0
+    set xcor -75
+    set ycor -100]
+  repeat 20
+  [ ask foa
+    [ set size size - 5
+      wait .02 ] ]
+  ask foa
+  [ die ]
+end
+
+to ownHeadSmashAnimation
+  create-ohsa 1 [
+    set size 100
+    set color gray
+    set shape "circle"
+    set heading 0
+    set xcor 100
+    set ycor 80]
+  repeat 20
+  [ ask ohsa
+    [ set size size - 5
+      wait .02 ] ]
+  ask ohsa
+  [ die ]
+end
+
+to foeHeadSmashAnimation
+  create-fhsa 1 [
+    set size 100
+    set color gray
+    set shape "circle"
+    set heading 0
+    set xcor -75
+    set ycor -100]
+  repeat 20
+  [ ask fhsa
+    [ set size size - 5
+      wait .02 ] ]
+  ask fhsa
+  [ die ]
+end
+
+to ownPoisonJabAnimation
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 15
+    set ycor 105 ]
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 20
+    set ycor 105 ]
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 25
+    set ycor 105 ]
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 15
+    set ycor 90 ]
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 20
+    set ycor 90 ]
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 25
+    set ycor 90 ]
+  ask opja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask opja
+  [ set xcor xcor + 110
+    set ycor ycor - 10 ]
+  ask opja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask opja
+  [ set xcor xcor - 50
+    set ycor ycor - 110 ]
+  ask opja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask opja
+  [ set xcor xcor + 20
+    set ycor ycor + 90 ]
+  ask opja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask opja
+  [ set xcor xcor + 30
+    set ycor ycor - 50 ]
+  ask opja
+  [ repeat 3 [
+    fd 2
+    wait .0125]
+    die]
+end
+
+to foePoisonJabAnimation
+  create-fpja 1
+  [ set size 25
+    set shape "fist"
+    set color violet
+    set heading 0
+    set xcor -135
+    set ycor -20 ]
+  create-fpja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor -130
+    set ycor -20 ]
+  create-fpja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor -125
+    set ycor -20 ]
+  create-fpja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor -135
+    set ycor -35 ]
+  create-fpja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor -130
+    set ycor -35 ]
+  create-fpja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor -125
+    set ycor -35 ]
+  ask fpja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fpja
+  [ set xcor xcor + 60
+    set ycor ycor - 115 ]
+  ask fpja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fpja
+  [ set xcor xcor - 20
+    set ycor ycor + 90 ]
+  ask fpja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fpja
+  [ set xcor xcor - 30
+    set ycor ycor - 50 ]
+  ask fpja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fpja
+  [ set xcor xcor + 100
+    set ycor ycor - 20 ]
+  ask fpja
+  [ repeat 3 [
+    fd 2
+    wait .0125]
+    die]
+end
+
+to foeConfusedStatusAnimation
+  create-fcsa 1
+  [ set size 25
+    set color yellow
+    set heading 25
+    set xcor 20
+    set ycor -77 ]
+  ask fcsa [
+    set xcor 50
+    set ycor 110
+    set heading 0 ]
+  repeat 12
+  [repeat 5 [ask fcsa
+    [ fd 10
+      wait .02 ] ]
+    ask fcsa
+    [ rt 90
+      fd 10
+      wait .02 ] ]
+  ask fcsa
+  [ die ]
+end
+
+to ownConfusedStatusAnimation
+  create-ocsa 1
+  [ set size 25
+    set color yellow
+    set heading 205
+    set xcor 27
+    set ycor 88 ]
+  ask ocsa
+  [ set xcor -100
+    set ycor -70
+    set heading 0 ]
+  repeat 12
+  [ repeat 5 [ask ocsa
+  [ fd 10
+        wait .02 ] ]
+  ask ocsa
+  [ rt 90
+    fd 10
+        wait .02 ] ]
+  ask ocsa
+  [ die ]
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
 314
 10
-751
-448
+723
+420
 -1
 -1
-13.0
+1.0
 1
 10
 1
@@ -694,10 +2968,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--16
-16
--16
-16
+-200
+200
+-200
+200
 0
 0
 1
@@ -705,10 +2979,10 @@ ticks
 30.0
 
 BUTTON
-22
-46
-85
-79
+0
+10
+63
+43
 NIL
 setup
 NIL
@@ -722,11 +2996,11 @@ NIL
 1
 
 BUTTON
-21
-106
-160
-139
-make ally infernape
+0
+46
+89
+79
+ally infernape
 ask ally 0 [\nset pokename \"infernape\"\npokenameTostats\nset color red\nset atkstage 0\n]
 NIL
 1
@@ -739,12 +3013,12 @@ NIL
 1
 
 BUTTON
-21
-170
-161
-203
-make enemy crobat
-ask enemy 1 [\nset pokename \"crobat\"\npokenameTostats\nset color magenta\n]
+0
+98
+91
+131
+enemy nidoking
+ask enemy 1 [\nset pokename \"nidoking\"\npokenameTostats\nset color magenta\n]
 NIL
 1
 T
@@ -756,11 +3030,11 @@ NIL
 1
 
 BUTTON
-14
-225
-286
-258
-make infernape use close combat
+140
+234
+276
+267
+ally use move1
 ask ally 0 [\nset currentmove move1]\n
 NIL
 1
@@ -772,52 +3046,96 @@ NIL
 NIL
 1
 
-BUTTON
-23
-368
-205
-401
-make crobat use acrobatics
-ask enemy 1 [\nset currentmove move2]\n
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
 MONITOR
-316
-400
-422
-445
-hp of infernape
+315
+376
+421
+421
+hp of ally
 report_hp ([hp] of ally 0)
 1
 1
 11
 
 MONITOR
-578
-14
-748
-59
-hp of crobat
+551
+11
+721
+56
+hp of enemy
 report_hp ([hp] of enemy 1)
 1
 1
 11
 
 BUTTON
+65
+523
+155
+556
+NIL
+doturntest
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+MONITOR
+18
+229
+129
+274
+Move1 of ally
+report_move [move1] of ally 0
+17
+1
+11
+
+MONITOR
+20
+282
+107
+327
+Move2 of ally
+report_move [move2] of ally 0
+17
+1
+11
+
+MONITOR
 22
-408
-216
-441
-make crobat use cross poison
-ask enemy 1 [\nset currentmove move3]\n
+333
+109
+378
+Move3 of ally
+report_move [move3] of ally 0
+17
+1
+11
+
+MONITOR
+23
+385
+110
+430
+Move4 of ally
+report_move [move4] of ally 0
+17
+1
+11
+
+BUTTON
+138
+285
+277
+318
+ally use move2
+ask ally 0 [\nset currentmove move2]\n
 NIL
 1
 T
@@ -829,11 +3147,11 @@ NIL
 1
 
 BUTTON
-13
-265
-207
-298
-make infernape use flare blitz
+148
+340
+261
+373
+ally use move3
 ask ally 0 [\nset currentmove move3]\n
 NIL
 1
@@ -846,11 +3164,123 @@ NIL
 1
 
 BUTTON
-32
-450
-191
-483
-make crobat use toxic
+145
+392
+258
+425
+ally use move4
+ask ally 0 [\nset currentmove move4]\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+MONITOR
+285
+453
+390
+498
+Move1 of enemy
+report_move [move1] of enemy 1
+17
+1
+11
+
+MONITOR
+454
+453
+559
+498
+Move2 of enemy
+report_move [move2] of enemy 1
+17
+1
+11
+
+MONITOR
+623
+454
+728
+499
+Move3 of enemy
+report_move [move3] of enemy 1
+17
+1
+11
+
+MONITOR
+804
+452
+909
+497
+Move4 of enemy
+report_move [move4] of enemy 1
+17
+1
+11
+
+BUTTON
+272
+509
+407
+542
+enemy  use move1
+ask enemy 1 [\nset currentmove move1]\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+441
+510
+573
+543
+enemy use move2
+ask enemy 1 [\nset currentmove move2]\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+614
+513
+746
+546
+enemy use move3
+ask enemy 1 [\nset currentmove move3]\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+788
+512
+920
+545
+enemy use move4
 ask enemy 1 [\nset currentmove move4]\n
 NIL
 1
@@ -863,12 +3293,12 @@ NIL
 1
 
 BUTTON
-32
-330
-251
-363
-make infernape use swords dance
-ask ally 0 [\nset currentmove move4]\n
+90
+46
+188
+79
+ally haxorus
+ask ally 0 [\nset pokename \"haxorus\"\npokenameTostats\nset color green\nset atkstage 0\n]
 NIL
 1
 T
@@ -880,12 +3310,46 @@ NIL
 1
 
 BUTTON
-65
-523
-155
-556
+184
+46
+285
+79
+ally amoonguss
+ask ally 0 [\nset pokename \"amoonguss\"\npokenameTostats\nset color green\nset atkstage 0\n]
 NIL
-doturntest
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+90
+98
+189
+131
+enemy crobat
+ask enemy 1 [\nset pokename \"crobat\"\npokenameTostats\nset color violet\nset atkstage 0\n]
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+188
+98
+283
+131
+enemy krookodile
+ask enemy 1 [\nset pokename \"krookodile\"\npokenameTostats\nset color red\nset atkstage 0\n]
 NIL
 1
 T
@@ -1041,6 +3505,13 @@ Circle -16777216 true false 60 75 60
 Circle -16777216 true false 180 75 60
 Polygon -16777216 true false 150 168 90 184 62 210 47 232 67 244 90 220 109 205 150 198 192 205 210 220 227 242 251 229 236 206 212 183
 
+fire
+false
+0
+Polygon -7500403 true true 151 286 134 282 103 282 59 248 40 210 32 157 37 108 68 146 71 109 83 72 111 27 127 55 148 11 167 41 180 112 195 57 217 91 226 126 227 203 256 156 256 201 238 263 213 278 183 281
+Polygon -955883 true false 126 284 91 251 85 212 91 168 103 132 118 153 125 181 135 141 151 96 185 161 195 203 193 253 164 286
+Polygon -2674135 true false 155 284 172 268 172 243 162 224 148 201 130 233 131 260 135 282
+
 fish
 false
 0
@@ -1049,6 +3520,20 @@ Polygon -1 true false 135 195 119 235 95 218 76 210 46 204 60 165
 Polygon -1 true false 75 45 83 77 71 103 86 114 166 78 135 60
 Polygon -7500403 true true 30 136 151 77 226 81 280 119 292 146 292 160 287 170 270 195 195 210 151 212 30 166
 Circle -16777216 true false 215 106 30
+
+fist
+true
+0
+Rectangle -7500403 true true 150 45 195 150
+Rectangle -7500403 true true 150 45 195 150
+Rectangle -7500403 true true 105 45 150 150
+Rectangle -7500403 true true 60 45 105 150
+Line -16777216 false 105 150 105 90
+Line -16777216 false 150 150 150 90
+Rectangle -7500403 true true 195 45 240 150
+Line -16777216 false 195 150 195 90
+Rectangle -7500403 true true 150 150 240 195
+Line -16777216 false 150 150 240 150
 
 flag
 false
@@ -1082,6 +3567,12 @@ Rectangle -7500403 true true 45 120 255 285
 Rectangle -16777216 true false 120 210 180 285
 Polygon -7500403 true true 15 120 150 15 285 120
 Line -16777216 false 30 120 270 120
+
+jaw
+true
+0
+Polygon -7500403 true true 60 150 45 135 45 120 60 90 90 75 135 60 165 60 210 75 240 90 255 120 255 135 240 150 240 135 240 120 150 90 60 120 60 150 60 150
+Polygon -1 true false 60 120 75 135 90 105 105 135 120 90 135 135 150 90 165 135 180 90 195 135 210 105 225 135 240 120 210 105 180 90 165 75 150 90 135 75 120 90 90 105 60 120
 
 leaf
 false
