@@ -2107,11 +2107,105 @@ to foePoisonedanimation
 end
 
 to ownBadPoisonanimation
-
+  create-obpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -103
+    set ycor -151]
+  create-obpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -167
+    set ycor -101]
+  create-obpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -103
+    set ycor -80]
+  create-obpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -57
+    set ycor -40]
+  create-obpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -32
+    set ycor -101]
+  create-obpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor -156
+    set ycor -40]
+  ask obpa
+  [ repeat 18 [
+    fd 1
+    wait .0125]]
+  ask obpa
+  [ die ]
 end
 
 to foeBadPoisonanimation
-
+  create-fbpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 103
+    set ycor 151]
+  create-fbpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 167
+    set ycor 101]
+  create-fbpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 103
+    set ycor 80]
+  create-fbpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 57
+    set ycor 40]
+  create-fbpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 32
+    set ycor 101]
+  create-fbpa 1 [
+    set size 45
+    set color violet
+    set shape "circle"
+    set heading 0
+    set xcor 156
+    set ycor 40]
+  ask fbpa
+  [ repeat 18 [
+    fd 1
+    wait .0125]]
+  ask fbpa
+  [ die ]
 end
 
 to ownParalyzeanimation
@@ -3005,9 +3099,9 @@ NIL
 1
 
 BUTTON
-635
+624
 420
-768
+757
 453
 NIL
 ownBurnanimation\n
@@ -3022,9 +3116,9 @@ NIL
 1
 
 BUTTON
-773
+762
 419
-901
+890
 452
 NIL
 foeBurnanimation\n
@@ -3073,9 +3167,9 @@ NIL
 1
 
 BUTTON
-912
+901
 420
-1067
+1056
 453
 NIL
 ownParalyzeanimation\n
@@ -3107,9 +3201,9 @@ NIL
 1
 
 BUTTON
-1070
+1059
 419
-1227
+1216
 452
 NIL
 ownPoisonedanimation
@@ -3124,12 +3218,46 @@ NIL
 1
 
 BUTTON
-1065
-458
-1217
-491
+1063
+455
+1215
+488
 NIL
 foePoisonedanimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1219
+419
+1383
+452
+NIL
+ownBadPoisonanimation\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1219
+456
+1378
+489
+NIL
+foeBadPoisonanimation
 NIL
 1
 T
