@@ -2049,11 +2049,61 @@ to foeBurnanimation
 end
 
 to ownPoisonedanimation
-
+  create-opa 1 [
+    set size 45
+    set color magenta
+    set shape "circle"
+    set heading 0
+    set xcor -32
+    set ycor -101]
+  create-opa 1 [
+    set size 45
+    set color magenta
+    set shape "circle"
+    set heading 0
+    set xcor -103
+    set ycor -51]
+  create-opa 1 [
+    set size 45
+    set color magenta
+    set shape "circle"
+    set heading 0
+    set xcor -167
+    set ycor -101]
+  ask opa [
+    repeat 25 [
+      fd 1
+      wait .0125]]
+  ask opa [die]
 end
 
 to foePoisonedanimation
-
+  create-fpa 1 [
+    set size 45
+    set color magenta
+    set shape "circle"
+    set heading 0
+    set xcor 32
+    set ycor 101]
+  create-fpa 1 [
+    set size 45
+    set color magenta
+    set shape "circle"
+    set heading 0
+    set xcor 103
+    set ycor 151]
+  create-fpa 1 [
+    set size 45
+    set color magenta
+    set shape "circle"
+    set heading 0
+    set xcor 167
+    set ycor 101]
+  ask fpa
+  [ repeat 25 [
+    fd 1
+    wait .0125]]
+  ask fpa [die]
 end
 
 to ownBadPoisonanimation
@@ -3046,6 +3096,40 @@ BUTTON
 487
 NIL
 foeParalyzeanimation\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1070
+419
+1227
+452
+NIL
+ownPoisonedanimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1065
+458
+1217
+491
+NIL
+foePoisonedanimation
 NIL
 1
 T
