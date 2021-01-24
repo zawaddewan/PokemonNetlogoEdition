@@ -52,8 +52,6 @@ breed [ opja opj ]
 breed [ fpja fpj ]
 breed [ osla osl ]
 breed [ fsla fsl ]
-breed [ ocoa oco ]
-breed [ fcoa fco ]
 breed [ oba ob ]
 breed [ fba fb ]
 breed [ opa op ]
@@ -1990,14 +1988,6 @@ to foeSleepanimation
       fd 1
       wait .0125]]
   ask fsla [die]
-end
-
-to ownConfuseanimation
-
-end
-
-to foeConfuseanimation
-
 end
 
 to ownBurnanimation
