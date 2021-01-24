@@ -68,13 +68,6 @@ turtles-own [pokename
   currentmove movetype cat power acc prio
   modifier effectiveness atkstage defstage spdefstage damage]
 
-;need to add choosing pokemon :P
-to menu
-  ca
-  import-pcolors "menu.png"
-end
-
-
 ;temporary setup to test things
 to setup
   ca
@@ -273,19 +266,12 @@ to pokenameTostats
     set type2 "null"
     set move1 "swords_dance"
     set move2 "earthquake"
-<<<<<<< HEAD
     set move3 "poison_jab"
-=======
-    set move3 "poison jab"
->>>>>>> 662269de65e261889c4ad6afa7f4ba525cf36163
     set move4 "outrage"
   ]
   if pokename = "nidoking" [
     calcHP 81 0 0
-<<<<<<< HEAD
     set hp maxhp
-=======
->>>>>>> 662269de65e261889c4ad6afa7f4ba525cf36163
     calcatk 102 0 0
     calcdef 77 0 0
     calcspatk 85 0 0
@@ -433,13 +419,8 @@ to moveTostats
     set acc 100
     set prio 0]
   if currentmove = "outrage" [
-<<<<<<< HEAD
     set movetype "dragon"
     set cat "physical"
-=======
-    set movetype "poison"
-    set cat "special"
->>>>>>> 662269de65e261889c4ad6afa7f4ba525cf36163
     set power 120
     set acc 100
     set prio 0]
@@ -3200,7 +3181,6 @@ NIL
 1
 
 MONITOR
-<<<<<<< HEAD
 285
 453
 390
@@ -3208,14 +3188,6 @@ MONITOR
 Move1 of enemy
 report_move [move1] of enemy 1
 17
-=======
-315
-421
-421
-466
-hp of infernape
-report_hp ([hp] of ally 0)
->>>>>>> 662269de65e261889c4ad6afa7f4ba525cf36163
 1
 11
 
@@ -3231,7 +3203,6 @@ report_move [move2] of enemy 1
 11
 
 MONITOR
-<<<<<<< HEAD
 623
 454
 728
@@ -3239,14 +3210,6 @@ MONITOR
 Move3 of enemy
 report_move [move3] of enemy 1
 17
-=======
-611
-419
-722
-464
-hp of crobat
-report_hp ([hp] of enemy 1)
->>>>>>> 662269de65e261889c4ad6afa7f4ba525cf36163
 1
 11
 
@@ -3387,40 +3350,6 @@ BUTTON
 131
 enemy krookodile
 ask enemy 1 [\nset pokename \"krookodile\"\npokenameTostats\nset color red\nset atkstage 0\n]
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-159
-42
-222
-75
-NIL
-ca
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-206
-109
-269
-142
-NIL
-menu
 NIL
 1
 T
