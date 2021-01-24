@@ -135,7 +135,7 @@ to menu
             set size 50
             set pokename "krookodile"
             pokenameTostats
-            set color green
+            set color brown
             set atkstage 0 ]
           genEnemy
           stop]]
