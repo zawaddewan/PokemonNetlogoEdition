@@ -1911,11 +1911,85 @@ to foePoisonJabAnimation
 end
 
 to ownSleepanimation
-
+  create-osla 1 [
+    set size 55
+    set shape "sleepZ"
+    set color cyan
+    set heading 315
+    set xcor -60
+    set ycor 0 ]
+  create-osla 1 [
+    set size 55
+    set shape "sleepZ"
+    set color cyan
+    set heading 315
+    set xcor -85
+    set ycor -30 ]
+  create-osla 1 [
+    set size 55
+    set shape "sleepZ"
+    set color cyan
+    set heading 315
+    set xcor -45
+    set ycor -60 ]
+  repeat 20 [
+    ask osla [
+      fd 1
+      wait .0125]]
+  ask osla [
+    set heading 45 ]
+  repeat 20 [
+    ask osla [
+      fd 1
+      wait .0125 ]]
+  ask osla [
+    set heading 315 ]
+  repeat 20 [
+    ask osla [
+      fd 1
+      wait .0125]]
+  ask osla [die]
 end
 
 to foeSleepanimation
-
+  create-fsla 1 [
+    set size 55
+    set shape "sleepZ"
+    set color cyan
+    set heading 315
+    set xcor 55
+    set ycor 125 ]
+  create-fsla 1 [
+    set size 55
+    set shape "sleepZ"
+    set color cyan
+    set heading 315
+    set xcor 30
+    set ycor 95 ]
+  create-fsla 1 [
+    set size 55
+    set shape "sleepZ"
+    set color cyan
+    set heading 315
+    set xcor 80
+    set ycor 65 ]
+  repeat 20 [
+    ask fsla [
+      fd 1
+      wait .0125]]
+  ask fsla [
+    set heading 45 ]
+  repeat 20 [
+    ask fsla [
+      fd 1
+      wait .0125 ]]
+  ask fsla [
+    set heading 315 ]
+  repeat 20 [
+    ask fsla [
+      fd 1
+      wait .0125]]
+  ask fsla [die]
 end
 
 to ownConfuseanimation
@@ -2858,6 +2932,40 @@ BUTTON
 452
 NIL
 foeBurnanimation\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+630
+454
+768
+487
+NIL
+ownSleepanimation\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+771
+454
+904
+487
+NIL
+foeSleepanimation
 NIL
 1
 T
