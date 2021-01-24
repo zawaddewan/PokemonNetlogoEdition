@@ -13,7 +13,7 @@ breed [ fcpa fcp ]
 breed [ ocpat ocpt ]
 breed [ fcpat fcpt ]
 breed [ ota ot ]
-breed [ fta ftd ]
+breed [ fta ft ]
 breed [ ocra ocr ]
 breed [ ocrat ocrt ]
 breed [ fcra fcr ]
@@ -40,6 +40,16 @@ breed [ oca oc ]
 breed [ fca fc ]
 breed [ oea oe ]
 breed [ fea fe ]
+breed [ ohsa ohs ]
+breed [ fhsa fhs ]
+breed [ ooa oo ]
+breed [ foa fo ]
+breed [ oma om ]
+breed [ fma fm ]
+breed [ omat omt ]
+breed [ fmat fmt ]
+breed [ opja opj ]
+breed [ fpja fpj ]
 
 to ownMachPunchAnimation
   create-ompa 1
@@ -1492,6 +1502,350 @@ to foeCrunchAnimation
   ask fca
   [ die ]
 end
+
+to ownMegahornAnimation
+  create-oma 1
+    [ set size 25
+      set heading 45
+      set color 126
+      set xcor 6
+      set ycor -14 ]
+    repeat 6 [ask oma
+      [ hatch 1
+        [ set breed omat
+          set size 25
+          set heading 45
+          set color 126 ]
+        fd 20
+        wait .02 ] ]
+  ask oma
+  [ lt 30 ]
+  repeat 6 [ask oma
+      [ hatch 1
+        [ set breed omat
+          set size 25
+          set heading 15
+          set color 126 ]
+        fd 20
+        wait .02 ] ]
+    ask omat
+    [ die ]
+    ask oma
+    [ die ]
+end
+
+to foeMegahornAnimation
+ create-fma 1
+    [ set size 25
+      set heading 315
+      set color 126
+      set xcor -6
+      set ycor -184 ]
+    repeat 6 [ask fma
+      [ hatch 1
+        [ set breed fmat
+          set size 25
+          set heading 315
+          set color 126 ]
+        fd 20
+        wait .02 ] ]
+  ask fma
+  [ rt 30 ]
+  repeat 6 [ask fma
+      [ hatch 1
+        [ set breed fmat
+          set size 25
+          set heading 345
+          set color 126 ]
+        fd 20
+        wait .02 ] ]
+    ask fmat
+    [ die ]
+    ask fma
+    [ die ]
+end
+
+to ownOutrageAnimation
+  create-ooa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor -160
+    set ycor -120]
+  create-ooa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor -120
+    set ycor -110]
+  create-ooa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 35
+    set ycor -130]
+  create-ooa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 90
+    set ycor -170]
+  repeat 15
+  [ ask ooa
+    [ set heading random 360
+      fd 5
+      wait .02 ] ]
+  ask ooa
+  [ die ]
+  create-ooa 1 [
+    set size 100
+    set color blue
+    set shape "circle"
+    set heading 0
+    set xcor 100
+    set ycor 80]
+  repeat 20
+  [ ask ooa
+    [ set size size - 5
+      wait .02 ] ]
+  ask ooa
+  [ die ]
+end
+
+to foeOutrageAnimation
+  create-foa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 25
+    set ycor 10]
+  create-foa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 80
+    set ycor -20]
+  create-foa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 160
+    set ycor -15]
+  create-foa 1
+  [ set size 25
+    set color blue
+    set shape "circle"
+    set xcor 170
+    set ycor 20]
+  repeat 15
+  [ ask foa
+    [ set heading random 360
+      fd 5
+      wait .02 ] ]
+  ask foa
+  [ die ]
+  create-foa 1 [
+    set size 100
+    set color blue
+    set shape "circle"
+    set heading 0
+    set xcor -75
+    set ycor -100]
+  repeat 20
+  [ ask foa
+    [ set size size - 5
+      wait .02 ] ]
+  ask foa
+  [ die ]
+end
+
+to ownHeadSmashAnimation
+  create-ohsa 1 [
+    set size 100
+    set color gray
+    set shape "circle"
+    set heading 0
+    set xcor 100
+    set ycor 80]
+  repeat 20
+  [ ask ohsa
+    [ set size size - 5
+      wait .02 ] ]
+  ask ohsa
+  [ die ]
+end
+
+to foeHeadSmashAnimation
+  create-fhsa 1 [
+    set size 100
+    set color gray
+    set shape "circle"
+    set heading 0
+    set xcor -75
+    set ycor -100]
+  repeat 20
+  [ ask fhsa
+    [ set size size - 5
+      wait .02 ] ]
+  ask fhsa
+  [ die ]
+end
+
+to ownPoisonJabAnimation
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 15
+    set ycor 105 ]
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 20
+    set ycor 105 ]
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 25
+    set ycor 105 ]
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 15
+    set ycor 90 ]
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 20
+    set ycor 90 ]
+  create-opja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor 25
+    set ycor 90 ]
+  ask opja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask opja
+  [ set xcor xcor + 110
+    set ycor ycor - 10 ]
+  ask opja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask opja
+  [ set xcor xcor - 50
+    set ycor ycor - 110 ]
+  ask opja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask opja
+  [ set xcor xcor + 20
+    set ycor ycor + 90 ]
+  ask opja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask opja
+  [ set xcor xcor + 30
+    set ycor ycor - 50 ]
+  ask opja
+  [ repeat 3 [
+    fd 2
+    wait .0125]
+    die]
+end
+
+to foePoisonJabAnimation
+  create-fpja 1
+  [ set size 25
+    set shape "fist"
+    set color violet
+    set heading 0
+    set xcor -135
+    set ycor -20 ]
+  create-fpja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor -130
+    set ycor -20 ]
+  create-fpja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor -125
+    set ycor -20 ]
+  create-fpja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor -135
+    set ycor -35 ]
+  create-fpja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor -130
+    set ycor -35 ]
+  create-fpja 1
+  [ set size 25
+    set color violet
+    set shape "fist"
+    set heading 0
+    set xcor -125
+    set ycor -35 ]
+  ask fpja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fpja
+  [ set xcor xcor + 60
+    set ycor ycor - 115 ]
+  ask fpja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fpja
+  [ set xcor xcor - 20
+    set ycor ycor + 90 ]
+  ask fpja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fpja
+  [ set xcor xcor - 30
+    set ycor ycor - 50 ]
+  ask fpja
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fpja
+  [ set xcor xcor + 100
+    set ycor ycor - 20 ]
+  ask fpja
+  [ repeat 3 [
+    fd 2
+    wait .0125]
+    die]
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -2173,6 +2527,142 @@ BUTTON
 217
 NIL
 foeCrunchAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1025
+233
+1189
+266
+NIL
+ownMegahornAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1025
+279
+1184
+312
+NIL
+foeMegahornAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1217
+239
+1372
+272
+NIL
+ownOutrageAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1213
+284
+1363
+317
+NIL
+foeOutrageAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1024
+335
+1197
+368
+NIL
+ownHeadSmashAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1023
+379
+1192
+412
+NIL
+foeHeadSmashAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1210
+336
+1374
+369
+NIL
+ownPoisonJabAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1210
+382
+1369
+415
+NIL
+foePoisonJabAnimation
 NIL
 1
 T
