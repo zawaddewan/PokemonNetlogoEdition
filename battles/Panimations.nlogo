@@ -30,6 +30,16 @@ breed [ oeba oeb ]
 breed [ feba feb ]
 breed [ osa os ]
 breed [ fsa fs ]
+breed [ osea ose ]
+breed [ fsea fse ]
+breed [ odca odc ]
+breed [ odcat odct ]
+breed [ fdca fdc ]
+breed [ fdcat fdct ]
+breed [ oca oc ]
+breed [ fca fc ]
+breed [ oea oe ]
+breed [ fea fe ]
 
 to ownMachPunchAnimation
   create-ompa 1
@@ -1290,6 +1300,84 @@ to foeConfuseRayAnimation
   ask fcra
   [ die ]
 end
+
+to ownStoneEdgeAnimation
+  create-osea 1
+  [ set size 50
+    set color brown
+    set heading 55
+    set shape "pentagon"
+    set xcor 60
+    set ycor -38 ]
+  ask osea
+  [ wait .02 ]
+  repeat 20
+  [ ask osea
+  [ fd 5
+      wait .02 ] ]
+  ask osea
+  [ die ]
+end
+
+to foeStoneEdgeAnimation
+  create-fsea 1
+  [ set size 50
+    set color brown
+    set heading 220
+    set shape "pentagon"
+    set xcor 42
+    set ycor 88 ]
+  ask fsea
+  [ wait .02 ]
+  repeat 20
+  [ ask fsea
+  [ fd 5
+      wait .02 ] ]
+  ask fsea
+  [ die ]
+end
+
+to ownDragonClawAnimation
+create-odca 1
+  [ set size 25
+    set heading 225
+    set color blue
+    set xcor 190
+    set ycor 170 ]
+  repeat 13 [ ask odca
+  [ hatch 1
+    [ set breed odcat
+      set size 25
+      set heading 225
+      set color blue ]
+    fd 20
+      wait .02 ] ]
+  ask odcat
+  [ die ]
+  ask odca
+  [ die ]
+end
+
+to foeDragonClawAnimation
+  create-fdca 1
+  [ set size 25
+    set heading 225
+    set color blue
+    set xcor 120
+    set ycor 0 ]
+  repeat 13 [ask fdca
+  [ hatch 1
+    [ set breed fdcat
+      set size 25
+      set heading 225
+      set color blue ]
+    fd 20
+      wait .02 ] ]
+  ask fdcat
+  [ die ]
+  ask fdca
+  [ die ]
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -1784,6 +1872,125 @@ BUTTON
 410
 NIL
 foeConfuseRayAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+355
+451
+418
+484
+hh
+import-pcolors \"hh.png\"
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+436
+453
+499
+486
+kk
+import-pcolors \"kk.png\"
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+516
+451
+579
+484
+nn
+import-pcolors \"nn.png\"
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1020
+37
+1189
+70
+NIL
+ownStoneEdgeAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1024
+85
+1188
+118
+NIL
+foeStoneEdgeAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1215
+37
+1390
+70
+NIL
+ownDragonClawAnimation
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+1215
+91
+1386
+124
+NIL
+foeDragonClawAnimation
 NIL
 1
 T
