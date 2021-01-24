@@ -86,39 +86,27 @@ to DOTURNTEST
     moveTostats]
   ifelse [prio] of ally 0 > 0 or [prio] of enemy 1 > 0
   [ifelse [prio] of ally 0 > [prio] of enemy 1
-    [moveAnimationAlly
-      attackEnemy
+    [attackEnemy
       wait 1
-      moveAnimationEnemy
       attackAlly]
-    [moveAnimationEnemy
-      attackAlly
+    [attackAlly
       wait 1
-      moveAnimationAlly
       attackEnemy]]
   [if [spd] of ally 0 > [spd] of enemy 1 [
-    moveAnimationAlly
     attackEnemy
     wait 1
-    moveAnimationEnemy
     attackAlly]
     if [spd] of ally 0 < [spd] of enemy 1 [
-      moveAnimationEnemy
       attackAlly
       wait 1
-      moveAnimationAlly
       attackEnemy]
     if [spd] of ally 0 = [spd] of enemy 1 [
       ifelse random 2 = 0
-      [moveAnimationEnemy
-        attackAlly
+      [attackAlly
         wait 1
-        moveAnimationAlly
         attackEnemy]
-      [moveAnimationAlly
-        attackEnemy
+      [attackEnemy
         wait 1
-        moveAnimationEnemy
         attackAlly]]]
   ask ally 0 [
     statusEffects]
@@ -126,7 +114,9 @@ to DOTURNTEST
     statusEffects]
   ask turtles [
     if hp <= 0
-    [die]]
+    [die]
+    if hp > maxhp
+    [set hp maxhp]]
 end
 
 ;THE REAL TURN
@@ -137,39 +127,27 @@ to doTurn
     moveTostats]
   ifelse [prio] of ally 0 > 0 or [prio] of enemy 1 > 0
   [ifelse [prio] of ally 0 > [prio] of enemy 1
-    [moveAnimationAlly
-      attackEnemy
+    [attackEnemy
       wait 1
-      moveAnimationEnemy
       attackAlly]
-    [moveAnimationEnemy
-      attackAlly
+    [attackAlly
       wait 1
-      moveAnimationAlly
       attackEnemy]]
   [if [spd] of ally 0 > [spd] of enemy 1 [
-    moveAnimationAlly
     attackEnemy
     wait 1
-    moveAnimationEnemy
     attackAlly]
     if [spd] of ally 0 < [spd] of enemy 1 [
-      moveAnimationEnemy
       attackAlly
       wait 1
-      moveAnimationAlly
       attackEnemy]
     if [spd] of ally 0 = [spd] of enemy 1 [
       ifelse random 2 = 0
-      [moveAnimationEnemy
-        attackAlly
+      [attackAlly
         wait 1
-        moveAnimationAlly
         attackEnemy]
-      [moveAnimationAlly
-        attackEnemy
+      [attackEnemy
         wait 1
-        moveAnimationEnemy
         attackAlly]]]
   ask ally 0 [
     statusEffects]
@@ -177,7 +155,9 @@ to doTurn
     statusEffects]
   ask turtles [
     if hp <= 0
-    [die]]
+    [die]
+    if hp > maxhp
+    [set hp maxhp]]
 end
 
 ;resets all temporary stats for the next turn
@@ -640,6 +620,7 @@ to attackEnemy
     ifelse hp <= 0
     [set currentmove 0]
     [
+    moveAnimationAlly
     outrageMechanic
         if outragedur > 0 [
           set currentmove "outrage"
@@ -664,6 +645,8 @@ to attackEnemy
         if nonvolatile = "paralyzed" [
           if random 4 = 0 [
             set damage 0]]
+          if movetype = "ground" and ([type1] of enemy 1 = "flying" or [type2] of enemy 1 = "flying") [
+            set damage 0]
         ask enemy 1 [
           set hp hp - ([damage] of ally 0)]
       ]
@@ -681,6 +664,7 @@ to attackAlly
     ifelse hp <= 0
     [set currentmove 0]
     [
+    moveAnimationEnemy
     outrageMechanic
         if outragedur > 0 [
           set currentmove "outrage"
@@ -705,6 +689,8 @@ to attackAlly
         if nonvolatile = "paralyzed" [
           if random 4 = 0 [
             set damage 0]]
+          if movetype = "ground" and ([type1] of ally 0 = "flying" or [type2] of ally 0 = "flying") [
+            set damage 0]
         ask ally 0 [
           set hp hp - ([damage] of enemy 1)]
       ]
@@ -926,7 +912,10 @@ end
 ;----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ;----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 to moveAnimationAlly
+  if [nonvolatile] of ally 0 = "asleep"
+    [set allyanimation 0]
   if [hp] of ally 0 > 0 [
+    if [nonvolatile] of ally 0 != "asleep" [
   ask ally 0 [
   if currentmove = 0
     [set allyanimation 0]
@@ -1015,10 +1004,14 @@ to moveAnimationAlly
   if allyanimation = "oma"
   [ownMegahornAnimation]
   ]
+  ]
 end
 
 to moveAnimationEnemy
+  if [nonvolatile] of enemy 1 = "asleep"
+    [set allyanimation 0]
   if [hp] of enemy 1 > 0 [
+    if [nonvolatile] of enemy 1 != "asleep" [
   ask enemy 1 [
   if currentmove = 0
     [set enemyanimation 0]
@@ -1107,10 +1100,11 @@ to moveAnimationEnemy
   if enemyanimation = "fma"
   [foeMegahornAnimation]
   ]
+  ]
 end
 
 to ownMachPunchAnimation
-  create-ompa 1
+  hatch-ompa 1
   [ set size 55
     set heading 35
     set color red
@@ -1133,7 +1127,7 @@ to ownMachPunchAnimation
 end
 
 to foeMachPunchAnimation
-  create-fmpa 1
+  hatch-fmpa 1
   [ set size 55
     set color red
     set shape "fist"
@@ -1156,42 +1150,42 @@ to foeMachPunchAnimation
 end
 
 to ownCloseCombatAnimation
-  create-occa 1
+  hatch-occa 1
   [ set size 25
     set color orange
     set shape "fist"
     set heading 0
     set xcor 15
     set ycor 105 ]
-  create-occa 1
+  hatch-occa 1
   [ set size 25
     set color orange
     set shape "fist"
     set heading 0
     set xcor 20
     set ycor 105 ]
-  create-occa 1
+  hatch-occa 1
   [ set size 25
     set color orange
     set shape "fist"
     set heading 0
     set xcor 25
     set ycor 105 ]
-  create-occa 1
+  hatch-occa 1
   [ set size 25
     set color orange
     set shape "fist"
     set heading 0
     set xcor 15
     set ycor 90 ]
-  create-occa 1
+  hatch-occa 1
   [ set size 25
     set color orange
     set shape "fist"
     set heading 0
     set xcor 20
     set ycor 90 ]
-  create-occa 1
+  hatch-occa 1
   [ set size 25
     set color orange
     set shape "fist"
@@ -1234,43 +1228,43 @@ to ownCloseCombatAnimation
 end
 
 to foeCloseCombatAnimation
-  create-fcca 1
-  [ set size 25
+  hatch-fcca 1
+  [ set size 55
     set shape "fist"
     set color orange
     set heading 0
     set xcor -135
     set ycor -20 ]
-  create-fcca 1
-  [ set size 25
+  hatch-fcca 1
+  [ set size 55
     set color orange
     set shape "fist"
     set heading 0
     set xcor -130
     set ycor -20 ]
-  create-fcca 1
-  [ set size 25
+  hatch-fcca 1
+  [ set size 55
     set color orange
     set shape "fist"
     set heading 0
     set xcor -125
     set ycor -20 ]
-  create-fcca 1
-  [ set size 25
+  hatch-fcca 1
+  [ set size 55
     set color orange
     set shape "fist"
     set heading 0
     set xcor -135
     set ycor -35 ]
-  create-fcca 1
-  [ set size 25
+  hatch-fcca 1
+  [ set size 55
     set color orange
     set shape "fist"
     set heading 0
     set xcor -130
     set ycor -35 ]
-  create-fcca 1
-  [ set size 25
+  hatch-fcca 1
+  [ set size 55
     set color orange
     set shape "fist"
     set heading 0
@@ -1312,7 +1306,7 @@ to foeCloseCombatAnimation
 end
 
 to ownFlareBlitzAnimation
-  create-ofba 1
+  hatch-ofba 1
   [ set size 50
     set color red
     set heading 55
@@ -1324,42 +1318,42 @@ to ownFlareBlitzAnimation
       wait .02
       fd 5]]
   ask ofba [die]
-  create-ofba 1 [
+  hatch-ofba 1 [
     set size 45
     set color red
     set shape "fire"
     set heading 0
     set xcor 103
     set ycor 151]
-  create-ofba 1 [
+  hatch-ofba 1 [
     set size 45
     set color red
     set shape "fire"
     set heading 0
     set xcor 167
     set ycor 101]
-  create-ofba 1 [
+  hatch-ofba 1 [
     set size 45
     set color red
     set shape "fire"
     set heading 0
     set xcor 103
     set ycor 80]
-  create-ofba 1 [
+  hatch-ofba 1 [
     set size 45
     set color red
     set shape "fire"
     set heading 0
     set xcor 57
     set ycor 40]
-  create-ofba 1 [
+  hatch-ofba 1 [
     set size 45
     set color red
     set shape "fire"
     set heading 0
     set xcor 32
     set ycor 101]
-  create-ofba 1 [
+  hatch-ofba 1 [
     set size 45
     set color red
     set shape "fire"
@@ -1375,7 +1369,7 @@ to ownFlareBlitzAnimation
 end
 
 to foeFlareBlitzAnimation
-  create-ffba 1
+  hatch-ffba 1
   [ set size 50
     set color red
     set heading 220
@@ -1387,42 +1381,42 @@ to foeFlareBlitzAnimation
       wait .02
       fd 5]]
   ask ffba [die]
-  create-ffba 1 [
+  hatch-ffba 1 [
     set size 45
     set color red
     set shape "fire"
     set heading 0
     set xcor -103
     set ycor -151]
-  create-ffba 1 [
+  hatch-ffba 1 [
     set size 45
     set color red
     set shape "fire"
     set heading 0
     set xcor -167
     set ycor -101]
-  create-ffba 1 [
+  hatch-ffba 1 [
     set size 45
     set color red
     set shape "fire"
     set heading 0
     set xcor -103
     set ycor -80]
-  create-ffba 1 [
+  hatch-ffba 1 [
     set size 45
     set color red
     set shape "fire"
     set heading 0
     set xcor -57
     set ycor -40]
-  create-ffba 1 [
+  hatch-ffba 1 [
     set size 45
     set color red
     set shape "fire"
     set heading 0
     set xcor -32
     set ycor -101]
-  create-ffba 1 [
+  hatch-ffba 1 [
     set size 45
     set color red
     set shape "fire"
@@ -1438,37 +1432,37 @@ to foeFlareBlitzAnimation
 end
 
 to ownSwordsDanceAnimation
-  create-osda 1
+  hatch-osda 1
   [ set size 40
     set color blue
     set heading 0
     set xcor -150
     set ycor -160 ]
-  create-osda 1
+  hatch-osda 1
   [ set size 40
     set color blue
     set heading 0
     set xcor -150
     set ycor -130 ]
-  create-osda 1
+  hatch-osda 1
   [ set size 40
     set color blue
     set heading 0
     set xcor -180
     set ycor -130 ]
-  create-osda 1
+  hatch-osda 1
   [ set size 40
     set color blue
     set heading 0
     set xcor -120
     set ycor -130 ]
-  create-osda 1
+  hatch-osda 1
   [ set size 40
     set color blue
     set heading 0
     set xcor -150
     set ycor -100 ]
-  create-osda 1
+  hatch-osda 1
   [ set size 40
     set color blue
     set heading 0
@@ -1499,37 +1493,37 @@ to ownSwordsDanceAnimation
 end
 
 to foeSwordsDanceAnimation
-  create-fsda 1
+  hatch-fsda 1
   [ set size 40
     set color blue
     set heading 0
     set xcor 15
     set ycor 30 ]
-  create-fsda 1
+  hatch-fsda 1
   [ set size 40
     set color blue
     set heading 0
     set xcor 15
     set ycor 60 ]
-  create-fsda 1
+  hatch-fsda 1
   [ set size 40
     set color blue
     set heading 0
     set xcor -15
     set ycor 60 ]
-  create-fsda 1
+  hatch-fsda 1
   [ set size 40
     set color blue
     set heading 0
     set xcor 45
     set ycor 60 ]
-  create-fsda 1
+  hatch-fsda 1
   [ set size 40
     set color blue
     set heading 0
     set xcor 15
     set ycor 90 ]
-  create-fsda 1
+  hatch-fsda 1
   [ set size 40
     set color blue
     set heading 0
@@ -1560,7 +1554,7 @@ to foeSwordsDanceAnimation
 end
 
 to ownSludgeBombAnimation
-  create-osba 1
+  hatch-osba 1
   [ set size 50
     set color violet
     set heading 55
@@ -1578,7 +1572,7 @@ to ownSludgeBombAnimation
 end
 
 to foeSludgeBombAnimation
-  create-fsba 1
+  hatch-fsba 1
   [ set size 50
     set color violet
     set heading 220
@@ -1596,7 +1590,7 @@ to foeSludgeBombAnimation
 end
 
 to ownEnergyBallAnimation
-  create-oeba 1
+  hatch-oeba 1
   [ set size 50
     set color green
     set heading 55
@@ -1614,7 +1608,7 @@ to ownEnergyBallAnimation
 end
 
 to foeEnergyBallAnimation
-  create-feba 1
+  hatch-feba 1
   [ set size 50
     set color green
     set heading 220
@@ -1632,42 +1626,42 @@ to foeEnergyBallAnimation
 end
 
 to ownSporeAnimation
-  create-osa 1
+  hatch-osa 1
   [ set size 25
     set color gray
     set heading 180
     set shape "circle"
     set xcor 15
     set ycor 115 ]
-  create-osa 1
+  hatch-osa 1
   [ set size 25
     set color gray
     set heading 180
     set shape "circle"
     set xcor 20
     set ycor 115 ]
-  create-osa 1
+  hatch-osa 1
   [ set size 25
     set color gray
     set heading 180
     set shape "circle"
     set xcor 25
     set ycor 115 ]
-  create-osa 1
+  hatch-osa 1
   [ set size 25
     set color gray
     set heading 180
     set shape "circle"
     set xcor 15
     set ycor 100 ]
-  create-osa 1
+  hatch-osa 1
   [ set size 25
     set color gray
     set heading 180
     set shape "circle"
     set xcor 20
     set ycor 100 ]
-  create-osa 1
+  hatch-osa 1
   [ set size 25
     set color gray
     set heading 180
@@ -1697,42 +1691,42 @@ to ownSporeAnimation
 end
 
 to foeSporeAnimation
-  create-fsa 1
+  hatch-fsa 1
   [ set size 25
     set color gray
     set heading 180
     set shape "circle"
     set xcor -135
     set ycor -10 ]
-  create-fsa 1
+  hatch-fsa 1
   [ set size 25
     set color gray
     set heading 180
     set shape "circle"
     set xcor -130
     set ycor -10 ]
-  create-fsa 1
+  hatch-fsa 1
   [ set size 25
     set color gray
     set heading 180
     set shape "circle"
     set xcor -125
     set ycor -10 ]
-  create-fsa 1
+  hatch-fsa 1
   [ set size 25
     set color gray
     set heading 180
     set shape "circle"
     set xcor -135
     set ycor -25 ]
-  create-fsa 1
+  hatch-fsa 1
   [ set size 25
     set color gray
     set heading 180
     set shape "circle"
     set xcor -130
     set ycor -35 ]
-  create-fsa 1
+  hatch-fsa 1
   [ set size 25
     set color gray
     set heading 180
@@ -1762,19 +1756,19 @@ to foeSporeAnimation
 end
 
 to ownGigaDrainAnimation
-  create-ogda 1
+  hatch-ogda 1
   [ set size 25
     set color green
     set heading 55
     set xcor 37
     set ycor 88 ]
-  create-ogda 1
+  hatch-ogda 1
   [ set size 25
     set color green
     set heading 220
     set xcor 90
     set ycor 45 ]
-  create-ogda 1
+  hatch-ogda 1
   [ set size 25
     set color green
     set heading 220
@@ -1791,42 +1785,42 @@ to ownGigaDrainAnimation
       wait .02 ] ]
   ask ogda
   [ die ]
-  create-ogda 1 [
+  hatch-ogda 1 [
     set size 20
     set color green
     set shape "circle"
     set heading 0
     set xcor -103
     set ycor -151]
-  create-ogda 1 [
+  hatch-ogda 1 [
     set size 20
     set color green
     set shape "circle"
     set heading 0
     set xcor -167
     set ycor -101]
-  create-ogda 1 [
+  hatch-ogda 1 [
     set size 20
     set color green
     set shape "circle"
     set heading 0
     set xcor -103
     set ycor -80]
-  create-ogda 1 [
+  hatch-ogda 1 [
     set size 20
     set color green
     set shape "circle"
     set heading 0
     set xcor -57
     set ycor -40]
-  create-ogda 1 [
+  hatch-ogda 1 [
     set size 20
     set color green
     set shape "circle"
     set heading 0
     set xcor -32
     set ycor -101]
-  create-ogda 1 [
+  hatch-ogda 1 [
     set size 20
     set color green
     set shape "circle"
@@ -1842,19 +1836,19 @@ to ownGigaDrainAnimation
 end
 
 to foeGigaDrainAnimation
-  create-fgda 1
+  hatch-fgda 1
   [ set size 25
     set color green
     set heading 220
     set xcor 55
     set ycor -38 ]
-  create-fgda 1
+  hatch-fgda 1
   [ set size 25
     set color green
     set heading 220
     set xcor -10
     set ycor -100 ]
-  create-fgda 1
+  hatch-fgda 1
   [ set size 25
     set color green
     set heading 220
@@ -1871,42 +1865,42 @@ to foeGigaDrainAnimation
       wait .02 ] ]
   ask fgda
   [ die ]
-  create-fgda 1 [
+  hatch-fgda 1 [
     set size 20
     set color green
     set shape "circle"
     set heading 0
     set xcor 103
     set ycor 151]
-  create-fgda 1 [
+  hatch-fgda 1 [
     set size 20
     set color green
     set shape "circle"
     set heading 0
     set xcor 167
     set ycor 101]
-  create-fgda 1 [
+  hatch-fgda 1 [
     set size 20
     set color green
     set shape "circle"
     set heading 0
     set xcor 103
     set ycor 80]
-  create-fgda 1 [
+  hatch-fgda 1 [
     set size 20
     set color green
     set shape "circle"
     set heading 0
     set xcor 57
     set ycor 40]
-  create-fgda 1 [
+  hatch-fgda 1 [
     set size 20
     set color green
     set shape "circle"
     set heading 0
     set xcor 32
     set ycor 101]
-  create-fgda 1 [
+  hatch-fgda 1 [
     set size 20
     set color green
     set shape "circle"
@@ -1922,42 +1916,42 @@ to foeGigaDrainAnimation
 end
 
 to ownToxicAnimation
-  create-ota 1
+  hatch-ota 1
   [ set size 25
     set color violet
     set heading 180
     set shape "circle"
     set xcor 15
     set ycor 115 ]
-  create-ota 1
+  hatch-ota 1
   [ set size 25
     set color violet
     set heading 180
     set shape "circle"
     set xcor 20
     set ycor 115 ]
-  create-ota 1
+  hatch-ota 1
   [ set size 25
     set color violet
     set heading 180
     set shape "circle"
     set xcor 25
     set ycor 115 ]
-  create-ota 1
+  hatch-ota 1
   [ set size 25
     set color violet
     set heading 180
     set shape "circle"
     set xcor 15
     set ycor 100 ]
-  create-ota 1
+  hatch-ota 1
   [ set size 25
     set color violet
     set heading 180
     set shape "circle"
     set xcor 20
     set ycor 100 ]
-  create-ota 1
+  hatch-ota 1
   [ set size 25
     set color violet
     set heading 180
@@ -1987,42 +1981,42 @@ to ownToxicAnimation
 end
 
 to foeToxicAnimation
-  create-fta 1
+  hatch-fta 1
   [ set size 25
     set color violet
     set heading 180
     set shape "circle"
     set xcor -135
     set ycor -20 ]
-  create-fta 1
+  hatch-fta 1
   [ set size 25
     set color violet
     set heading 180
     set shape "circle"
     set xcor -130
     set ycor -20 ]
-  create-fta 1
+  hatch-fta 1
   [ set size 25
     set color violet
     set heading 180
     set shape "circle"
     set xcor -125
     set ycor -20 ]
-  create-fta 1
+  hatch-fta 1
   [ set size 25
     set color violet
     set heading 180
     set shape "circle"
     set xcor -135
     set ycor -35 ]
-  create-fta 1
+  hatch-fta 1
   [ set size 25
     set color violet
     set heading 180
     set shape "circle"
     set xcor -130
     set ycor -35 ]
-  create-fta 1
+  hatch-fta 1
   [ set size 25
     set color violet
     set heading 180
@@ -2052,7 +2046,7 @@ to foeToxicAnimation
 end
 
 to ownCrossPoisonAnimation
-  create-ocpa 1
+  hatch-ocpa 1
   [ set size 25
     set heading 135
     set color violet
@@ -2070,7 +2064,7 @@ to ownCrossPoisonAnimation
   [ die ]
   ask ocpa
   [ die ]
-  create-ocpa 1
+  hatch-ocpa 1
   [ set size 25
     set heading 225
     set color violet
@@ -2088,42 +2082,42 @@ to ownCrossPoisonAnimation
   [ die ]
   ask ocpa
   [ die ]
-  create-ocpa 1 [
+  hatch-ocpa 1 [
     set size 20
     set color violet
     set shape "circle"
     set heading 0
     set xcor 103
     set ycor 151]
-  create-ocpa 1 [
+  hatch-ocpa 1 [
     set size 20
     set color violet
     set shape "circle"
     set heading 0
     set xcor 167
     set ycor 101]
-  create-ocpa 1 [
+  hatch-ocpa 1 [
     set size 20
     set color violet
     set shape "circle"
     set heading 0
     set xcor 103
     set ycor 80]
-  create-ocpa 1 [
+  hatch-ocpa 1 [
     set size 20
     set color violet
     set shape "circle"
     set heading 0
     set xcor 57
     set ycor 40]
-  create-ocpa 1 [
+  hatch-ocpa 1 [
     set size 20
     set color violet
     set shape "circle"
     set heading 0
     set xcor 32
     set ycor 101]
-  create-ocpa 1 [
+  hatch-ocpa 1 [
     set size 20
     set color violet
     set shape "circle"
@@ -2139,7 +2133,7 @@ to ownCrossPoisonAnimation
 end
 
 to foeCrossPoisonAnimation
-  create-fcpa 1
+  hatch-fcpa 1
   [ set size 25
     set heading 135
     set color violet
@@ -2157,7 +2151,7 @@ to foeCrossPoisonAnimation
   [ die ]
   ask fcpa
   [ die ]
-  create-fcpa 1
+  hatch-fcpa 1
   [ set size 25
     set heading 225
     set color violet
@@ -2175,42 +2169,42 @@ to foeCrossPoisonAnimation
   [ die ]
   ask fcpa
   [ die ]
-  create-fcpa 1 [
+  hatch-fcpa 1 [
     set size 20
     set color violet
     set shape "circle"
     set heading 0
     set xcor -103
     set ycor -151]
-  create-fcpa 1 [
+  hatch-fcpa 1 [
     set size 20
     set color violet
     set shape "circle"
     set heading 0
     set xcor -167
     set ycor -101]
-  create-fcpa 1 [
+  hatch-fcpa 1 [
     set size 20
     set color violet
     set shape "circle"
     set heading 0
     set xcor -103
     set ycor -80]
-  create-fcpa 1 [
+  hatch-fcpa 1 [
     set size 20
     set color violet
     set shape "circle"
     set heading 0
     set xcor -57
     set ycor -40]
-  create-fcpa 1 [
+  hatch-fcpa 1 [
     set size 20
     set color violet
     set shape "circle"
     set heading 0
     set xcor -32
     set ycor -101]
-  create-fcpa 1 [
+  hatch-fcpa 1 [
     set size 20
     set color violet
     set shape "circle"
@@ -2226,7 +2220,7 @@ to foeCrossPoisonAnimation
 end
 
 to ownAcrobaticsAnimation
-  repeat 2 [create-oaa 1
+  repeat 2 [hatch-oaa 1
     [ set size 25
       set heading 315
       set color gray
@@ -2244,7 +2238,7 @@ to ownAcrobaticsAnimation
     [ die ]
     ask oaa
     [ die ]
-    create-oaa 1
+    hatch-oaa 1
     [ set size 25
       set heading 45
       set color gray
@@ -2265,7 +2259,7 @@ to ownAcrobaticsAnimation
 end
 
 to foeAcrobaticsAnimation
-  repeat 2 [create-faa 1
+  repeat 2 [hatch-faa 1
     [ set size 25
       set heading 315
       set color gray
@@ -2283,7 +2277,7 @@ to foeAcrobaticsAnimation
     [ die ]
     ask faa
     [ die ]
-    create-faa 1
+    hatch-faa 1
     [ set size 25
       set heading 45
       set color gray
@@ -2304,7 +2298,7 @@ to foeAcrobaticsAnimation
 end
 
 to ownConfuseRayAnimation
-  create-ocra 1
+  hatch-ocra 1
   [ set size 25
     set color yellow
     set heading 25
@@ -2337,7 +2331,7 @@ to ownConfuseRayAnimation
 end
 
 to foeConfuseRayAnimation
-  create-fcra 1
+  hatch-fcra 1
   [ set size 25
     set color yellow
     set heading 205
@@ -2370,49 +2364,89 @@ to foeConfuseRayAnimation
 end
 
 to ownStoneEdgeAnimation
-  create-osea 1
+  hatch-osea 1
   [ set size 50
     set color brown
-    set heading 55
+    set heading 35
     set shape "pentagon"
     set xcor 60
     set ycor -38 ]
+  hatch-osea 1
+  [ set size 50
+    set color brown
+    set heading 35
+    set shape "pentagon"
+    set xcor 47
+    set ycor -63 ]
+  hatch-osea 1
+  [ set size 50
+    set color brown
+    set heading 35
+    set shape "pentagon"
+    set xcor 12
+    set ycor -33 ]
   ask osea
   [ wait .02 ]
-  repeat 20
-  [ ask osea
-  [ fd 5
-      wait .02 ] ]
+  ask osea
+  [ repeat 20 [
+    fd 5
+    wait .02 ]]
   ask osea
   [ die ]
 end
 
 to foeStoneEdgeAnimation
-  create-fsea 1
+  hatch-fsea 1
   [ set size 50
     set color brown
-    set heading 220
+    set heading 215
     set shape "pentagon"
     set xcor 42
     set ycor 88 ]
+  hatch-fsea 1
+  [ set size 50
+    set color brown
+    set heading 215
+    set shape "pentagon"
+    set xcor 20
+    set ycor 75 ]
+  hatch-fsea 1
+  [ set size 50
+    set color brown
+    set heading 215
+    set shape "pentagon"
+    set xcor 67
+    set ycor 56 ]
   ask fsea
   [ wait .02 ]
-  repeat 20
-  [ ask fsea
-  [ fd 5
-      wait .02 ] ]
+  ask fsea
+  [ repeat 25 [
+    fd 5
+    wait .015 ] ]
   ask fsea
   [ die ]
 end
 
 to ownDragonClawAnimation
-create-odca 1
+hatch-odca 1
   [ set size 25
     set heading 225
     set color blue
     set xcor 190
     set ycor 170 ]
-  repeat 13 [ ask odca
+  hatch-odca 1
+  [ set size 25
+    set heading 207
+    set color blue
+    set xcor 100
+    set ycor 170 ]
+  hatch-odca 1
+  [ set size 25
+    set heading 243
+    set color blue
+    set xcor 190
+    set ycor 80 ]
+  repeat 10 [ ask odca
   [ hatch 1
     [ set breed odcat
       set size 25
@@ -2427,13 +2461,25 @@ create-odca 1
 end
 
 to foeDragonClawAnimation
-  create-fdca 1
+  hatch-fdca 1
   [ set size 25
     set heading 225
     set color blue
-    set xcor 120
+    set xcor 40
     set ycor 0 ]
-  repeat 13 [ask fdca
+  hatch-fdca 1
+  [ set size 25
+    set heading 243
+    set color blue
+    set xcor 40
+    set ycor -90 ]
+  hatch-fdca 1
+  [ set size 25
+    set heading 207
+    set color blue
+    set xcor -50
+    set ycor 0 ]
+  repeat 10 [ask fdca
   [ hatch 1
     [ set breed fdcat
       set size 25
@@ -2448,25 +2494,25 @@ to foeDragonClawAnimation
 end
 
 to ownEarthquakeAnimation
-  create-oea 1
+  hatch-oea 1
   [ set size 25
     set color brown
     set shape "pentagon"
     set xcor 25
     set ycor 10]
-  create-oea 1
+  hatch-oea 1
   [ set size 25
     set color brown
     set shape "pentagon"
     set xcor 80
     set ycor -20]
-  create-oea 1
+  hatch-oea 1
   [ set size 25
     set color brown
     set shape "pentagon"
     set xcor 160
     set ycor -15]
-  create-oea 1
+  hatch-oea 1
   [ set size 25
     set color brown
     set shape "pentagon"
@@ -2482,30 +2528,42 @@ to ownEarthquakeAnimation
 end
 
 to foeEarthquakeAnimation
-  create-fea 1
+  hatch-fea 1
   [ set size 25
     set color brown
     set shape "pentagon"
     set xcor -160
     set ycor -120]
-  create-fea 1
+  hatch-fea 1
   [ set size 25
     set color brown
     set shape "pentagon"
     set xcor -120
     set ycor -110]
-  create-fea 1
+  hatch-fea 1
   [ set size 25
     set color brown
     set shape "pentagon"
     set xcor 35
     set ycor -130]
-  create-fea 1
+  hatch-fea 1
   [ set size 25
     set color brown
     set shape "pentagon"
     set xcor 90
     set ycor -170]
+  hatch-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor -84
+    set ycor -152 ]
+  hatch-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor -20
+    set ycor -171 ]
   repeat 15
   [ ask fea
     [ set heading random 360
@@ -2516,14 +2574,14 @@ to foeEarthquakeAnimation
 end
 
 to ownCrunchAnimation
-  create-oca 1
+  hatch-oca 1
   [ set size 100
     set color gray
     set heading 0
     set shape "jaw"
     set xcor 120
     set ycor 75 ]
-  create-oca 1
+  hatch-oca 1
   [ set size 100
     set color gray
     set heading 180
@@ -2534,20 +2592,21 @@ to ownCrunchAnimation
   [ ask oca
     [ bk 5
       wait .02 ] ]
+  ask oca [ wait .15 ]
   ask oca
   [ die ]
 end
 
 to foeCrunchAnimation
-  create-fca 1
-  [ set size 100
+  hatch-fca 1
+  [ set size 130
     set color gray
     set heading 0
     set shape "jaw"
     set xcor -60
     set ycor -50 ]
-  create-fca 1
-  [ set size 100
+  hatch-fca 1
+  [ set size 130
     set color gray
     set heading 180
     set shape "jaw"
@@ -2557,92 +2616,79 @@ to foeCrunchAnimation
   [ ask fca
     [ bk 5
       wait .02 ] ]
+  ask fca [ wait .15 ]
   ask fca
   [ die ]
 end
 
 to ownMegahornAnimation
-  create-oma 1
+  hatch-oma 1
     [ set size 25
-      set heading 45
-      set color 126
+      set heading 35
+      set color green
       set xcor 6
       set ycor -14 ]
-    repeat 6 [ask oma
-      [ hatch 1
-        [ set breed omat
-          set size 25
-          set heading 45
-          set color 126 ]
-        fd 20
-        wait .02 ] ]
-  ask oma
-  [ lt 30 ]
-  repeat 6 [ask oma
-      [ hatch 1
-        [ set breed omat
-          set size 25
-          set heading 15
-          set color 126 ]
-        fd 20
-        wait .02 ] ]
-    ask omat
-    [ die ]
+  repeat 15 [
+    ask oma [
+      set size size + 5
+      wait .05 ]]
+  repeat 6 [
     ask oma
-    [ die ]
+    [ hatch 1
+      [ set breed omat
+        set size 25
+        set heading 35
+        set color green ]
+      fd 20
+      wait .0625 ]]
+  ask oma [ die ]
+  ask omat [ die ]
 end
 
 to foeMegahornAnimation
- create-fma 1
+ hatch-fma 1
     [ set size 25
-      set heading 315
-      set color 126
-      set xcor -6
-      set ycor -184 ]
-    repeat 6 [ask fma
-      [ hatch 1
-        [ set breed fmat
-          set size 25
-          set heading 315
-          set color 126 ]
-        fd 20
-        wait .02 ] ]
-  ask fma
-  [ rt 30 ]
-  repeat 6 [ask fma
-      [ hatch 1
-        [ set breed fmat
-          set size 25
-          set heading 345
-          set color 126 ]
-        fd 20
-        wait .02 ] ]
-    ask fmat
-    [ die ]
+      set heading 215
+      set color green
+      set xcor 42
+      set ycor 129 ]
+  repeat 15 [
+    ask fma [
+      set size size + 5
+      wait .05 ]]
+  repeat 6 [
     ask fma
-    [ die ]
+    [ hatch 1
+      [ set breed fmat
+        set size 25
+        set heading 215
+        set color green ]
+      fd 20
+      wait .0625 ]]
+  ask fma [ die ]
+  ask fmat [ die ]
 end
 
 to ownOutrageAnimation
-  create-ooa 1
+  hatch-ooa 1
   [ set size 25
     set color blue
     set shape "circle"
     set xcor -160
     set ycor -120]
-  create-ooa 1
+  hatch-ooa 1
   [ set size 25
     set color blue
     set shape "circle"
     set xcor -120
     set ycor -110]
-  create-ooa 1
+  hatch-ooa 1
   [ set size 25
     set color blue
     set shape "circle"
     set xcor 35
     set ycor -130]
-  create-ooa 1
+  hatch-ooa 1
   [ set size 25
     set color blue
     set shape "circle"
@@ -2655,7 +2701,7 @@ to ownOutrageAnimation
       wait .02 ] ]
   ask ooa
   [ die ]
-  create-ooa 1 [
+  hatch-ooa 1 [
     set size 100
     set color blue
     set shape "circle"
@@ -2671,25 +2717,25 @@ to ownOutrageAnimation
 end
 
 to foeOutrageAnimation
-  create-foa 1
+  hatch-foa 1
   [ set size 25
     set color blue
     set shape "circle"
     set xcor 25
     set ycor 10]
-  create-foa 1
+  hatch-foa 1
   [ set size 25
     set color blue
     set shape "circle"
     set xcor 80
     set ycor -20]
-  create-foa 1
+  hatch-foa 1
   [ set size 25
     set color blue
     set shape "circle"
     set xcor 160
     set ycor -15]
-  create-foa 1
+  hatch-foa 1
   [ set size 25
     set color blue
     set shape "circle"
@@ -2702,7 +2748,7 @@ to foeOutrageAnimation
       wait .02 ] ]
   ask foa
   [ die ]
-  create-foa 1 [
+  hatch-foa 1 [
     set size 100
     set color blue
     set shape "circle"
@@ -2718,7 +2764,7 @@ to foeOutrageAnimation
 end
 
 to ownHeadSmashAnimation
-  create-ohsa 1 [
+  hatch-ohsa 1 [
     set size 100
     set color gray
     set shape "circle"
@@ -2734,7 +2780,7 @@ to ownHeadSmashAnimation
 end
 
 to foeHeadSmashAnimation
-  create-fhsa 1 [
+  hatch-fhsa 1 [
     set size 100
     set color gray
     set shape "circle"
@@ -2750,42 +2796,42 @@ to foeHeadSmashAnimation
 end
 
 to ownPoisonJabAnimation
-  create-opja 1
+  hatch-opja 1
   [ set size 25
     set color violet
     set shape "fist"
     set heading 0
     set xcor 15
     set ycor 105 ]
-  create-opja 1
+  hatch-opja 1
   [ set size 25
     set color violet
     set shape "fist"
     set heading 0
     set xcor 20
     set ycor 105 ]
-  create-opja 1
+  hatch-opja 1
   [ set size 25
     set color violet
     set shape "fist"
     set heading 0
     set xcor 25
     set ycor 105 ]
-  create-opja 1
+  hatch-opja 1
   [ set size 25
     set color violet
     set shape "fist"
     set heading 0
     set xcor 15
     set ycor 90 ]
-  create-opja 1
+  hatch-opja 1
   [ set size 25
     set color violet
     set shape "fist"
     set heading 0
     set xcor 20
     set ycor 90 ]
-  create-opja 1
+  hatch-opja 1
   [ set size 25
     set color violet
     set shape "fist"
@@ -2828,42 +2874,42 @@ to ownPoisonJabAnimation
 end
 
 to foePoisonJabAnimation
-  create-fpja 1
-  [ set size 25
+  hatch-fpja 1
+  [ set size 55
     set shape "fist"
     set color violet
     set heading 0
     set xcor -135
     set ycor -20 ]
-  create-fpja 1
-  [ set size 25
+  hatch-fpja 1
+  [ set size 55
     set color violet
     set shape "fist"
     set heading 0
     set xcor -130
     set ycor -20 ]
-  create-fpja 1
-  [ set size 25
+  hatch-fpja 1
+  [ set size 55
     set color violet
     set shape "fist"
     set heading 0
     set xcor -125
     set ycor -20 ]
-  create-fpja 1
-  [ set size 25
+  hatch-fpja 1
+  [ set size 55
     set color violet
     set shape "fist"
     set heading 0
     set xcor -135
     set ycor -35 ]
-  create-fpja 1
-  [ set size 25
+  hatch-fpja 1
+  [ set size 55
     set color violet
     set shape "fist"
     set heading 0
     set xcor -130
     set ycor -35 ]
-  create-fpja 1
+  hatch-fpja 1
   [ set size 25
     set color violet
     set shape "fist"
@@ -2906,7 +2952,7 @@ to foePoisonJabAnimation
 end
 
 to foeConfusedStatusAnimation
-  create-fcsa 1
+  hatch-fcsa 1
   [ set size 25
     set color yellow
     set heading 25
@@ -2929,7 +2975,7 @@ to foeConfusedStatusAnimation
 end
 
 to ownConfusedStatusAnimation
-  create-ocsa 1
+  hatch-ocsa 1
   [ set size 25
     set color yellow
     set heading 205
