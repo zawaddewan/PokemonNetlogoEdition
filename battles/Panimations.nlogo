@@ -45,8 +45,8 @@ breed [ fhsa fhs ]
 breed [ ooa oo ]
 breed [ foa fo ]
 breed [ oma om ]
-breed [ fma fm ]
 breed [ omat omt ]
+breed [ fma fm ]
 breed [ fmat fmt ]
 breed [ opja opj ]
 breed [ fpja fpj ]
@@ -177,42 +177,42 @@ end
 
 to foeCloseCombatAnimation
   create-fcca 1
-  [ set size 25
+  [ set size 55
     set shape "fist"
     set color orange
     set heading 0
     set xcor -135
     set ycor -20 ]
   create-fcca 1
-  [ set size 25
+  [ set size 55
     set color orange
     set shape "fist"
     set heading 0
     set xcor -130
     set ycor -20 ]
   create-fcca 1
-  [ set size 25
+  [ set size 55
     set color orange
     set shape "fist"
     set heading 0
     set xcor -125
     set ycor -20 ]
   create-fcca 1
-  [ set size 25
+  [ set size 55
     set color orange
     set shape "fist"
     set heading 0
     set xcor -135
     set ycor -35 ]
   create-fcca 1
-  [ set size 25
+  [ set size 55
     set color orange
     set shape "fist"
     set heading 0
     set xcor -130
     set ycor -35 ]
   create-fcca 1
-  [ set size 25
+  [ set size 55
     set color orange
     set shape "fist"
     set heading 0
@@ -257,7 +257,7 @@ to ownFlareBlitzAnimation
   create-ofba 1
   [ set size 50
     set color red
-    set heading 55
+    set heading 35
     set shape "circle"
     set xcor 60
     set ycor -38 ]
@@ -320,7 +320,7 @@ to foeFlareBlitzAnimation
   create-ffba 1
   [ set size 50
     set color red
-    set heading 220
+    set heading 215
     set shape "circle"
     set xcor 42
     set ycor 88 ]
@@ -505,7 +505,7 @@ to ownSludgeBombAnimation
   create-osba 1
   [ set size 50
     set color violet
-    set heading 55
+    set heading 35
     set shape "circle"
     set xcor 60
     set ycor -38 ]
@@ -523,7 +523,7 @@ to foeSludgeBombAnimation
   create-fsba 1
   [ set size 50
     set color violet
-    set heading 220
+    set heading 215
     set shape "circle"
     set xcor 42
     set ycor 88 ]
@@ -541,7 +541,7 @@ to ownEnergyBallAnimation
   create-oeba 1
   [ set size 50
     set color green
-    set heading 55
+    set heading 35
     set shape "circle"
     set xcor 60
     set ycor -38 ]
@@ -559,7 +559,7 @@ to foeEnergyBallAnimation
   create-feba 1
   [ set size 50
     set color green
-    set heading 220
+    set heading 215
     set shape "circle"
     set xcor 42
     set ycor 88 ]
@@ -1315,16 +1315,30 @@ to ownStoneEdgeAnimation
   create-osea 1
   [ set size 50
     set color brown
-    set heading 55
+    set heading 35
     set shape "pentagon"
     set xcor 60
     set ycor -38 ]
+  create-osea 1
+  [ set size 50
+    set color brown
+    set heading 35
+    set shape "pentagon"
+    set xcor 47
+    set ycor -63 ]
+  create-osea 1
+  [ set size 50
+    set color brown
+    set heading 35
+    set shape "pentagon"
+    set xcor 12
+    set ycor -33 ]
   ask osea
   [ wait .02 ]
-  repeat 20
-  [ ask osea
-  [ fd 5
-      wait .02 ] ]
+  ask osea
+  [ repeat 20 [
+    fd 5
+    wait .02 ]]
   ask osea
   [ die ]
 end
@@ -1333,16 +1347,30 @@ to foeStoneEdgeAnimation
   create-fsea 1
   [ set size 50
     set color brown
-    set heading 220
+    set heading 215
     set shape "pentagon"
     set xcor 42
     set ycor 88 ]
+  create-fsea 1
+  [ set size 50
+    set color brown
+    set heading 215
+    set shape "pentagon"
+    set xcor 20
+    set ycor 75 ]
+  create-fsea 1
+  [ set size 50
+    set color brown
+    set heading 215
+    set shape "pentagon"
+    set xcor 67
+    set ycor 56 ]
   ask fsea
   [ wait .02 ]
-  repeat 20
-  [ ask fsea
-  [ fd 5
-      wait .02 ] ]
+  ask fsea
+  [ repeat 25 [
+    fd 5
+    wait .015 ] ]
   ask fsea
   [ die ]
 end
@@ -1354,7 +1382,19 @@ create-odca 1
     set color blue
     set xcor 190
     set ycor 170 ]
-  repeat 13 [ ask odca
+  create-odca 1
+  [ set size 25
+    set heading 207
+    set color blue
+    set xcor 100
+    set ycor 170 ]
+  create-odca 1
+  [ set size 25
+    set heading 243
+    set color blue
+    set xcor 190
+    set ycor 80 ]
+  repeat 10 [ ask odca
   [ hatch 1
     [ set breed odcat
       set size 25
@@ -1373,9 +1413,21 @@ to foeDragonClawAnimation
   [ set size 25
     set heading 225
     set color blue
-    set xcor 120
+    set xcor 40
     set ycor 0 ]
-  repeat 13 [ask fdca
+  create-fdca 1
+  [ set size 25
+    set heading 243
+    set color blue
+    set xcor 40
+    set ycor -90 ]
+  create-fdca 1
+  [ set size 25
+    set heading 207
+    set color blue
+    set xcor -50
+    set ycor 0 ]
+  repeat 10 [ask fdca
   [ hatch 1
     [ set breed fdcat
       set size 25
@@ -1448,6 +1500,18 @@ to foeEarthquakeAnimation
     set shape "pentagon"
     set xcor 90
     set ycor -170]
+  create-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor -84
+    set ycor -152 ]
+  create-fea 1
+  [ set size 25
+    set color brown
+    set shape "pentagon"
+    set xcor -20
+    set ycor -171 ]
   repeat 15
   [ ask fea
     [ set heading random 360
@@ -1476,20 +1540,21 @@ to ownCrunchAnimation
   [ ask oca
     [ bk 5
       wait .02 ] ]
+  ask oca [ wait .15 ]
   ask oca
   [ die ]
 end
 
 to foeCrunchAnimation
   create-fca 1
-  [ set size 100
+  [ set size 130
     set color gray
     set heading 0
     set shape "jaw"
     set xcor -60
     set ycor -50 ]
   create-fca 1
-  [ set size 100
+  [ set size 130
     set color gray
     set heading 180
     set shape "jaw"
@@ -1499,6 +1564,7 @@ to foeCrunchAnimation
   [ ask fca
     [ bk 5
       wait .02 ] ]
+  ask fca [ wait .15 ]
   ask fca
   [ die ]
 end
@@ -1506,63 +1572,49 @@ end
 to ownMegahornAnimation
   create-oma 1
     [ set size 25
-      set heading 45
-      set color 126
+      set heading 35
+      set color green
       set xcor 6
       set ycor -14 ]
-    repeat 6 [ask oma
-      [ hatch 1
-        [ set breed omat
-          set size 25
-          set heading 45
-          set color 126 ]
-        fd 20
-        wait .02 ] ]
-  ask oma
-  [ lt 30 ]
-  repeat 6 [ask oma
-      [ hatch 1
-        [ set breed omat
-          set size 25
-          set heading 15
-          set color 126 ]
-        fd 20
-        wait .02 ] ]
-    ask omat
-    [ die ]
+  repeat 15 [
+    ask oma [
+      set size size + 5
+      wait .05 ]]
+  repeat 6 [
     ask oma
-    [ die ]
+    [ hatch 1
+      [ set breed omat
+        set size 25
+        set heading 35
+        set color green ]
+      fd 20
+      wait .0625 ]]
+  ask oma [ die ]
+  ask omat [ die ]
 end
 
 to foeMegahornAnimation
  create-fma 1
     [ set size 25
-      set heading 315
-      set color 126
-      set xcor -6
-      set ycor -184 ]
-    repeat 6 [ask fma
-      [ hatch 1
-        [ set breed fmat
-          set size 25
-          set heading 315
-          set color 126 ]
-        fd 20
-        wait .02 ] ]
-  ask fma
-  [ rt 30 ]
-  repeat 6 [ask fma
-      [ hatch 1
-        [ set breed fmat
-          set size 25
-          set heading 345
-          set color 126 ]
-        fd 20
-        wait .02 ] ]
-    ask fmat
-    [ die ]
+      set heading 215
+      set color green
+      set xcor 42
+      set ycor 129 ]
+  repeat 15 [
+    ask fma [
+      set size size + 5
+      wait .05 ]]
+  repeat 6 [
     ask fma
-    [ die ]
+    [ hatch 1
+      [ set breed fmat
+        set size 25
+        set heading 215
+        set color green ]
+      fd 20
+      wait .0625 ]]
+  ask fma [ die ]
+  ask fmat [ die ]
 end
 
 to ownOutrageAnimation
@@ -1771,35 +1823,35 @@ end
 
 to foePoisonJabAnimation
   create-fpja 1
-  [ set size 25
+  [ set size 55
     set shape "fist"
     set color violet
     set heading 0
     set xcor -135
     set ycor -20 ]
   create-fpja 1
-  [ set size 25
+  [ set size 55
     set color violet
     set shape "fist"
     set heading 0
     set xcor -130
     set ycor -20 ]
   create-fpja 1
-  [ set size 25
+  [ set size 55
     set color violet
     set shape "fist"
     set heading 0
     set xcor -125
     set ycor -20 ]
   create-fpja 1
-  [ set size 25
+  [ set size 55
     set color violet
     set shape "fist"
     set heading 0
     set xcor -135
     set ycor -35 ]
   create-fpja 1
-  [ set size 25
+  [ set size 55
     set color violet
     set shape "fist"
     set heading 0
