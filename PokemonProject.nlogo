@@ -10,6 +10,13 @@ turtles-own [pokename
   currentmove movetype cat power acc prio
   modifier effectiveness atkstage damage]
 
+;need to add choosing pokemon :P
+to menu
+  ca
+  import-pcolors "menu.png"
+end
+
+
 ;temporary setup to test things
 to setup
   ca
@@ -157,6 +164,50 @@ to pokenameTostats
     set move3 "energy_ball"
     set move4 "sludge_bomb"
   ]
+  if pokename = "krookodile" [
+    calcHP 95 0 0
+    set hp maxhp
+    calcatk 117 0 0
+    calcdef 80 0 0
+    calcspatk 65 0 0
+    calcspdef 70 0 0
+    calcspd 92 0 0
+    set type1 "ground"
+    set type2 "dark"
+    set move1 "earthquake"
+    set move2 "crunch"
+    set move3 "stone_edge"
+    set move4 "dragon_claw"
+  ]
+  if pokename = "haxorus" [
+    calcHP 76 0 0
+    set hp maxhp
+    calcatk 147 0 0
+    calcdef 90 0 0
+    calcspatk 60 0 0
+    calcspdef 70 0 0
+    calcspd 97 0 0
+    set type1 "dragon"
+    set type2 "null"
+    set move1 "swords_dance"
+    set move2 "earthquake"
+    set move3 "poison jab"
+    set move4 "outrage"
+  ]
+  if pokename = "nidoking" [
+    calcHP 81 0 0
+    calcatk 102 0 0
+    calcdef 77 0 0
+    calcspatk 85 0 0
+    calcspdef 75 0 0
+    calcspd 85 0 0
+    set type1 "poison"
+    set type2 "ground"
+    set move1 "earthquake"
+    set move2 "head_smash"
+    set move3 "megahorn"
+    set move4 "outrage"
+  ]
 end
 
 ;calculates hp
@@ -260,6 +311,54 @@ to moveTostats
     set cat "special"
     set power 90
     set acc 100
+    set prio 0]
+  if currentmove = "earthquake" [
+    set movetype "ground"
+    set cat "physical"
+    set power 100
+    set acc 100
+    set prio 0]
+  if currentmove = "crunch" [
+    set movetype "dark"
+    set cat "physical"
+    set power 80
+    set acc 100
+    set prio 0]
+  if currentmove = "stone_edge" [
+    set movetype "rock"
+    set cat "physical"
+    set power 100
+    set acc 80
+    set prio 0]
+  if currentmove = "dragon_claw" [
+    set movetype "dragon"
+    set cat "physical"
+    set power 80
+    set acc 100
+    set prio 0]
+  if currentmove = "poison_jab" [
+    set movetype "poison"
+    set cat "physical"
+    set power 80
+    set acc 100
+    set prio 0]
+  if currentmove = "outrage" [
+    set movetype "poison"
+    set cat "special"
+    set power 120
+    set acc 100
+    set prio 0]
+  if currentmove = "head_smash" [
+    set movetype "rock"
+    set cat "physical"
+    set power 150
+    set acc 80
+    set prio 0]
+  if currentmove = "megahorn" [
+    set movetype "bug"
+    set cat "physical"
+    set power 120
+    set acc 85
     set prio 0]
 end
 
@@ -680,11 +779,11 @@ end
 GRAPHICS-WINDOW
 314
 10
-751
-448
+723
+420
 -1
 -1
-13.0
+1.0
 1
 10
 1
@@ -694,10 +793,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--16
-16
--16
-16
+-200
+200
+-200
+200
 0
 0
 1
@@ -790,10 +889,10 @@ NIL
 1
 
 MONITOR
-316
-400
-422
-445
+315
+421
+421
+466
 hp of infernape
 report_hp ([hp] of ally 0)
 1
@@ -801,10 +900,10 @@ report_hp ([hp] of ally 0)
 11
 
 MONITOR
-578
-14
-748
-59
+611
+419
+722
+464
 hp of crobat
 report_hp ([hp] of enemy 1)
 1
@@ -886,6 +985,40 @@ BUTTON
 556
 NIL
 doturntest
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+159
+42
+222
+75
+NIL
+ca
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+206
+109
+269
+142
+NIL
+menu
 NIL
 1
 T
