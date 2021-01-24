@@ -1,5 +1,7 @@
 breed [ ompa omp ]
+breed [ ompat ompt ]
 breed [ fmpa fmp ]
+breed [ fmpat fmpt ]
 breed [ occa occ ]
 breed [ fcca fcc ]
 breed [ ofba ofb ]
@@ -13,7 +15,9 @@ breed [ fcpat fcpt ]
 breed [ ota ot ]
 breed [ fta ftd ]
 breed [ ocra ocr ]
+breed [ ocrat ocrt ]
 breed [ fcra fcr ]
+breed [ fcrat fcrt ]
 breed [ oaa oa ]
 breed [ faa fa ]
 breed [ oaat oat ]
@@ -29,104 +33,48 @@ breed [ fsa fs ]
 
 to ownMachPunchAnimation
   create-ompa 1
-  [ set size 25
+  [ set size 55
+    set heading 35
     set color red
-    set heading 55
     set shape "fist"
-    set xcor 55
-    set ycor -38 ]
-  create-ompa 1
-  [ set size 25
-    set color red
-    set heading 55
-    set shape "fist"
-    set xcor 50
-    set ycor -38 ]
-  create-ompa 1
-  [ set size 25
-    set color red
-    set heading 55
-    set shape "fist"
-    set xcor 45
-    set ycor -38 ]
-    create-ompa 1
-  [ set size 25
-    set color red
-    set heading 55
-    set shape "fist"
-    set xcor 55
-    set ycor -30 ]
-  create-ompa 1
-  [ set size 25
-    set color red
-    set heading 55
-    set shape "fist"
-    set xcor 50
-    set ycor -30 ]
-  create-ompa 1
-  [ set size 25
-    set color red
-    set heading 55
-    set shape "fist"
-    set xcor 45
-    set ycor -30 ]
+    set xcor 20
+    set ycor -77 ]
+  repeat 8 [
+    ask ompa
+    [ hatch 1
+      [ set breed ompat
+        set size 25
+        set heading 35
+        set color red ]
+      fd 20
+      wait .0625 ]]
   ask ompa
-  [repeat 25 [
-    wait .01
-    fd 1
-    ]
-    die]
+  [ die ]
+  ask ompat
+  [ die ]
 end
 
 to foeMachPunchAnimation
-   create-fmpa 1
-  [ set size 25
-    set color red
-    set heading 220
-    set shape "fist"
-    set xcor 37
-    set ycor 88 ]
   create-fmpa 1
-  [ set size 25
+  [ set size 55
     set color red
-    set heading 220
     set shape "fist"
-    set xcor 32
-    set ycor 88 ]
-  create-fmpa 1
-  [ set size 25
-    set color red
-    set heading 220
-    set shape "fist"
+    set heading 215
     set xcor 27
     set ycor 88 ]
-  create-fmpa 1
-  [ set size 25
-    set color red
-    set heading 220
-    set shape "fist"
-    set xcor 37
-    set ycor 80 ]
-  create-fmpa 1
-  [ set size 25
-    set color red
-    set heading 220
-    set shape "fist"
-    set xcor 32
-    set ycor 80 ]
-  create-fmpa 1
-  [ set size 25
-    set color red
-    set heading 220
-    set shape "fist"
-    set xcor 27
-    set ycor 80 ]
+  repeat 8 [
+    ask fmpa
+    [ hatch 1
+      [ set breed fmpat
+        set size 25
+        set heading 215
+        set color red ]
+      fd 20
+      wait .0625 ]]
   ask fmpa
-  [repeat 25 [
-    wait .01
-    fd 1
-    ]
-    die]
+  [ die ]
+  ask fmpat
+  [ die ]
 end
 
 to ownCloseCombatAnimation
@@ -271,6 +219,13 @@ to foeCloseCombatAnimation
   ask fcca
   [ set xcor xcor - 30
     set ycor ycor - 50 ]
+  ask fcca
+  [ repeat 3 [
+    fd 2
+    wait .0125]]
+  ask fcca
+  [ set xcor xcor + 100
+    set ycor ycor - 20 ]
   ask fcca
   [ repeat 3 [
     fd 2
@@ -602,63 +557,63 @@ to ownSporeAnimation
   create-osa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 15
-    set ycor 105 ]
+    set ycor 115 ]
   create-osa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 20
-    set ycor 105 ]
+    set ycor 115 ]
   create-osa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 25
-    set ycor 105 ]
+    set ycor 115 ]
   create-osa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 15
-    set ycor 90 ]
+    set ycor 100 ]
   create-osa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 20
-    set ycor 90 ]
+    set ycor 100 ]
   create-osa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 25
-    set ycor 90 ]
+    set ycor 100 ]
   repeat 3
   [ ask osa
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask osa
   [ set xcor xcor + 120
     set ycor ycor - 15 ]
   repeat 3
   [ ask osa
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask osa
   [ set xcor xcor - 60
-    set ycor ycor - 115 ]
+    set ycor ycor - 45 ]
   repeat 3
   [ ask osa
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask osa
   [ die ]
 end
@@ -667,63 +622,63 @@ to foeSporeAnimation
   create-fsa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -135
-    set ycor -20 ]
+    set ycor -10 ]
   create-fsa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -130
-    set ycor -20 ]
+    set ycor -10 ]
   create-fsa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -125
-    set ycor -20 ]
+    set ycor -10 ]
   create-fsa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -135
-    set ycor -35 ]
+    set ycor -25 ]
   create-fsa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -130
     set ycor -35 ]
   create-fsa 1
   [ set size 25
     set color gray
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -125
     set ycor -35 ]
   repeat 3
   [ ask fsa
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask fsa
   [ set xcor xcor + 120
     set ycor ycor - 15 ]
   repeat 3
   [ ask fsa
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask fsa
   [ set xcor xcor - 60
-    set ycor ycor - 115 ]
+    set ycor ycor - 45 ]
  repeat 3
   [ ask fsa
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask fsa
    [ die ]
 end
@@ -892,63 +847,63 @@ to ownToxicAnimation
   create-ota 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 15
-    set ycor 105 ]
+    set ycor 115 ]
   create-ota 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 20
-    set ycor 105 ]
+    set ycor 115 ]
   create-ota 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 25
-    set ycor 105 ]
+    set ycor 115 ]
   create-ota 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 15
-    set ycor 90 ]
+    set ycor 100 ]
   create-ota 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 20
-    set ycor 90 ]
+    set ycor 100 ]
   create-ota 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor 25
-    set ycor 90 ]
+    set ycor 100 ]
   repeat 3
   [ ask ota
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask ota
   [ set xcor xcor + 120
     set ycor ycor - 15 ]
   repeat 3
   [ ask ota
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask ota
   [ set xcor xcor - 60
-    set ycor ycor - 115 ]
+    set ycor ycor - 45 ]
   repeat 3
   [ ask ota
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask ota
   [ die ]
 end
@@ -957,63 +912,63 @@ to foeToxicAnimation
   create-fta 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -135
     set ycor -20 ]
   create-fta 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -130
     set ycor -20 ]
   create-fta 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -125
     set ycor -20 ]
   create-fta 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -135
     set ycor -35 ]
   create-fta 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -130
     set ycor -35 ]
   create-fta 1
   [ set size 25
     set color violet
-    set heading 0
+    set heading 180
     set shape "circle"
     set xcor -125
     set ycor -35 ]
   repeat 3
   [ ask fta
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask fta
   [ set xcor xcor + 120
     set ycor ycor - 15 ]
   repeat 3
   [ ask fta
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask fta
   [ set xcor xcor - 60
-    set ycor ycor - 115 ]
+    set ycor ycor - 45 ]
  repeat 3
   [ ask fta
   [ fd 5
-      wait .05 ] ]
+      wait .025 ] ]
   ask fta
    [ die ]
 end
@@ -1128,7 +1083,7 @@ to foeCrossPoisonAnimation
   [ set size 25
     set heading 225
     set color violet
-    set xcor 120
+    set xcor 50
     set ycor 0 ]
   repeat 13 [ask fcpa
   [ hatch 1
@@ -1194,79 +1149,79 @@ end
 
 to ownAcrobaticsAnimation
   repeat 2 [create-oaa 1
-  [ set size 25
-    set heading 135
-    set color gray
-    set xcor -15
-    set ycor 170 ]
-  repeat 13 [ ask oaa
-  [ hatch 1
-    [ set breed oaat
-      set size 25
-      set heading 135
-      set color gray ]
-    fd 20
-      wait .02 ] ]
-  ask oaat
-  [ die ]
-  ask oaa
-  [ die ]
-  create-oaa 1
-  [ set size 25
-    set heading 225
-    set color gray
-    set xcor 190
-    set ycor 170 ]
-  repeat 13 [ask oaa
-  [ hatch 1
-    [ set breed oaat
-      set size 25
-      set heading 225
-      set color gray ]
-    fd 20
-    wait .02 ] ]
-  ask oaat
-  [ die ]
-  ask oaa
+    [ set size 25
+      set heading 315
+      set color gray
+      set xcor 169
+      set ycor -14 ]
+    repeat 13 [ ask oaa
+      [ hatch 1
+        [ set breed oaat
+          set size 25
+          set heading 315
+          set color gray ]
+        fd 20
+        wait .02 ] ]
+    ask oaat
+    [ die ]
+    ask oaa
+    [ die ]
+    create-oaa 1
+    [ set size 25
+      set heading 45
+      set color gray
+      set xcor 6
+      set ycor -14 ]
+    repeat 13 [ask oaa
+      [ hatch 1
+        [ set breed oaat
+          set size 25
+          set heading 45
+          set color gray ]
+        fd 20
+        wait .02 ] ]
+    ask oaat
+    [ die ]
+    ask oaa
     [ die ] ]
 end
 
 to foeAcrobaticsAnimation
   repeat 2 [create-faa 1
-  [ set size 25
-    set heading 135
-    set color gray
-    set xcor -190
-    set ycor 0 ]
-  repeat 13 [ask faa
-  [ hatch 1
-    [ set breed faat
-      set size 25
-      set heading 135
-      set color gray ]
-    fd 20
+    [ set size 25
+      set heading 315
+      set color gray
+      set xcor -6
+      set ycor -184 ]
+    repeat 13 [ask faa
+      [ hatch 1
+        [ set breed faat
+          set size 25
+          set heading 315
+          set color gray ]
+        fd 20
         wait .02 ] ]
-  ask faat
-  [ die ]
-  ask faa
-  [ die ]
-  create-faa 1
-  [ set size 25
-    set heading 225
-    set color gray
-    set xcor 120
-    set ycor 0 ]
-  repeat 13 [ask faa
-  [ hatch 1
-    [ set breed faat
-      set size 25
-      set heading 225
-      set color gray ]
-    fd 20
+    ask faat
+    [ die ]
+    ask faa
+    [ die ]
+    create-faa 1
+    [ set size 25
+      set heading 45
+      set color gray
+      set xcor -134
+      set ycor -184 ]
+    repeat 13 [ask faa
+      [ hatch 1
+        [ set breed faat
+          set size 25
+          set heading 45
+          set color gray ]
+        fd 20
         wait .02 ] ]
-  ask faat
-  [ die ]
-  ask faa
+    ask faat
+    [ die ]
+    ask faa
     [ die ] ]
 end
 
@@ -1274,18 +1229,30 @@ to ownConfuseRayAnimation
   create-ocra 1
   [ set size 25
     set color yellow
-    set heading 0
+    set heading 25
+    set xcor 20
+    set ycor -77 ]
+  repeat 8 [
+    ask ocra
+    [ hatch 1
+      [ set breed ocrat
+        set size 25
+        set heading 25
+        set color yellow ]
+      fd 20
+      wait .0625 ]]
+  ask ocrat [die]
+  ask ocra [
     set xcor 50
-    set ycor 110 ]
-  ask ocra
-  [ wait .02 ]
+    set ycor 110
+    set heading 0 ]
   repeat 8
   [repeat 5 [ask ocra
-  [ fd 10
+    [ fd 10
       wait .02 ] ]
-  ask ocra
-  [ rt 90
-    fd 10
+    ask ocra
+    [ rt 90
+      fd 10
       wait .02 ] ]
   ask ocra
   [ die ]
@@ -1295,11 +1262,23 @@ to foeConfuseRayAnimation
   create-fcra 1
   [ set size 25
     set color yellow
-    set heading 0
-    set xcor -100
-    set ycor -70 ]
+    set heading 205
+    set xcor 27
+    set ycor 88 ]
+  repeat 8 [
+    ask fcra
+    [ hatch 1
+      [ set breed fcrat
+        set size 25
+        set heading 205
+        set color yellow ]
+      fd 20
+      wait .0625 ]]
+  ask fcrat [die]
   ask fcra
-  [ wait .02 ]
+  [ set xcor -100
+    set ycor -70
+    set heading 0 ]
   repeat 8
   [ repeat 5 [ask fcra
   [ fd 10
