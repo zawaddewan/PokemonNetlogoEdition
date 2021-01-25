@@ -787,7 +787,7 @@ to statusMovesEnemy
   ask enemy 1 [
   if (type1 = "fire" or type2 = "fire") and nonvolatile = "burned" [
     set nonvolatile 0]
-  if (type1 = "poison" or type2 = "poison" or type1 = "steel" or type2 = "steel") and nonvolatile = "poisoned" [
+  if (type1 = "poison" or type2 = "poison" or type1 = "steel" or type2 = "steel") and (nonvolatile = "poisoned" or nonvolatile = "badly_poisoned") [
     set nonvolatile 0]
   if (type1 = "electric" or type2 = "electric") and nonvolatile = "paralyzed" [
     set nonvolatile 0]
