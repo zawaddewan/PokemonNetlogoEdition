@@ -897,7 +897,7 @@ to attackEnemy
         if cat = "physical" [
           ifelse currentmove = "cross_poison" or currentmove = "stone_edge"
           [calcDamagePhy atk ([def] of enemy 1) power 1 ([defstage] of enemy 1)]
-          [calcDamagePhy atk ([def] of enemy 1) power 0 ([defstage] of enemy 1)]
+          [calcDamagePhy atk ([def] of enemy 1) power 0 ([defstage] of enemy 1)]]
         if cat = "special" [
           calcDamageSpe spatk ([spdef] of enemy 1) power 0 ([spdefstage] of enemy 1)]
         if nonvolatile = "paralyzed" [
@@ -907,7 +907,6 @@ to attackEnemy
             set damage 0]
         ask enemy 1 [
           set hp hp - ([damage] of ally 0)]
-      ]
     ]
     statusMovesEnemy
     ]
@@ -941,7 +940,7 @@ to attackAlly
         if cat = "physical" [
           ifelse currentmove = "cross_poison" or currentmove = "stone_edge"
           [calcDamagePhy atk ([def] of ally 0) power 1 ([defstage] of ally 0)]
-          [calcDamagePhy atk ([def] of ally 0) power 0 ([defstage] of ally 0)]
+          [calcDamagePhy atk ([def] of ally 0) power 0 ([defstage] of ally 0)]]
         if cat = "special" [
           calcDamageSpe spatk ([spdef] of ally 0) power 0 ([spdefstage] of ally 0)]
         confusedStatus
@@ -952,7 +951,6 @@ to attackAlly
             set damage 0]
         ask ally 0 [
           set hp hp - ([damage] of enemy 1)]
-      ]
     ]
     statusMovesAlly
     ]
@@ -979,14 +977,12 @@ end
 ;A is attack D is defense, calculates damage
 to calcDamagePhy [A D pow critmod defstg]
   calcModifier critmod
-  if defstg < 1 [
-    set damage (((((((2 * 5) / 5) + 2) * pow * (A * (1 + (atkstage / 2)))) / (D * (1 + (2 / ((abs defstg) + 2))))) / 50) + 2) * modifier]
+    set damage (((((((2 * 5) / 5) + 2) * pow * (A * (1 + (atkstage / 2)))) / (D * (1 + (2 / ((abs defstg) + 2))))) / 50) + 2) * modifier
 end
 
 to calcDamageSpe [A D pow critmod spdefstg]
   calcModifier critmod
-  if spdefstg < 1 [
-    set damage (((((((2 * 5) / 5) + 2) * pow * (A * (1 + (atkstage / 2)))) / (D * (2 / ((abs spdefstg) + 2)))) / 50) + 2) * modifier]
+    set damage (((((2 * 5) / 5) + 2) * pow * A / (D * (1 + (2 / ((abs spdefstg) + 2)))) / 50) + 2) * modifier
 end
 
 ;calculates modifier for calcDamage
