@@ -773,7 +773,11 @@ to statusMovesEnemy
         ask enemy 1 [
           set nonvolatile "poisoned"]]]
   ]
+<<<<<<< HEAD
   if [confused?] of enemy 1 = false or [confused?] of enemy 1 = 0 [
+=======
+    if [confused?] of enemy 1 = false or [confused?] of enemy 1 = 0 [
+>>>>>>> d57d7a8091253f27e47e7c5c1b55885b146a12bc
     if currentmove = "confuse_ray" [
       ask enemy 1 [
         set confused? true]]
