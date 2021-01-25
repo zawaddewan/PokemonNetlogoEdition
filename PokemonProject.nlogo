@@ -391,12 +391,18 @@ to doTurn
   ask enemy 1 [
     wait 1
     statusEffects]
-  ask ally 0 [
-    if hp <= 0
-    [die
-     ]
+  ifelse [hp] of ally 0 <= 0 [
+    ask ally 0 [die]
+    enemyWins]
+  [ask ally 0 [
     if hp > maxhp
-    [set hp maxhp]]
+      [set hp maxhp]]]
+  ifelse [hp] of enemy 1 <= 0 [
+    ask enemy 1 [die]
+    allyWins]
+  [ask enemy 1 [
+    if hp > maxhp
+      [set hp maxhp]]]
 end
 
 ;resets all temporary stats for the next turn
@@ -3015,7 +3021,7 @@ to foeOutrageAnimation
       wait .02 ] ]
   ask foa
   [ die ]
-  hatch-foa 1 [
+  hatch-foa 1 [set hidden? false
     set size 100
     set color blue
     set shape "circle"
