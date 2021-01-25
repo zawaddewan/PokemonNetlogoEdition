@@ -174,17 +174,17 @@ to genEnemy
 end
 
 to createBackground
-  if [pokename] of ally 0 = "amooguss" and [pokename] of enemy 1 = "haxorus"
+  if [pokename] of ally 0 = "amoonguss" and [pokename] of enemy 1 = "haxorus"
     [import-pcolors "battles/ah.png"]
-  if [pokename] of ally 0 = "amooguss" and [pokename] of enemy 1 = "krookodile"
+  if [pokename] of ally 0 = "amoonguss" and [pokename] of enemy 1 = "krookodile"
     [import-pcolors "battles/ak.png"]
-  if [pokename] of ally 0 = "amooguss" and [pokename] of enemy 1 = "nidoking"
+  if [pokename] of ally 0 = "amoonguss" and [pokename] of enemy 1 = "nidoking"
     [import-pcolors "battles/an.png"]
-  if [pokename] of ally 0 = "amooguss" and [pokename] of enemy 1 = "infernape"
+  if [pokename] of ally 0 = "amoonguss" and [pokename] of enemy 1 = "infernape"
     [import-pcolors "battles/ai.png"]
-  if [pokename] of ally 0 = "amooguss" and [pokename] of enemy 1 = "crobat"
+  if [pokename] of ally 0 = "amoonguss" and [pokename] of enemy 1 = "crobat"
     [import-pcolors "battles/ac.png"]
-  if [pokename] of ally 0 = "amooguss" and [pokename] of enemy 1 = "amoonguss"
+  if [pokename] of ally 0 = "amoonguss" and [pokename] of enemy 1 = "amoonguss"
     [import-pcolors "battles/aa.png"]
   if [pokename] of ally 0 = "haxorus" and [pokename] of enemy 1 = "haxorus"
     [import-pcolors "battles/hh.png"]
@@ -3764,7 +3764,7 @@ BUTTON
 261
 238
 Use Move 1
-ask ally 0 [\nset currentmove move2]\n
+ask ally 0 [\nset currentmove move1]\n
 NIL
 1
 T
