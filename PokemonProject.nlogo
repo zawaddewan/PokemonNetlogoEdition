@@ -3833,39 +3833,25 @@ Zawad Dewan, Donald Bi, and Jeffery Tang, Pd 4
 
 ## WHAT IS IT?
 
-This is an implementation of Pokemon in NetLogo. It simulates 1v1 battles with teams of 1 pokemon each, with 6 pokemon to choose from and a pool of 20 moves. Each pokemon has its own moveset, health, and stats. Each move and status affect also has its own corresponding animation.
+This is an implementation of Pokemon in NetLogo. It simulates 1v1 battles with teams of 1 pokemon each, with 6 pokemon to choose from and a pool of 20 moves. Each pokemon has its own moveset, health, and stats. Each move and status effect also has its own corresponding animation. Alongside this, type effectiveness (super effectiveness, immunity, not effective, etc) was implemented.
 
 ## HOW IT WORKS
 
-(what rules the agents use to create the overall behavior of the model)
+What happens - Once you press menu, the program waits for you to click your mouse, and checks if you clicked in the regions corresponding to each pokemon. Once selected, the stats and moves for the pokemon are stored in a turtle, ally 0, and a random pokemon is chosen for the enemy. This enemy pokemon's stats and moves are stored within a turtle as well, enemy 1. Then, a new background is created with the relevant pokemon, and the reporters that display health and the names of the moves are populated. Once a button for a move is pressed, it is stored, and once Do Turn is pressed, whichever pokemon has the higher speed value will go first, their move animation will play, then the other pokemon's turn will be done, and lastly any status effects that are in play will play their animation and take affect. This continues until either pokemon dies, and depending on the outcome a win or loss screen is displayed and the program ends.
+
+How we made this - From the beginning we had the idea that we should keep the amount of things we would implement low, as we knew that we wouldn't be able to make a fully fledged battle simulator in only 24 days. So, we set our goals somewhere reasonable: 6 pokemon, 20 moves, as well as status effects, animations, and backgrounds. Alongside comes all of the system mechanics of pokemon, all of which needed to be put into NetLogo. As it turns out, 24 days was exactly how long it ended up taking us to do all of that, tweak it, bug test, troubleshoot, and eventually come to a finished product. The most interesting parts to do were the status effects, as they can dissipate after a certain amount of time has passed, and they can prevent pokemon from taking action. These things needed to be tracked each time a turn happened, and they could also be changed right after or before.
 
 ## HOW TO USE IT
 
-Press the 'menu' button, which will bring up a menu of 6 pokemon to choose from. Click on whatever pokemon you choose, and then the reporters showing the moves will show what moves your pokemon of choice has available to it. Select one, and then press 'doTurn' to initiate the turn. You can do this until you die or you beat the pokemon. To restart, press the 'menu' button again.
-
-## THINGS TO NOTICE
-
-(suggested things for the user to notice while running the model)
-
-## THINGS TO TRY
-
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
-
-## EXTENDING THE MODEL
-
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
-
-## NETLOGO FEATURES
-
-(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
-
-## RELATED MODELS
-
-(models in the NetLogo Models Library and elsewhere which are of related interest)
+Press the Menu button, which will bring up a menu of 6 pokemon to choose from. Click on whatever pokemon you choose, and then the reporters showing the moves will show what moves your pokemon of choice has available to it. Select one, and then press Do Turn to initiate the turn. You can do this until you die or you beat the pokemon. To restart, press the 'menu' button again.
 
 ## CREDITS AND REFERENCES
 
-(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
+Bulbapedia: https://bulbapedia.bulbagarden.net/
+Bulbapedia is an online Pokemon encylcopedia, like wikipedia, which contained all of the information we needed for our program. Damage calculations, movesets, stat calculations, and how moves work were all pulled from there.
+
+PokemonDB: https://pokemondb.net/ 
+We pulled the sprites used in the program from PokemonDB. These were upscaled in GIMP and then edited together to create the backgrounds.
 @#$#@#$#@
 default
 true
