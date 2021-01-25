@@ -977,12 +977,12 @@ end
 ;A is attack D is defense, calculates damage
 to calcDamagePhy [A D pow critmod defstg]
   calcModifier critmod
-    set damage (((((((2 * 5) / 5) + 2) * pow * (A * (1 + (atkstage / 2)))) / D ) / 50) + 2) * modifier
+    set damage (((((((2 * 50) / 5) + 2) * pow * (A * (1 + (atkstage / 2)))) / D ) / 50) + 2) * modifier
 end
 
 to calcDamageSpe [A D pow critmod spdefstg]
   calcModifier critmod
-    set damage (((((2 * 5) / 5) + 2) * pow * A / (D * (1 + (2 / ((abs spdefstg) + 2)))) / 50) + 2) * modifier
+    set damage ((((  (2 * 50) / 5) + 2) * pow * A / (D * (1 + (2 / ((abs spdefstg) + 2)))) / 50) + 2) * modifier
 end
 
 ;calculates modifier for calcDamage
