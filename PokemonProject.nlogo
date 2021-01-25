@@ -3764,7 +3764,7 @@ BUTTON
 261
 238
 Use Move 1
-ask ally 0 [\nset currentmove move2]\n
+ask ally 0 [\nset currentmove move1]\n
 NIL
 1
 T
