@@ -977,7 +977,7 @@ end
 ;A is attack D is defense, calculates damage
 to calcDamagePhy [A D pow critmod defstg]
   calcModifier critmod
-    set damage (((((((2 * 5) / 5) + 2) * pow * (A * (1 + (atkstage / 2)))) / (D * (1 + (2 / ((abs defstg) + 2))))) / 50) + 2) * modifier
+    set damage (((((((2 * 5) / 5) + 2) * pow * (A * (1 + (atkstage / 2)))) / D ) / 50) + 2) * modifier
 end
 
 to calcDamageSpe [A D pow critmod spdefstg]
@@ -988,8 +988,8 @@ end
 ;calculates modifier for calcDamage
 to calcModifier [n]
   ifelse breed = allies [
-  calcEffectiveness movetype ([type1] of enemy 1) ([type2] of enemy 1)
   set modifier 1
+  calcEffectiveness movetype ([type1] of enemy 1) ([type2] of enemy 1)
   ifelse n = 1
      [if random 8 = 0
        [set modifier modifier * 1.5]]
@@ -999,12 +999,12 @@ to calcModifier [n]
   if nonvolatile = "burned" and cat = "physical" [
     set modifier modifier * 0.5]
   if movetype = type1 or movetype = type2 [
-      set modifier modifier * 15]
+      set modifier modifier * 1.5]
   set modifier modifier * effectiveness
   ]
   [
-  calcEffectiveness movetype ([type1] of ally 0) ([type2] of ally 0)
   set modifier 1
+    calcEffectiveness movetype ([type1] of ally 0) ([type2] of ally 0)
   ifelse n = 1
      [if random 8 = 0
        [set modifier modifier * 1.5]]
